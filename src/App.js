@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import first from './first.png'
-import second from './second.png'
 import './App.css';
 
 import $ from 'jquery'
+
+function TodoItem(args) {
+    return <li><input type="checkbox" checked={args.isCompleted} />{args.children}</li>
+}
 
 class App extends Component {
     constructor(props) {
@@ -14,29 +16,23 @@ class App extends Component {
         this.logoId = 'logo'
 
         this.state = {
-            userInput: ''
+            cards: [ {
+                name: 'AAA',
+                task: 'Do smth...',
+                completed: false
+            }, {
+                name: 'bbb',
+                task: 'Do more!',
+                completed: false
+            }, {
+                name: 'CCC',
+                task: 'Do not do anything',
+                completed: false
+            } ]
         };
-
-        this.defaultLogo = logo
-        this.commands = {
-            aa: first,
-            bb: second
-        }
 
         // This binding is necessary to make `this` work in the callback
         this.handleChange = this.handleChange.bind(this);
-    }
-
-    textToShow(inputText) {
-        const logo = $(document.getElementById(this.logoId))
-
-        if (inputText in this.commands) {
-            logo.attr("src", this.commands[inputText])
-            return 'Yes, i know!'
-        } else {
-            logo.attr("src", this.defaultLogo)
-            return `${inputText}? Never heard of them?`
-        }
     }
 
     handleChange(event) {
@@ -56,14 +52,20 @@ class App extends Component {
                         onChange={this.handleChange}
                     />
 
-                    <p id={this.textId}>
-
-                    </p>
+                    <p id={this.textId}>Write your command</p>
 
                 </div>
                 <div className="App-header">
-                    <img id={this.logoId} src={logo} alt="logo" />
-                    <h2>Welcome to My TODO List</h2>
+                    <img className="App-logo" id={this.logoId} src={logo} alt="logo" />
+                    <ul>
+                        {this.state.cards.map((card, index) => {
+                            return <TodoItem
+                                key={index}
+                                isCompleted={card.completed}>
+                                {card.task}
+                            </TodoItem>
+                        })}
+                    </ul>
                 </div>
             </div>
         );
