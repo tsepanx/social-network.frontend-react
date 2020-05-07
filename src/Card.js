@@ -3,26 +3,16 @@ import $ from "jquery";
 
 import s from './Card.module.css'
 
+//
+// let state = {
+//     isCompleted: args.isCompleted
+// }
 
-class Card extends Component {
-    constructor(args) {
-        super(args);
+// handleClick = handleClick.bind(this)
 
-        this.id = args.id
-        this.title = args.name
-        this.task = args.task
-
-        this.state = {
-            isCompleted: args.isCompleted
-        }
-
-        this.toggleButtonId =  `toggleBtn${this.id}`
-
-        this.handleClick = this.handleClick.bind(this)
-    }
-
-    toggleButtonStyle() {
-        const btn = $(document.getElementById(this.toggleButtonId))
+const Card = (props) => {
+    const toggleButtonStyle = () => {
+        const btn = $(document.getElementById(`toggleBtn${props.id}`))
 
         const classActive = 'btn-success'
         const classDisabled = ''
@@ -36,28 +26,31 @@ class Card extends Component {
         }
     }
 
-    handleClick() {
-        this.toggleButtonStyle()
-        this.setState({ isCompleted: !this.state.isCompleted })
+    const handleClick = () => {
+        toggleButtonStyle()
+        props.state.isCompleted = !props.state.isCompleted
+        console.log(props.state.isCompleted)
     }
 
-    render() {
-        return (
-            <div>
-                <div className="card text-left"  style={{ width: '20rem'}}>
-                    <div className="card-header card-title">{this.title}</div>
-                    <div className="card-body">
-                        <p className="card-text">{this.task}</p>
-                        <hr/>
-                        <div id={this.toggleButtonId} onClick={this.handleClick} className="btn toggle-btn">
-                            Single toggle <input className="toggle-checkbox" readOnly={true} type="checkbox" checked={this.state.isCompleted} />
-                        </div>
+    return (
+        <div>
+            <div className="card text-left" style={{width: '20rem'}}>
+                <div className="card-header card-title">{props.title}</div>
+                <div className="card-body">
+                    <p className="card-text">{props.task}</p>
+                    <hr/>
+                    <div id={`toggleBtn${props.id}`}
+                         onClick={handleClick}
+                         className="btn toggle-btn">
+
+                        Single toggle <input className="toggle-checkbox" readOnly={false} type="checkbox"
+                                             checked={props.state.isCompleted}/>
                     </div>
                 </div>
-                <p/>
             </div>
-        )
-    }
+            <p/>
+        </div>
+    )
 }
 
 

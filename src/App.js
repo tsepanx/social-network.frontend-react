@@ -13,9 +13,13 @@ const App = (props) => {
         <Card
             key={index}
             id={index}
-            name={card.title}
+            title={card.title}
             task={card.description}
-            isCompleted={card.completed}>
+            state={
+                {
+                    isCompleted: card.completed
+                }
+            }>
         </Card>
     )
 
