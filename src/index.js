@@ -1,21 +1,25 @@
-import './index.css';
+import React from "react";
 import * as serviceWorker from './serviceWorker';
-import state, {addCard, updateCard} from "./state";
 import ReactDOM from "react-dom";
 import {BrowserRouter} from "react-router-dom";
-import React from "react";
+
+import './index.css';
+
 import App from "./App";
+import store from "./state";
 
 let rerenderTree = (state) => {
     ReactDOM.render(
         <BrowserRouter>
-            <React.StrictMode><App state={state} addCard={addCard} updateCard={updateCard}/></React.StrictMode>
+            <React.StrictMode><App state={state}
+                                   addCard={store.addCard.bind(store)}
+                                   updateCard={store.updateCard.bind(store)}/></React.StrictMode>
         </BrowserRouter>,
         document.getElementById('root')
     );
 }
 
-rerenderTree(state)
+rerenderTree(store.getState())
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.css";
 
 import Header from "./Header/Header";
 import Sidebar from "./Sidebar/Sidebar";
-import Posts from './Posts/Posts'
+import Cards from './Cards/Cards'
 import Messages from "./Messages/Messages";
 
 
@@ -22,7 +22,7 @@ const App = (props) => {
 
             <div className="App-content">
                 <Route path='/posts' render={() => {
-                    return <Posts state={props.state.posts} addCard={props.addCard} updateCard={props.updateCard}/>
+                    return <Cards state={props.state.cards} addCard={props.addCard} updateCard={props.updateCard}/>
                 }}/>
                 <Route path='/messages' render={() => {
                     return <Messages state={props.state}/>

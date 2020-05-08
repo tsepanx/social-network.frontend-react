@@ -6,7 +6,7 @@ const Card = (props) => {
     let btn = React.createRef();
     let checkbox = React.createRef();
 
-    const [isChecked, setChecked] = useState(0)
+    const [isChecked, setCheckbox] = useState(0)
 
     const getBtnClasses = (isActive) => {
         const btnActiveClass = 'btn-success'
@@ -19,7 +19,7 @@ const Card = (props) => {
 
     const updateBtnStyle = () => {
         btn.current.classList.value = getBtnClasses(props.state.completed)
-        setChecked(props.state.completed)
+        setCheckbox(props.state.completed)
     }
 
     const handleClick = () => {

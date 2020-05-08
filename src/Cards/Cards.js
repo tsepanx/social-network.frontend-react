@@ -1,16 +1,16 @@
 import React from "react";
-import s from './Posts.module.css'
+import s from './Cards.module.css'
 
 import Card from "./Card/Card";
 
-const Posts = (props) => {
-    const cards = props.state.items.map((card, index) =>
+const Cards = (props) => {
+    const cards = props.state.items.map((cardItem, index) =>
         <Card
             key={index}
             id={index}
             addCard={props.addCard}
             updateCard={props.updateCard}
-            state={card}>
+            state={cardItem}>
         </Card>
     )
 
@@ -22,4 +22,4 @@ const Posts = (props) => {
     )
 }
 
-export default Posts
+export default Cards
