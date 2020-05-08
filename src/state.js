@@ -9,9 +9,6 @@ let state = {
 };
 
 export let addCard = (newCard) => { state.posts.items.push(newCard) }
-export let updateCard = (cardId, updatedCard) => {
-    // debugger
-    state.posts.items[cardId] = updatedCard}
-    // debugger
+export let updateCard = (cardId, updatedCard) => { state.posts.items[cardId] = updatedCard }
 
 export default state

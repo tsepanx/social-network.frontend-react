@@ -1,7 +1,19 @@
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import rerenderTree from "./render";
-import state from "./state";
+import state, {addCard, updateCard} from "./state";
+import ReactDOM from "react-dom";
+import {BrowserRouter} from "react-router-dom";
+import React from "react";
+import App from "./App";
+
+let rerenderTree = (state) => {
+    ReactDOM.render(
+        <BrowserRouter>
+            <React.StrictMode><App state={state} addCard={addCard} updateCard={updateCard}/></React.StrictMode>
+        </BrowserRouter>,
+        document.getElementById('root')
+    );
+}
 
 rerenderTree(state)
 

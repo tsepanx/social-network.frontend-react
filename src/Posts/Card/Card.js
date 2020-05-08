@@ -3,7 +3,6 @@ import React from "react";
 // import s from './Card.module.css'
 
 const Card = (props) => {
-
     let btn = React.createRef();
     let checkbox = React.createRef();
 
@@ -45,7 +44,7 @@ const Card = (props) => {
                     <hr/>
                     <div ref={btn} onClick={handleClick} className={getBtnClasses(props.state.completed)}>
                         Single toggle
-                        <input ref={checkbox} className="toggle-checkbox" readOnly={true} type="checkbox"/>
+                        <input ref={checkbox} className="toggle-checkbox"  type="checkbox"/>
                     </div>
                 </div>
             </div>
