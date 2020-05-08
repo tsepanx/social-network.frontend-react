@@ -22,7 +22,9 @@ const App = (props) => {
 
             <div className="App-content">
                 <Route path='/posts' render={() => {
-                    return <Cards state={props.state.cards} addCard={props.addCard} updateCard={props.updateCard}/>
+                    return <Cards
+                        state={props.state.cards}
+                        dispatch={props.dispatch}/>
                 }}/>
                 <Route path='/messages' render={() => {
                     return <Messages state={props.state}/>

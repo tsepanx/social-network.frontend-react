@@ -11,15 +11,17 @@ import store from "./state";
 let rerenderTree = (state) => {
     ReactDOM.render(
         <BrowserRouter>
-            <React.StrictMode><App state={state}
-                                   addCard={store.addCard.bind(store)}
-                                   updateCard={store.updateCard.bind(store)}/></React.StrictMode>
+            <React.StrictMode><App
+                state={state}
+                dispatch={store.dispatch.bind(store)}
+            /></React.StrictMode>
         </BrowserRouter>,
         document.getElementById('root')
     );
 }
-
+// debugger
 rerenderTree(store.getState())
+store.subscribe(rerenderTree)
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

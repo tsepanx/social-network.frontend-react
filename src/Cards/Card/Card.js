@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 
+import {typeEnum} from "../../state";
 // import s from './Card.module.css'
 
 const Card = (props) => {
@@ -25,7 +26,8 @@ const Card = (props) => {
     const handleClick = () => {
         props.state.completed = !props.state.completed
 
-        props.updateCard(props.id, props.state)
+        props.dispatch({type: typeEnum.UPDATE_CARD, id: props.id, updatedState: props.state})
+        // props.updateCard(props.id, props.state)
         updateBtnStyle()
     }
 

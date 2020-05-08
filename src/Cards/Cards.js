@@ -1,6 +1,7 @@
 import React from "react";
 import s from './Cards.module.css'
 
+import {typeEnum} from "../state";
 import Card from "./Card/Card";
 
 const Cards = (props) => {
@@ -8,14 +9,20 @@ const Cards = (props) => {
         <Card
             key={index}
             id={index}
-            addCard={props.addCard}
-            updateCard={props.updateCard}
+            dispatch={props.dispatch}
             state={cardItem}>
         </Card>
     )
 
+    const addNewCard = () => {
+        console.log(typeEnum, 'aaa')
+        // debugger
+        props.dispatch({type: typeEnum.ADD_CARD})
+    }
+
     return (
         <div className={s.posts}>
+            <div onClick={addNewCard} className='btn btn-success'>Add New</div>
             Posts
             { cards }
         </div>
