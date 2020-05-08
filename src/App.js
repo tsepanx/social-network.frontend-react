@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Route, Router} from "react-router-dom";
 
 import './App.css';
@@ -12,6 +12,9 @@ import Messages from "./Messages/Messages";
 
 
 const App = (props) => {
+
+    console.log(useState())
+
     return (
         <div className="App">
             <Header/>

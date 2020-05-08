@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 
 // import s from './Card.module.css'
 
 const Card = (props) => {
     let btn = React.createRef();
     let checkbox = React.createRef();
+
+    const [isChecked, setChecked] = useState(0)
 
     const getBtnClasses = (isActive) => {
         const btnActiveClass = 'btn-success'
@@ -15,17 +17,9 @@ const Card = (props) => {
         return classes
     }
 
-    const setCheckbox = (isActive) => {
-        if (isActive) {
-            checkbox.current.setAttribute('checked', '')
-        } else {
-            checkbox.current.removeAttribute('checked')
-        }
-    }
-
     const updateBtnStyle = () => {
         btn.current.classList.value = getBtnClasses(props.state.completed)
-        setCheckbox(props.state.completed)
+        setChecked(props.state.completed)
     }
 
     const handleClick = () => {
@@ -44,7 +38,7 @@ const Card = (props) => {
                     <hr/>
                     <div ref={btn} onClick={handleClick} className={getBtnClasses(props.state.completed)}>
                         Single toggle
-                        <input ref={checkbox} className="toggle-checkbox"  type="checkbox"/>
+                        <input ref={checkbox} className="toggle-checkbox" type="checkbox" readOnly={true} checked={isChecked}/>
                     </div>
                 </div>
             </div>
