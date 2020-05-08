@@ -1,38 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {BrowserRouter} from "react-router-dom";
+import rerenderTree from "./render";
+import state from "./state";
 
-
-let state = {
-    posts: {
-        items: [
-            {
-                title: 'AAA',
-                description: 'Do smdsfsdfdsfth...',
-                completed: false
-            }, {
-                title: 'bbb',
-                description: 'Do more!',
-                completed: false
-            }, {
-                title: 'CCC',
-                description: 'Do not do anything',
-                completed: false
-            }
-        ]
-    }
-};
-
-
-ReactDOM.render(
-    <BrowserRouter>
-        <React.StrictMode><App state={state}/></React.StrictMode>
-    </BrowserRouter>,
-    document.getElementById('root')
-);
+rerenderTree(state)
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

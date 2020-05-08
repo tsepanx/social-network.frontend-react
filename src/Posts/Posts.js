@@ -8,9 +8,9 @@ const Posts = (props) => {
         <Card
             key={index}
             id={index}
-            title={card.title}
-            task={card.description}
-            state={{isCompleted: card.completed}}>
+            addCard={props.addCard}
+            updateCard={props.updateCard}
+            state={card}>
         </Card>
     )
 

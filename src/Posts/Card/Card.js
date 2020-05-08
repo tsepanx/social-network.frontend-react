@@ -3,42 +3,49 @@ import React from "react";
 // import s from './Card.module.css'
 
 const Card = (props) => {
-    const toggleButtonStyle = () => {
-        const btn = document.getElementsByClassName('btn').item(props.id)
 
-        const classActive = 'btn-success'
-        if (btn.classList.contains(classActive)) {
-            btn.classList.remove(classActive)
+    let btn = React.createRef();
+    let checkbox = React.createRef();
+
+    const getBtnClasses = (isActive) => {
+        const btnActiveClass = 'btn-success'
+
+        let classes = "btn toggle-btn "
+        if (isActive) { classes += btnActiveClass}
+
+        return classes
+    }
+
+    const setCheckbox = (isActive) => {
+        if (isActive) {
+            checkbox.current.setAttribute('checked', '')
         } else {
-            btn.classList.add(classActive)
+            checkbox.current.removeAttribute('checked')
         }
     }
 
+    const updateBtnStyle = () => {
+        btn.current.classList.value = getBtnClasses(props.state.completed)
+        setCheckbox(props.state.completed)
+    }
+
     const handleClick = () => {
-        toggleButtonStyle()
-        props.state.isCompleted = !props.state.isCompleted
+        props.state.completed = !props.state.completed
 
-        const toggle = document.getElementsByClassName('toggle-checkbox').item(props.id)
-        if (props.state.isCompleted) {
-            toggle.setAttribute('checked', '')
-        } else {
-            toggle.removeAttribute('checked')
-        }
-        // toggle.setAttribute('checked', props.state.isCompleted)
-
-        console.log(toggle.attributes)
+        props.updateCard(props.id, props.state)
+        updateBtnStyle()
     }
 
     return (
         <div>
             <div className="card text-left" style={{width: '20rem'}}>
-                <div className="card-header card-title">{props.title}</div>
+                <div className="card-header card-title">{props.state.title}</div>
                 <div className="card-body">
-                    <p className="card-text">{props.task}</p>
+                    <p className="card-text">{props.state.description}</p>
                     <hr/>
-                    <div onClick={handleClick} className="btn toggle-btn">
+                    <div ref={btn} onClick={handleClick} className={getBtnClasses(props.state.completed)}>
                         Single toggle
-                        <input className="toggle-checkbox" readOnly={false} type="checkbox"/>
+                        <input ref={checkbox} className="toggle-checkbox" readOnly={true} type="checkbox"/>
                     </div>
                 </div>
             </div>
