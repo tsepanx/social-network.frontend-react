@@ -1,7 +1,4 @@
-export let typeEnum = {
-    ADD_CARD: 'ADD_CARD',
-    UPDATE_CARD: 'UPDATE_CARD'
-}
+import cardsReducer from "./reducers/cards-reducer";
 
 let store = {
     _state: {
@@ -26,27 +23,9 @@ let store = {
         return this._state
     },
 
-    addCard(newCard) {
-        this._state.cards.items.push(newCard);
-    },
-
-    updateCard(cardId, updatedState) {
-        this._state.cards.items[cardId] = updatedState
-    },
-
     dispatch(action) {
         // debugger
-        if (action.type === typeEnum.ADD_CARD) {
-            let newCard = {
-                title: 'New Title',
-                description: 'New',
-                completed: true
-            }
-
-            this.addCard(newCard)
-        } else if (action.type === typeEnum.UPDATE_CARD) {
-            this.updateCard(action.id, action.updatedState)
-        }
+        this._state.cards = cardsReducer(this._state.cards, action)
 
         this._callSubscriber(this._state)
     }
