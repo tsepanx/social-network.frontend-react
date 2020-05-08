@@ -6,7 +6,7 @@ import {BrowserRouter} from "react-router-dom";
 import './index.css';
 
 import App from "./App";
-import store from "./state";
+import store from "./reducers/state";
 
 let rerenderTree = (state) => {
     ReactDOM.render(
