@@ -3,8 +3,9 @@ import './App.css';
 
 import "bootstrap/dist/css/bootstrap.css";
 
-import Card from "./Card";
-import Header from "./Header";
+import Card from "./Card/Card";
+import Header from "./Header/Header";
+import Sidebar from "./Sidebar/Sidebar";
 
 
 const App = (props) => {
@@ -15,18 +16,15 @@ const App = (props) => {
             id={index}
             title={card.title}
             task={card.description}
-            state={
-                {
-                    isCompleted: card.completed
-                }
-            }>
+            state={ { isCompleted: card.completed } }>
         </Card>
     )
 
     return (
         <div className="App">
             <Header/>
-            <div className="App-header">
+            <Sidebar />
+            <div className="App-content">
                 <ul className="list-group list-group-flush"> {cards} </ul>
             </div>
         </div>

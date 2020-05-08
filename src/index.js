@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import Card from "./Card";
+import Card from "./Card/Card";
 
 
 let state = {
