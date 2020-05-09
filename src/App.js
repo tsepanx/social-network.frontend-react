@@ -12,9 +12,6 @@ import Messages from "./Messages/Messages";
 
 
 const App = (props) => {
-
-    console.log(useState())
-
     return (
         <div className="App">
             <Header/>

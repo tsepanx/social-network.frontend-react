@@ -5,9 +5,9 @@ export let typeEnum = {
 
 let initialState = {
     items: [
-        {title: 'AAA', description: 'Do smdsfsdfdsfth...', completed: false},
-        // {title: 'bbb', description: 'Do more!', completed: false},
-        // {title: 'CCC', description: 'Do not do anything', completed: false}
+        {title: 'AAA', description: 'Do smdsfsdfdsfth...', isCompleted: false},
+        // {title: 'bbb', description: 'Do more!', isCompleted: false},
+        // {title: 'CCC', description: 'Do not do anything', isCompleted: false}
     ]
 }
 
@@ -18,7 +18,7 @@ const cardsReducer = (state = initialState, action) => {
             let newCard = {
                 title: 'New Title',
                 description: 'New',
-                completed: false
+                isCompleted: false
             }
 
             state.items.push(newCard);

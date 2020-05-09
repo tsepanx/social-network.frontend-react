@@ -15,8 +15,6 @@ const Cards = (props) => {
     )
 
     const addNewCard = () => {
-        console.log(typeEnum, 'aaa')
-        // debugger
         props.dispatch({type: typeEnum.ADD_CARD})
     }
 
