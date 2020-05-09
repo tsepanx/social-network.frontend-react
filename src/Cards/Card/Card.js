@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-import {typeEnum} from "../../reducers/cards-reducer";
+import {typeEnum} from "../../redux/cards-reducer";
 // import s from './Card.module.css'
 
 const Card = (props) => {

@@ -1,7 +1,7 @@
 import React from "react";
 import s from './Cards.module.css'
 
-import {typeEnum} from "../reducers/cards-reducer";
+import {typeEnum} from "../redux/cards-reducer";
 import Card from "./Card/Card";
 
 const Cards = (props) => {

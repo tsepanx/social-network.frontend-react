@@ -6,7 +6,7 @@ import {BrowserRouter} from "react-router-dom";
 import './index.css';
 
 import App from "./App";
-import store from "./reducers/state";
+import store from "./redux/store";
 
 let rerenderTree = (state) => {
     ReactDOM.render(
@@ -21,7 +21,10 @@ let rerenderTree = (state) => {
 }
 // debugger
 rerenderTree(store.getState())
-store.subscribe(rerenderTree)
+
+// store.subscribe(rerenderTree)
+store.subscribe(() => rerenderTree(store.getState()))
+
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
