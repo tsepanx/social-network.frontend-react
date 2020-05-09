@@ -1,12 +1,12 @@
 import React, {useState} from "react";
 
-// import s from './CardButton.module.css'
+import s from './CardButton.module.css'
 
 const CardButton = (props) => {
     let btn = React.createRef();
     let checkbox = React.createRef();
 
-    const getBtnClass = () => 'btn ' + (props.state.isActive ? 'btn-success' : '')
+    const getBtnClass = () => s.btn + ' btn ' + (props.state.isActive ? 'btn-success' : '')
 
     const [isChecked, setCheckbox] = useState(props.state.isActive)
     const [btnClass, setBtnClass] = useState(getBtnClass())
@@ -27,7 +27,7 @@ const CardButton = (props) => {
         <div ref={btn}
              onClick={handleClick}
              className={btnClass}>
-            Single toggle
+            <div className={s.btnText}>Single toggle</div>
             <input ref={checkbox} className="toggle-checkbox" type="checkbox" readOnly={true} checked={isChecked}/>
         </div>
     )

@@ -20,8 +20,7 @@ const Cards = (props) => {
 
     return (
         <div className={s.posts}>
-            <div onClick={addNewCard} className='btn btn-success'>Add New</div>
-            Posts
+            <div onClick={addNewCard} className={'btn btn-success ' + s.btnNew}>Add New</div>
             { cards }
         </div>
     )

@@ -5,7 +5,7 @@ export let cardAction = {
 
 let initialState = {
     items: [
-        {title: 'AAA', description: 'Do smdsfsdfdsfth...', isCompleted: false},
+        {title: 'AAA', description: 'Do smdsfsdfdsfth...', isCompleted: true},
         {title: 'bbb', description: 'Do more!', isCompleted: true},
         {title: 'CCC', description: 'Do not do anything', isCompleted: false}
     ]
