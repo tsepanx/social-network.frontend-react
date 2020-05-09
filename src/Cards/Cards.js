@@ -1,7 +1,7 @@
 import React from "react";
 import s from './Cards.module.css'
 
-import {typeEnum} from "../redux/cards-reducer";
+import {cardAction} from "../redux/cards-reducer";
 import Card from "./Card/Card";
 
 const Cards = (props) => {
@@ -15,7 +15,7 @@ const Cards = (props) => {
     )
 
     const addNewCard = () => {
-        props.dispatch({type: typeEnum.ADD_CARD})
+        props.dispatch({type: cardAction.ADD_CARD})
     }
 
     return (

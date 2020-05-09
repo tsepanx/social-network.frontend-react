@@ -1,39 +1,23 @@
 import React, {useEffect, useState} from "react";
 
-import {typeEnum} from "../../redux/cards-reducer";
+import {cardAction} from "../../redux/cards-reducer";
+import CardButton from "./CardButton/CardButton";
 // import s from './Card.module.css'
 
 const Card = (props) => {
-    let btn = React.createRef();
-    let checkbox = React.createRef();
 
-    const [isChecked, setCheckbox] = useState(props.state.isCompleted)
-
-    const getBtnClasses = (isActive) => {
-        const btnActiveClass = 'btn-success'
-
-        let classes = "btn toggle-btn "
-        if (isActive) { classes += btnActiveClass}
-
-        return classes
+    const updateSelf = () => {
+        props.dispatch({
+            type: cardAction.UPDATE_CARD,
+            id: props.id,
+            updatedState: props.state
+        })
     }
 
-    const updateBtnStyle = () => {
-        btn.current.classList.value = getBtnClasses(props.state.isCompleted)
-        setCheckbox(props.state.isCompleted)
+    const updateIsCompleted = (isCompleted) => {
+        props.state.isCompleted = isCompleted
+        updateSelf()
     }
-
-    const handleClick = () => {
-        props.state.isCompleted = !props.state.isCompleted
-
-        props.dispatch({type: typeEnum.UPDATE_CARD, id: props.id, updatedState: props.state})
-        // props.updateCard(props.id, props.state)
-        updateBtnStyle()
-    }
-
-    useEffect(() => {
-        console.log('Component did mount!!! ' + isChecked)
-    }, [isChecked])
 
     return (
         <div>
@@ -42,10 +26,11 @@ const Card = (props) => {
                 <div className="card-body">
                     <p className="card-text">{props.state.description}</p>
                     <hr/>
-                    <div ref={btn} onClick={handleClick} className={getBtnClasses(props.state.isCompleted)}>
-                        Single toggle
-                        <input ref={checkbox} className="toggle-checkbox" type="checkbox" readOnly={true} checked={isChecked}/>
-                    </div>
+                    <CardButton
+                        state={{isActive: props.state.isCompleted}}
+                        dispatch={props.dispatch}
+                        updateIsCompleted={updateIsCompleted}
+                    />
                 </div>
             </div>
             <p/>

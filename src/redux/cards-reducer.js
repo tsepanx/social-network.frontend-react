@@ -1,6 +1,7 @@
-export let typeEnum = {
+export let cardAction = {
     ADD_CARD: 'ADD_CARD',
-    UPDATE_CARD: 'UPDATE_CARD'
+    UPDATE_CARD: 'UPDATE_CARD',
+    // COMPLETED: 'COMPLETED'
 }
 
 let initialState = {
@@ -14,7 +15,7 @@ let initialState = {
 
 const cardsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case typeEnum.ADD_CARD:
+        case cardAction.ADD_CARD:
             let newCard = {
                 title: 'New Title',
                 description: 'New',
@@ -24,13 +25,15 @@ const cardsReducer = (state = initialState, action) => {
             state.items.push(newCard);
 
             return state;
-        case typeEnum.UPDATE_CARD:
+        case cardAction.UPDATE_CARD:
             let cardId = action.id
             let newCardState = action.updatedState
 
             state.items[cardId] = newCardState
 
             return state;
+        // case cardAction.COMPLETED:
+
         default:
             return state;
     }
