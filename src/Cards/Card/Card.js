@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
+import s from './Card.module.css'
 
 import {cardAction} from "../../redux/cards-reducer";
 import CardButton from "./CardButton/CardButton";
-// import s from './Card.module.css'
 
 const Card = (props) => {
 
@@ -23,12 +23,12 @@ const Card = (props) => {
         <div>
             <div className="card text-left" style={{width: '20rem'}}>
                 <div className="card-header card-title">{props.state.title}</div>
-                <div className="card-body">
+
+                <div className={"card-body " + s.cardBody}>
                     <p className="card-text">{props.state.description}</p>
                     <hr/>
                     <CardButton
                         state={{isActive: props.state.isCompleted}}
-                        dispatch={props.dispatch}
                         updateIsCompleted={updateIsCompleted}
                     />
                 </div>

@@ -1,14 +1,13 @@
 export let cardAction = {
     ADD_CARD: 'ADD_CARD',
     UPDATE_CARD: 'UPDATE_CARD',
-    // COMPLETED: 'COMPLETED'
 }
 
 let initialState = {
     items: [
         {title: 'AAA', description: 'Do smdsfsdfdsfth...', isCompleted: false},
-        // {title: 'bbb', description: 'Do more!', isCompleted: false},
-        // {title: 'CCC', description: 'Do not do anything', isCompleted: false}
+        {title: 'bbb', description: 'Do more!', isCompleted: true},
+        {title: 'CCC', description: 'Do not do anything', isCompleted: false}
     ]
 }
 

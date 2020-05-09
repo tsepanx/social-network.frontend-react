@@ -1,26 +1,32 @@
 import React, {useState} from "react";
 
+// import s from './CardButton.module.css'
+
 const CardButton = (props) => {
     let btn = React.createRef();
     let checkbox = React.createRef();
 
-    const [isChecked, setCheckbox] = useState(props.state.isActive)
+    const getBtnClass = () => 'btn ' + (props.state.isActive ? 'btn-success' : '')
 
-    const getBtnClasses = () => props.state.isActive ? 'btn toggle-btn btn-success' : 'btn toggle-btn'
+    const [isChecked, setCheckbox] = useState(props.state.isActive)
+    const [btnClass, setBtnClass] = useState(getBtnClass())
 
     const updateBtn = () => {
-        btn.current.classList.value = getBtnClasses(props.state.isActive)
+        setBtnClass(getBtnClass)
         setCheckbox(props.state.isActive)
     }
 
     const handleClick = () => {
         props.state.isActive = !props.state.isActive
+
         props.updateIsCompleted(props.state.isActive)
         updateBtn()
     }
 
     return (
-        <div ref={btn} onClick={handleClick} className={getBtnClasses()}>
+        <div ref={btn}
+             onClick={handleClick}
+             className={btnClass}>
             Single toggle
             <input ref={checkbox} className="toggle-checkbox" type="checkbox" readOnly={true} checked={isChecked}/>
         </div>
