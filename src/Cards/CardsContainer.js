@@ -1,10 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
 import Cards from "./Cards";
+import {addCardCreator, updateCardCreator} from "../redux/cards-reducer";
 
 
 let mapStateToProps = (state) => {
-    // debugger
     return {
         items: state.cards.items,
     }
@@ -12,7 +12,12 @@ let mapStateToProps = (state) => {
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        dispatch: dispatch
+        addCard: () => {
+            dispatch(addCardCreator());
+        },
+        updateCard: (id, updatedState) => {
+            dispatch(updateCardCreator(id, updatedState))
+        }
     }
 }
 

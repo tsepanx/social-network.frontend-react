@@ -1,11 +1,13 @@
-export let cardAction = {
+let cardAction = {
     ADD_CARD: 'ADD_CARD',
     UPDATE_CARD: 'UPDATE_CARD',
 }
 
+export const addCardCreator = () => ({type: cardAction.ADD_CARD})
+export const updateCardCreator = (id, updatedState) => ({ type: cardAction.UPDATE_CARD, id, updatedState })
+
 let initialState = {
     items: [
-        {title: 'AAA', description: 'Do smdsfsdfdsfth...', isCompleted: true},
         {title: 'bbb', description: 'Do more!', isCompleted: true},
         {title: 'CCC', description: 'Do not do anything', isCompleted: false}
     ]
@@ -21,18 +23,15 @@ const cardsReducer = (state = initialState, action) => {
                 isCompleted: false
             }
 
-            state.items.push(newCard);
-
-            return state;
+            return {
+                ...state,
+                items: [...state.items, newCard]
+            }
         case cardAction.UPDATE_CARD:
-            let cardId = action.id
-            let newCardState = action.updatedState
+            let copy = { ...state, items: [...state.items,] }
+            copy.items[action.id] = action.updatedState
 
-            state.items[cardId] = newCardState
-
-            return state;
-        // case cardAction.COMPLETED:
-
+            return copy
         default:
             return state;
     }

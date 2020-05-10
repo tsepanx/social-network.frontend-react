@@ -8,27 +8,14 @@ const CardButton = (props) => {
 
     const getBtnClass = () => `${s.btn} btn ${props.state.isActive ? 'btn-success' : ''}`
 
-    const [isChecked, setCheckbox] = useState(props.state.isActive)
-    const [btnClass, setBtnClass] = useState(getBtnClass())
-
-    const updateBtn = () => {
-        setBtnClass(getBtnClass)
-        setCheckbox(props.state.isActive)
-    }
-
-    const handleClick = () => {
-        props.state.isActive = !props.state.isActive
-
-        props.updateIsCompleted(props.state.isActive)
-        updateBtn()
-    }
+    const handleClick = () => { props.updateIsCompleted(!props.state.isActive) }
 
     return (
         <div ref={btn}
              onClick={handleClick}
-             className={btnClass}>
+             className={getBtnClass()}>
             <div className={s.btnText}>Single toggle</div>
-            <input ref={checkbox} className="toggle-checkbox" type="checkbox" readOnly={true} checked={isChecked}/>
+            <input ref={checkbox} className="toggle-checkbox" type="checkbox" readOnly={true} checked={props.state.isActive}/>
         </div>
     )
 }

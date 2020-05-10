@@ -1,22 +1,13 @@
 import React from "react";
 import s from './Card.module.css'
 
-import {cardAction} from "../../redux/cards-reducer";
 import CardButton from "./CardButton/CardButton";
 
 const Card = (props) => {
 
-    const updateSelf = () => {
-        props.dispatch({
-            type: cardAction.UPDATE_CARD,
-            id: props.id,
-            updatedState: props.state
-        })
-    }
-
     const updateIsCompleted = (isCompleted) => {
         props.state.isCompleted = isCompleted
-        updateSelf()
+        props.updateCard(props.id, props.state)
     }
 
     return (
