@@ -14,10 +14,10 @@ const Card = (props) => {
 
     return (
         <div>
-            <div className={"card text-left text-white " + s.cardBody} style={{width: '20rem'}}>
-                <div className="card-header text-white card-title">{props.state.title}</div>
+            <div className="card text-left" style={{width: '20rem'}}>
+                <div className="card-header card-title">{props.state.title}</div>
 
-                <div className={"card-body " + s.cardBody}>
+                <div className="card-body">
                     <p className="card-text">{props.state.description}</p>
                     <hr/>
 
