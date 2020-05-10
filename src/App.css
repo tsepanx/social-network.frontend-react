@@ -1,5 +1,5 @@
 #root {
-  background-color: #181A1B;
+  /*background-color: #181A1B;*/
   /*color: lightgrey;*/
 }
 
@@ -39,7 +39,7 @@ input[type="text"] {
 /*  background-color: #181A1B;*/
 /*}*/
 
-/*.card {*/
-/*  color: lightgrey;*/
-/*  background-color: #181A1B;*/
-/*}*/
+.card {
+  /*display: grid;*/
+  width: 20rem;
+}

@@ -2,9 +2,8 @@ import React from "react";
 import CountryInfo from "./CountryInfo";
 
 const InfoItems = (props) => {
-    console.log(props)
 
-    let items = props.list.map(value => <CountryInfo name={value.country}/>)
+    let items = props.list.map(value => <CountryInfo args={value}/>)
 
     return (
         <div>

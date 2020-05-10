@@ -14,7 +14,7 @@ const Card = (props) => {
 
     return (
         <div>
-            <div className="card text-left" style={{width: '20rem'}}>
+            <div className="card text-left">
                 <div className="card-header card-title">{props.state.title}</div>
 
                 <div className="card-body">
