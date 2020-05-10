@@ -6,7 +6,7 @@ const CardButton = (props) => {
     let btn = React.createRef();
     let checkbox = React.createRef();
 
-    const getBtnClass = () => s.btn + ' btn ' + (props.state.isActive ? 'btn-success' : '')
+    const getBtnClass = () => `${s.btn} btn ${props.state.isActive ? 'btn-success' : ''}`
 
     const [isChecked, setCheckbox] = useState(props.state.isActive)
     const [btnClass, setBtnClass] = useState(getBtnClass())

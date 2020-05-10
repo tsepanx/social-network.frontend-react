@@ -9,9 +9,10 @@ import Header from "./Header/Header";
 import Sidebar from "./Sidebar/Sidebar";
 import Cards from './Cards/Cards'
 import Messages from "./Messages/Messages";
+import CardsContainer from "./Cards/CardsContainer";
 
 
-const App = (props) => {
+const App = () => {
     return (
         <div className="App">
             <Header/>
@@ -19,12 +20,15 @@ const App = (props) => {
 
             <div className="App-content">
                 <Route path='/posts' render={() => {
-                    return <Cards
-                        state={props.state.cards}
-                        dispatch={props.dispatch}/>
+                    return <CardsContainer
+                        // state={props.state.cards}
+                        // dispatch={props.dispatch}
+                    />
                 }}/>
                 <Route path='/messages' render={() => {
-                    return <Messages state={props.state}/>
+                    return <Messages
+                        // state={props.state}
+                    />
                 }}/>
             </div>
         </div>

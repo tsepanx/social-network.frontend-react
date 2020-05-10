@@ -5,7 +5,7 @@ import {cardAction} from "../redux/cards-reducer";
 import Card from "./Card/Card";
 
 const Cards = (props) => {
-    const cards = props.state.items.map((cardItem, index) =>
+    const cards = props.items.map((cardItem, index) =>
         <Card
             key={index}
             id={index}

@@ -7,14 +7,17 @@ import './index.css';
 
 import App from "./App";
 import store from "./redux/store";
+import {Provider} from "react-redux";
 
 let rerenderTree = (state) => {
     ReactDOM.render(
         <BrowserRouter>
-            <React.StrictMode><App
-                state={state}
-                dispatch={store.dispatch.bind(store)}
-            /></React.StrictMode>
+            <Provider store={store}>
+                <React.StrictMode><App
+                    // state={state}
+                    // dispatch={store.dispatch.bind(store)}
+                /></React.StrictMode>
+            </Provider>
         </BrowserRouter>,
         document.getElementById('root')
     );

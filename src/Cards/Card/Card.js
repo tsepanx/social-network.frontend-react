@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import s from './Card.module.css'
 
 import {cardAction} from "../../redux/cards-reducer";
