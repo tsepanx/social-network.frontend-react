@@ -1,7 +1,6 @@
 import React from "react";
 import s from './Cards.module.css'
 
-import {cardAction} from "../redux/cards-reducer";
 import Card from "./Card/Card";
 
 const Cards = (props) => {

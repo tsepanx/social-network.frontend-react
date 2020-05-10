@@ -1,14 +1,16 @@
 import React from "react";
 import s from './Card.module.css'
 
-import CardButton from "./CardButton/CardButton";
-
 const Card = (props) => {
+    let completedButton = React.createRef();
+    let completedCheckbox = React.createRef();
 
     const updateIsCompleted = (isCompleted) => {
         props.state.isCompleted = isCompleted
         props.updateCard(props.id, props.state)
     }
+
+    const handleClick = () => { updateIsCompleted(!props.state.isCompleted) }
 
     return (
         <div>
@@ -18,10 +20,17 @@ const Card = (props) => {
                 <div className={"card-body " + s.cardBody}>
                     <p className="card-text">{props.state.description}</p>
                     <hr/>
-                    <CardButton
-                        state={{isActive: props.state.isCompleted}}
-                        updateIsCompleted={updateIsCompleted}
-                    />
+
+                    <div ref={completedButton}
+                         onClick={handleClick}
+                         className={`${s.btn} btn ${props.state.isCompleted ? 'btn-success' : ''}`}>
+                        <div className={s.btnText}>Single toggle</div>
+                        <input ref={completedCheckbox}
+                               className="toggle-checkbox"
+                               type="checkbox"
+                               readOnly={true}
+                               checked={props.state.isCompleted}/>
+                    </div>
                 </div>
             </div>
             <p/>

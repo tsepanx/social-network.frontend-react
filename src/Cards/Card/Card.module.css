@@ -2,3 +2,11 @@
     color: lightgrey;
     background-color: #181A1B;
 }
+
+.btn {
+    display: inline-flex;
+}
+
+.btnText {
+    color: #ffffff;
+}
