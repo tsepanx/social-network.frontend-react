@@ -1,15 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import * as axios from "axios";
 import {connect} from "react-redux";
 
-import {addInfoItemCreator, setInfoItemsCreator} from "../redux/info-reducer";
+import {addInfoItemCreator, setInfoItemsCreator, updateNewItemTextCreator} from "../redux/info-reducer";
 import InfoItems from "./InfoItems";
 
 const InfoContainer = (props) => {
 
-    let countries = ['rus', 'us']
+    const [countries, setCountries] = useState(['rus', 'us', 'uk', 'sweden', 'china', 'japan', 'germany', 'spain', 'france'])
 
     const reloadBtn = React.createRef()
+    const newItemText = React.createRef()
 
     const loadCountryPromise = (name) => {
         let url = `https://corona.lmao.ninja/v2/countries/${name}`
@@ -32,10 +33,23 @@ const InfoContainer = (props) => {
         loadCountries(countries, onLoadedCountry)
     }
 
+    const onNewItemTextUpdated = () => {
+        let newText = newItemText.current.value
+        props.updateNewItemText(newText)
+    }
+
+    const onAddNewItem = () => {
+        // debugger
+        setCountries(prevState => [...prevState, props.newItemText])
+        // debugger
+    }
+
     return (
         <div>
             Some Info
-            <textarea></textarea>
+            <div>{ countries.map(value => `${value} `)}</div>
+            <textarea ref={newItemText} onChange={onNewItemTextUpdated} value={props.newItemText}/>
+            <div onClick={onAddNewItem} className='btn btn-dark'>Add new item</div>
             <div className='btn btn-success' onClick={onReload} ref={reloadBtn}>Reload</div>
             <div><InfoItems list={props.items}/></div>
         </div>
@@ -43,9 +57,8 @@ const InfoContainer = (props) => {
 }
 
 let mapStateToProps = (state) => {
-    return {
-        items: state.info.items,
-    }
+    // console.log({ ...state.info })
+    return { ...state.info }
 }
 
 
@@ -56,6 +69,9 @@ let mapDispatchToProps = (dispatch) => {
         },
         addItem: (item) => {
             dispatch(addInfoItemCreator(item))
+        },
+        updateNewItemText: (text) => {
+            dispatch(updateNewItemTextCreator(text))
         }
     }
 }
