@@ -13,10 +13,10 @@ export const contentComponents = [
 ]
 
 const Sidebar = () => {
-
-    let sidebarItems = contentComponents.map(value =>
+    let sidebarItems = contentComponents.map((value, index) =>
         <div className={s.item}>
             <NavLink
+                key={index}
                 to={value.path}
                 activeClassName={s.activeLink}>
                 {value.title}

@@ -12,7 +12,12 @@ import {contentComponents} from "./Sidebar/Sidebar";
 
 const App = () => {
 
-    let routeItems = contentComponents.map(value => <Route path={value.path} render={() => value.component}/>)
+    let routeItems = contentComponents.map((value, index) =>
+        <Route
+            key={index}
+            path={value.path}
+            render={() => value.component}
+        />)
 
     return (
         <div className="App">

@@ -9,21 +9,26 @@ import InfoItems from "./InfoItems";
 
 const InfoContainer = (props) => {
 
-    useEffect(() => {
-        axios.get('https://corona.lmao.ninja/v2/countries/Russia').then(
+    const reloadBtn = React.createRef()
+
+    const loadCountryInfo = () => {
+        axios.get('https://corona.lmao.ninja/v2/countries/rus').then(
             response => {
                 props.setInfoItems([response.data])
-                console.log(response.data)
+                console.log(response)
             }
         )
-    }, [])
+    }
+    const onReloadClick = () => {
+        props.setInfoItems([])
+        loadCountryInfo()
+    }
 
     return (
         <div>
             Some Info
-            <div>
-                <InfoItems list={props.items}/>
-            </div>
+            <div className='btn btn-success' onClick={onReloadClick} ref={reloadBtn}>Reload</div>
+            <div><InfoItems list={props.items}/></div>
         </div>
     )
 }

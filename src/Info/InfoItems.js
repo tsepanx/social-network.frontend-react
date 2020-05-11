@@ -3,7 +3,11 @@ import CountryInfo from "./CountryInfo";
 
 const InfoItems = (props) => {
 
-    let items = props.list.map(value => <CountryInfo args={value}/>)
+    let items = props.list.map((value, index) =>
+        <CountryInfo
+            key={index}
+            args={value}
+        />)
 
     return (
         <div>
