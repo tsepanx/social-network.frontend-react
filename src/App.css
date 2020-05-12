@@ -1,8 +1,3 @@
-#root {
-  /*background-color: #181A1B;*/
-  /*color: lightgrey;*/
-}
-
 .hidden {
   display: none;
 }
@@ -17,10 +12,10 @@
   display: grid;
   grid-template-areas: "h h" "n c";
 
-  grid-template-rows: 60px 1fr;
-  grid-template-columns: 3fr 9fr;
+  grid-template-rows: 50px 1fr;
+  grid-template-columns: 1fr 5fr;
 
-  grid-gap: 10px;
+  grid-gap: 8px;
 }
 
 .App-content {
@@ -37,13 +32,6 @@ input[type="text"] {
   margin-left: 10px;
 }
 
-
-/*.card-body {*/
-/*  color: lightgrey;*/
-/*  background-color: #181A1B;*/
-/*}*/
-
 .card {
-  /*display: grid;*/
   width: 20rem;
 }

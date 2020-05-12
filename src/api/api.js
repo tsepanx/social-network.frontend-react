@@ -4,7 +4,6 @@ const base_url = 'https://corona.lmao.ninja/v2/'
 
 const instance = axios.create({
     baseURL: base_url
-
 })
 
 const receiveCountryData = (name) => {
