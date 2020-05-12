@@ -4,7 +4,7 @@ const CountryInfo = (props) => {
     return (
         <div className='card'>
             <div className='card-header'>{props.args.country}, {props.args.continent}</div>
-            <div className='card-body'>
+            <div className='card-body hidden'>
                 <div>active: {props.args.active}</div>
                 <div>cases: {props.args.cases}</div>
                 <div>casesPerOneMillion: {props.args.casesPerOneMillion}</div>
@@ -21,6 +21,7 @@ const CountryInfo = (props) => {
                 <div>updated: {props.args.updated}</div>
             </div>
         </div>
+
     )
 }
 

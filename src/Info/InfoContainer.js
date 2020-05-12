@@ -4,33 +4,24 @@ import {connect} from "react-redux";
 
 import {addInfoItemCreator, setInfoItemsCreator, updateNewItemTextCreator} from "../redux/info-reducer";
 import InfoItems from "./InfoItems";
+import {receiveCountries} from "../api";
 
 const InfoContainer = (props) => {
 
-    const [countries, setCountries] = useState(['rus', 'us', 'uk', 'sweden', 'china', 'japan', 'germany', 'spain', 'france'])
+    const [countries, setCountries] = useState(['rus', 'china', 'germany', 'spain', 'france'])
 
     const reloadBtn = React.createRef()
     const newItemText = React.createRef()
 
-    const loadCountryPromise = (name) => {
-        let url = `https://corona.lmao.ninja/v2/countries/${name}`
-        return axios.get(url)
-    }
-
-    const loadCountries = (names, callback) => {
-        for (const name of names) {
-            loadCountryPromise(name).then(callback)
-        }
-    }
 
     const onReload = () => {
-        let onLoadedCountry = response => {
-            props.addItem(response.data)
-            console.log(response)
+        let onReceivedCountry = data => {
+            props.addItem(data)
+            console.log(data)
         }
 
         props.setItems([])
-        loadCountries(countries, onLoadedCountry)
+        receiveCountries(countries, onReceivedCountry)
     }
 
     const onNewItemTextUpdated = () => {
@@ -39,9 +30,7 @@ const InfoContainer = (props) => {
     }
 
     const onAddNewItem = () => {
-        // debugger
         setCountries(prevState => [...prevState, props.newItemText])
-        // debugger
     }
 
     return (
@@ -56,10 +45,7 @@ const InfoContainer = (props) => {
     )
 }
 
-let mapStateToProps = (state) => {
-    // console.log({ ...state.info })
-    return { ...state.info }
-}
+let mapStateToProps = (state) => ({ ...state.info })
 
 
 let mapDispatchToProps = (dispatch) => {

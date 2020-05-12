@@ -3,6 +3,10 @@
   /*color: lightgrey;*/
 }
 
+.hidden {
+  display: none;
+}
+
 .toggle-checkbox {
   margin-left: 10px;
 }
