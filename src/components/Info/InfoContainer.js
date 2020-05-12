@@ -2,9 +2,9 @@ import React, {useState} from "react";
 import * as axios from "axios";
 import {connect} from "react-redux";
 
-import {addInfoItemCreator, setInfoItemsCreator, updateNewItemTextCreator} from "../redux/info-reducer";
+import {addInfoItemCreator, setInfoItemsCreator, updateNewItemTextCreator} from "../../redux/info-reducer";
 import InfoItems from "./InfoItems";
-import {receiveCountries} from "../api";
+import {receiveCountries} from "../../api/api";
 
 const InfoContainer = (props) => {
 

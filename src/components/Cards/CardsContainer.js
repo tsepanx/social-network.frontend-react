@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import Cards from "./Cards";
-import {addCardCreator, updateCardCreator} from "../redux/cards-reducer";
+import {addCardCreator, updateCardCreator} from "../../redux/cards-reducer";
 
 
 let mapStateToProps = (state) => {

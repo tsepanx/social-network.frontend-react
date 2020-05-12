@@ -5,10 +5,10 @@ import './App.css';
 
 import "bootstrap/dist/css/bootstrap.css";
 
-import Header from "./Header/Header";
-import Sidebar from "./Sidebar/Sidebar";
+import Header from "./components/Header/Header";
+import Sidebar from "./components/Sidebar/Sidebar";
 
-import {contentComponents} from "./Sidebar/Sidebar";
+import {contentComponents} from "./components/Sidebar/Sidebar";
 
 const App = () => {
 
