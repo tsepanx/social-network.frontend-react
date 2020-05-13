@@ -5,12 +5,10 @@ const Card = (props) => {
     let completedButton = React.createRef();
     let completedCheckbox = React.createRef();
 
-    const updateIsCompleted = (isCompleted) => {
-        props.state.isCompleted = isCompleted
+    const handleClick = () => {
+        props.state.isCompleted = !props.state.isCompleted
         props.updateCard(props.id, props.state)
     }
-
-    const handleClick = () => { updateIsCompleted(!props.state.isCompleted) }
 
     return (
         <div>

@@ -8,9 +8,10 @@ let itemAction = {
 
 export const setInfoItemsCreator = (items) => ({type: itemAction.SET_ITEMS, items})
 export const addInfoItemCreator = (itemData) => ({type: itemAction.ADD_ITEM, item: itemData})
-export const updateNewItemTextCreator = (text) => ({type: itemAction.UPDATE_NEW_ITEM_TEXT, text: text})
+export const setNewItemTextCreator = (text) => ({type: itemAction.UPDATE_NEW_ITEM_TEXT, text: text})
 
 export const reload = (countries) => (dispatch) => {
+    debugger
         dispatch(setInfoItemsCreator([]))
 
         for (const country of countries) {
@@ -21,8 +22,8 @@ export const reload = (countries) => (dispatch) => {
         }
 }
 
-export const updateNewItemText = (text) => (dispatch) => {
-    dispatch(updateNewItemTextCreator(text))
+export const setNewItemText = (text) => (dispatch) => {
+    dispatch(setNewItemTextCreator(text))
 }
 
 
@@ -43,7 +44,6 @@ const infoReducer = (state = initialState, action) => {
             return {
                 ...state,
                 items: [...state.items, action.item],
-                newItemText: ''
             }
         case itemAction.UPDATE_NEW_ITEM_TEXT:
             return {

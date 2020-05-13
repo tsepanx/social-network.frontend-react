@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 
 import {
     reload,
-    updateNewItemText
+    setNewItemText
 } from "../../redux/info-reducer";
 import InfoItems from "./InfoItems";
 
@@ -11,27 +11,38 @@ const InfoContainer = (props) => {
 
     const [countries, setCountries] = useState(['rus', 'china', 'germany', 'spain', 'france'])
 
-    const reloadBtn = React.createRef()
     const newItemText = React.createRef()
 
-    const onNewItemTextUpdated = () => {
+    const onNewItemTextChanged = () => {
         let newText = newItemText.current.value
-        props.updateNewItemText(newText)
+        props.setNewItemText(newText)
     }
 
     const onAddNewItem = () => {
         if (newItemText.current.value.trim()) {
             setCountries(prevState => [...prevState, props.newItemText])
+            props.setNewItemText('')
         }
     }
+
+    const onReload = () => {
+        props.reload(countries)
+    }
+
+    const countriesList = () => countries.map((value, index) =>
+        ( <div>{index}: {value}</div> )
+    )
 
     return (
         <div>
             Some Info
-            <div>{ countries.map((value, index) => <div>{index}: {value ? value : 'empty string'}</div>)}</div>
-            <textarea ref={newItemText} onChange={onNewItemTextUpdated} value={props.newItemText}/>
-            <div onClick={onAddNewItem} className='btn btn-dark'>Add new item</div>
-            <div className='btn btn-success' onClick={() => {props.reload(countries)}} ref={reloadBtn}>Reload</div>
+            <div>{ countriesList() }</div>
+            <textarea ref={newItemText} onChange={onNewItemTextChanged} value={props.newItemText}/>
+            <div>
+
+                <button onClick={onAddNewItem}>Add new item</button>
+                <button onClick={onReload}>Reload </button>
+            </div>
             <div><InfoItems list={props.items} /></div>
         </div>
     )
@@ -39,4 +50,4 @@ const InfoContainer = (props) => {
 
 let mapStateToProps = (state) => ({ ...state.info })
 
-export default connect(mapStateToProps, {reload, updateNewItemText})(InfoContainer)
+export default connect(mapStateToProps, {reload, setNewItemText})(InfoContainer)
