@@ -2,35 +2,26 @@ import Api from "../api/api";
 
 let itemAction = {
     SET_ITEMS: 'SET_INFO_ITEMS',
-    ADD_ITEM: 'ADD_ITEM',
-    UPDATE_NEW_ITEM_TEXT: 'UPDATE_NEW_ITEM_TEXT'
+    ADD_ITEM: 'ADD_ITEM'
 }
 
 export const setInfoItemsCreator = (items) => ({type: itemAction.SET_ITEMS, items})
 export const addInfoItemCreator = (itemData) => ({type: itemAction.ADD_ITEM, item: itemData})
-export const setNewItemTextCreator = (text) => ({type: itemAction.UPDATE_NEW_ITEM_TEXT, text: text})
 
 export const reload = (countries) => (dispatch) => {
-    debugger
-        dispatch(setInfoItemsCreator([]))
+    dispatch(setInfoItemsCreator([]))
 
-        for (const country of countries) {
-            Api.receiveCountryData(country).then(data => {
-                dispatch(addInfoItemCreator(data))
-                console.log(data)
-            })
-        }
+    for (const country of countries) {
+        Api.receiveCountryData(country).then(data => {
+            dispatch(addInfoItemCreator(data))
+            console.log(data)
+        })
+    }
 }
-
-export const setNewItemText = (text) => (dispatch) => {
-    dispatch(setNewItemTextCreator(text))
-}
-
 
 
 let initialState = {
-    items: [],
-    newItemText: ''
+    items: []
 }
 
 const infoReducer = (state = initialState, action) => {
@@ -44,11 +35,6 @@ const infoReducer = (state = initialState, action) => {
             return {
                 ...state,
                 items: [...state.items, action.item],
-            }
-        case itemAction.UPDATE_NEW_ITEM_TEXT:
-            return {
-                ...state,
-                newItemText: action.text
             }
         default:
             return state;

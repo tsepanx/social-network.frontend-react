@@ -3,25 +3,34 @@ import {connect} from "react-redux";
 
 import {
     reload,
-    setNewItemText
 } from "../../redux/info-reducer";
 import InfoItems from "./InfoItems";
+import {Field, reduxForm} from "redux-form";
+
+const AddNewItemForm = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field component='textarea' name='input'/>
+                <button>Add new item</button>
+            </div>
+        </form>
+    )
+}
+
+const NewItemReduxForm = reduxForm({form: 'new-item'})(AddNewItemForm)
 
 const InfoContainer = (props) => {
 
     const [countries, setCountries] = useState(['rus', 'china', 'germany', 'spain', 'france'])
 
-    const newItemText = React.createRef()
+    const onSubmitNewItem = (formData) => {
+        let newName = formData.input
 
-    const onNewItemTextChanged = () => {
-        let newText = newItemText.current.value
-        props.setNewItemText(newText)
-    }
-
-    const onAddNewItem = () => {
-        if (newItemText.current.value.trim()) {
-            setCountries(prevState => [...prevState, props.newItemText])
-            props.setNewItemText('')
+        if (newName) {
+            if (newName.trim()) {
+                setCountries(prevState => [...prevState, newName])
+            }
         }
     }
 
@@ -37,12 +46,8 @@ const InfoContainer = (props) => {
         <div>
             Some Info
             <div>{ countriesList() }</div>
-            <textarea ref={newItemText} onChange={onNewItemTextChanged} value={props.newItemText}/>
-            <div>
-
-                <button onClick={onAddNewItem}>Add new item</button>
-                <button onClick={onReload}>Reload </button>
-            </div>
+            <NewItemReduxForm onSubmit={onSubmitNewItem}/>
+            <button onClick={onReload}>Reload </button>
             <div><InfoItems list={props.items} /></div>
         </div>
     )
@@ -50,4 +55,4 @@ const InfoContainer = (props) => {
 
 let mapStateToProps = (state) => ({ ...state.info })
 
-export default connect(mapStateToProps, {reload, setNewItemText})(InfoContainer)
+export default connect(mapStateToProps, {reload})(InfoContainer)

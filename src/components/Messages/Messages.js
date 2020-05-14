@@ -1,8 +1,12 @@
 import React from "react";
+import Login from "./Login";
 
 const Messages = () => {
     return (
-        <div>Messages</div>
+        <div>
+            Messages
+            <Login/>
+        </div>
     )
 }
 
