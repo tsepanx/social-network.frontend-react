@@ -1,24 +1,35 @@
 import React, {useState} from "react";
+
+import {Field, reduxForm} from "redux-form";
 import {connect} from "react-redux";
 
-import {
-    reload,
-} from "../../redux/info-reducer";
+import {reload} from "../../redux/info-reducer";
 import InfoItems from "./InfoItems";
-import {Field, reduxForm} from "redux-form";
+import {fieldLengthLessThan, fieldNotNull} from "../../utils/validators";
+import {Input} from "../common/FormsControls/FormsControls";
 
-const AddNewItemForm = (props) => {
+const fieldLengthLessThan15 = fieldLengthLessThan(15)
+
+let AddNewItemForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field component='textarea' name='input'/>
+                <Field
+                    component={Input}
+                    name='input'
+                    validate={[
+                        fieldNotNull,
+                        fieldLengthLessThan15
+                    ]}
+                />
+
                 <button>Add new item</button>
             </div>
         </form>
     )
 }
 
-const NewItemReduxForm = reduxForm({form: 'new-item'})(AddNewItemForm)
+AddNewItemForm = reduxForm({form: 'new-item'})(AddNewItemForm)
 
 const InfoContainer = (props) => {
 
@@ -46,7 +57,7 @@ const InfoContainer = (props) => {
         <div>
             Some Info
             <div>{ countriesList() }</div>
-            <NewItemReduxForm onSubmit={onSubmitNewItem}/>
+            <AddNewItemForm onSubmit={onSubmitNewItem}/>
             <button onClick={onReload}>Reload </button>
             <div><InfoItems list={props.items} /></div>
         </div>
