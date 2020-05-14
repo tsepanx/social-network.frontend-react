@@ -1,6 +1,16 @@
 import React from "react";
 
 const CountryInfo = (props) => {
+
+    // debugger
+    if (props.args.error) {
+        return (
+            <div>
+                {props.args.error}
+            </div>
+        )
+    }
+
     return (
         <div className='card'>
             <div className='card-header'>{props.args.country}, {props.args.continent}</div>

@@ -12,10 +12,16 @@ export const reload = (countries) => (dispatch) => {
     dispatch(setInfoItemsCreator([]))
 
     for (const country of countries) {
-        Api.receiveCountryData(country).then(data => {
-            dispatch(addInfoItemCreator(data))
-            console.log(data)
-        })
+        Api.receiveCountryData(country)
+            .then(data => {
+                dispatch(addInfoItemCreator(data))
+                console.log(data)
+            })
+            .catch(error => {
+                console.log(error)
+                let fakeData = {error: 'Error: ' + error.response.status + ' for country: ' + country}
+                dispatch(addInfoItemCreator(fakeData))
+            })
     }
 }
 
