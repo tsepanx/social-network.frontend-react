@@ -8,7 +8,9 @@ import InfoItems from "./InfoItems";
 
 import {defaultFormField, input} from "../common/FormsControls/FormsControls";
 
-const defaultField = defaultFormField(input, 'name', 'Country name')
+const defaultFieldName = 'name'
+const defaultFieldPlaceholder = 'Country name';
+const defaultField = defaultFormField(input, defaultFieldName, defaultFieldPlaceholder)
 
 let AddNewItemForm = (props) => {
     return (
@@ -28,12 +30,10 @@ const InfoContainer = (props) => {
     const [countries, setCountries] = useState(['rus', 'china', 'germany', 'spain', 'france'])
 
     const onSubmitNewItem = (formData) => {
-        let newName = formData.input
+        let newName = formData[defaultFieldName]
 
         if (newName) {
-            if (newName.trim()) {
-                setCountries(prevState => [...prevState, newName])
-            }
+            setCountries(prevState => [...prevState, newName])
         }
     }
 
