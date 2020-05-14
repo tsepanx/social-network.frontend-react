@@ -5,10 +5,10 @@ import {connect} from "react-redux";
 
 import {reload} from "../../redux/info-reducer";
 import InfoItems from "./InfoItems";
-import {fieldLengthLessThan, fieldNotNull} from "../../utils/validators";
-import {input} from "../common/FormsControls/FormsControls";
 
-const fieldLengthLessThan15 = fieldLengthLessThan(15)
+import defaultValidators from "../../utils/validators";
+
+import {input} from "../common/FormsControls/FormsControls";
 
 let AddNewItemForm = (props) => {
     return (
@@ -18,10 +18,7 @@ let AddNewItemForm = (props) => {
                     component={input}
                     placeholder={'Country name'}
                     name='input'
-                    validate={[
-                        fieldNotNull,
-                        fieldLengthLessThan15
-                    ]}
+                    validate={defaultValidators}
                 />
 
                 <button>Add new item</button>
