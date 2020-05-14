@@ -2,7 +2,6 @@ import React from "react";
 
 const CountryInfo = (props) => {
 
-    // debugger
     if (props.args.error) {
         return (
             <div>

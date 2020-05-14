@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import {reload} from "../../redux/info-reducer";
 import InfoItems from "./InfoItems";
 import {fieldLengthLessThan, fieldNotNull} from "../../utils/validators";
-import {Input} from "../common/FormsControls/FormsControls";
+import {input} from "../common/FormsControls/FormsControls";
 
 const fieldLengthLessThan15 = fieldLengthLessThan(15)
 
@@ -15,7 +15,8 @@ let AddNewItemForm = (props) => {
         <form onSubmit={props.handleSubmit}>
             <div>
                 <Field
-                    component={Input}
+                    component={input}
+                    placeholder={'Country name'}
                     name='input'
                     validate={[
                         fieldNotNull,
