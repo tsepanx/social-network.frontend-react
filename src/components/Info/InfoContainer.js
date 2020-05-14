@@ -1,33 +1,27 @@
 import React, {useState} from "react";
 
-import {Field, reduxForm} from "redux-form";
+import {reduxForm} from "redux-form";
 import {connect} from "react-redux";
 
 import {reload} from "../../redux/info-reducer";
 import InfoItems from "./InfoItems";
 
-import defaultValidators from "../../utils/validators";
+import {defaultFormField, input} from "../common/FormsControls/FormsControls";
 
-import {input} from "../common/FormsControls/FormsControls";
+const defaultField = defaultFormField(input, 'name', 'Country name')
 
 let AddNewItemForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field
-                    component={input}
-                    placeholder={'Country name'}
-                    name='input'
-                    validate={defaultValidators}
-                />
-
+                {defaultField}
                 <button>Add new item</button>
             </div>
         </form>
     )
 }
 
-AddNewItemForm = reduxForm({form: 'new-item'})(AddNewItemForm)
+AddNewItemForm = reduxForm({form: 'new-item-form'})(AddNewItemForm)
 
 const InfoContainer = (props) => {
 
