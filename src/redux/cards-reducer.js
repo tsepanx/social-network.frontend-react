@@ -9,7 +9,6 @@ export const updateCardCreator = (id, updatedState) => ({ type: cardAction.UPDAT
 let initialState = {
     items: [
         {title: 'bbb', description: 'Do more!', isCompleted: true},
-        {title: 'CCC', description: 'Do not do anything', isCompleted: false}
     ]
 }
 

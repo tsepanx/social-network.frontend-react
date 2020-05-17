@@ -1,4 +1,5 @@
 import Api from "../api/api";
+import {stopSubmit} from "redux-form";
 
 let itemAction = {
     SET_ITEMS: 'SET_INFO_ITEMS',
@@ -18,11 +19,21 @@ export const reload = (countries) => (dispatch) => {
                 console.log(data)
             })
             .catch(error => {
-                console.log(error)
                 let fakeData = {error: 'Error: ' + error.response.status + ' for country: ' + country}
                 dispatch(addInfoItemCreator(fakeData))
             })
     }
+}
+
+export const validateCountry = (name, addNewCountry) => (dispatch) => {
+
+    Api.receiveCountryData(name)
+        .then( data => {
+            addNewCountry(data.country)
+        })
+        .catch(error =>
+            dispatch(stopSubmit('newItem', {name: 'Unknown country'}))
+        )
 }
 
 

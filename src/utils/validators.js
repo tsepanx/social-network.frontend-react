@@ -10,11 +10,15 @@ export const fieldIsNotIncorrect = value => baseValidator(
     'Incorrect field text'
 )
 
-export const fieldLengthLessThan = maxLength => value =>
-    baseValidator(value.length < maxLength, `Field should be shorter than ${maxLength} symbols`)
+export const fieldLengthLessThan = maxLength => value => baseValidator(
+    value.length < maxLength,
+    `Field should be shorter than ${maxLength} symbols`
+)
 
-export const fieldShouldContainOnlyLowercase = value =>
-    baseValidator(value.toLowerCase() === value, 'Field should contain only lowercase')
+export const fieldShouldContainOnlyLowercase = value => baseValidator(
+    value.toLowerCase() === value,
+    'Field should contain only lowercase'
+)
 
 const defaultInputValidators = [
     fieldIsNotIncorrect,

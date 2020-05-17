@@ -1,40 +1,40 @@
 import React, {useState} from "react";
 
-import {reduxForm} from "redux-form";
+import {Field, reduxForm} from "redux-form";
 import {connect} from "react-redux";
 
-import {reload} from "../../redux/info-reducer";
+import {reload, validateCountry} from "../../redux/info-reducer";
 import InfoItems from "./InfoItems";
 
-import {defaultFormField, input} from "../common/FormsControls/FormsControls";
-
-const defaultFieldName = 'name'
-const defaultFieldPlaceholder = 'Country name';
-const defaultField = defaultFormField(input, defaultFieldName, defaultFieldPlaceholder)
+import {input, textarea} from "../common/FormsControls/FormsControls";
+import defaultValidators from "../../utils/validators";
 
 let AddNewItemForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                {defaultField}
+                <Field
+                    component={input}
+                    placeholder={'Country name'}
+                    name={'name'}
+                    validate={defaultValidators}
+                />
                 <button>Add new item</button>
             </div>
         </form>
     )
 }
 
-AddNewItemForm = reduxForm({form: 'new-item-form'})(AddNewItemForm)
+AddNewItemForm = reduxForm({form: 'newItem'})(AddNewItemForm)
 
 const InfoContainer = (props) => {
 
-    const [countries, setCountries] = useState(['rus', 'china', 'germany', 'spain', 'france'])
+    const [countries, setCountries] = useState(['Russia', 'Spain'])
+
+    const addNewCountry = (name) => setCountries(prevState => [...prevState, name])
 
     const onSubmitNewItem = (formData) => {
-        let newName = formData[defaultFieldName]
-
-        if (newName) {
-            setCountries(prevState => [...prevState, newName])
-        }
+        props.validateCountry(formData.name, addNewCountry)
     }
 
     const onReload = () => {
@@ -58,4 +58,4 @@ const InfoContainer = (props) => {
 
 let mapStateToProps = (state) => ({ ...state.info })
 
-export default connect(mapStateToProps, {reload})(InfoContainer)
+export default connect(mapStateToProps, {reload, validateCountry})(InfoContainer)
