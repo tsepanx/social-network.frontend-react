@@ -31,19 +31,19 @@ export const reload = (countries) => async (dispatch) => {
         }
     }
 
-    resData.forEach(value => {dispatch(addInfoItemCreator(value))})
+    resData.forEach(value => {
+        dispatch(addInfoItemCreator(value))
+    })
     dispatch(toggleFetching(false))
 }
 
-export const validateCountry = (name, addNewCountry) => (dispatch) => {
-
-    Api.receiveCountryData(name)
-        .then(data => {
-            addNewCountry(data.country)
-        })
-        .catch(error =>
-            dispatch(stopSubmit('newItem', {name: 'Unknown country'}))
-        )
+export const validateCountry = (name, addNewCountry) => async (dispatch) => {
+    try {
+        let data = await Api.receiveCountryData(name)
+        addNewCountry(data.country)
+    } catch (e) {
+        dispatch(stopSubmit('newItem', {name: 'Unknown country'}))
+    }
 }
 
 
