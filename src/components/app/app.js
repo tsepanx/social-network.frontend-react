@@ -8,6 +8,7 @@ import './app.css';
 import Header from "../header/header";
 
 import {contentComponents} from "../header/header";
+import Preloader from "../common/preloader/Preloader";
 
 const App = () => {
 
@@ -19,10 +20,21 @@ const App = () => {
         />)
 
     return (
-        <div className="App">
-            <Header/>
+        <div className='container'>
+            <div className="App">
+                <div className='row'>
+                    <div className="col-12">
+                        <Header/>
+                        {/*<Preloader/>*/}
+                    </div>
+                </div>
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="App-content">{routeItems}</div>
+                        </div>
+                    </div>
 
-            <div className="App-content">{routeItems}</div>
+            </div>
         </div>
     );
 }

@@ -7,8 +7,8 @@ import Messages from "../messages/messages";
 import InfoContainer from "../info/info-container";
 
 export const contentComponents = [
+    {component: <Messages/>, path: '/login', title: 'Login'},
     {component: <TodoListContainer/>, path: '/todo', title: 'TODO'},
-    {component: <Messages/>, path: '/messages', title: 'Messages'},
     {component: <InfoContainer/>, path: '/info', title: 'Statistics'}
 ]
 

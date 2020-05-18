@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import TodoList from "./todo-list";
-import {addCardCreator, updateCardCreator} from "../../redux/cards-reducer";
+import {addCardCreator, updateCardCreator} from "../../redux/todo-reducer";
 
 
 let mapStateToProps = (state) => {

@@ -1,34 +1,44 @@
 import Api from "../api/api";
 import {stopSubmit} from "redux-form";
 
-let itemAction = {
+let infoAction = {
     SET_ITEMS: 'SET_INFO_ITEMS',
-    ADD_ITEM: 'ADD_ITEM'
+    ADD_ITEM: 'ADD_ITEM',
+    TOGGLE_FETCHING: 'TOGGLE_FETCHING'
 }
 
-export const setInfoItemsCreator = (items) => ({type: itemAction.SET_ITEMS, items})
-export const addInfoItemCreator = (itemData) => ({type: itemAction.ADD_ITEM, item: itemData})
+export const setInfoItemsCreator = (items) => ({type: infoAction.SET_ITEMS, items})
+export const addInfoItemCreator = (itemData) => ({type: infoAction.ADD_ITEM, item: itemData})
+export const toggleFetching = (isFetching) => {
+    let a = {type: infoAction.TOGGLE_FETCHING, fetching: isFetching}
+    console.log(a)
+    return a
+}
 
-export const reload = (countries) => (dispatch) => {
+export const reload = (countries) => async (dispatch) => {
     dispatch(setInfoItemsCreator([]))
+    dispatch(toggleFetching(true))
+
+    let resData = []
 
     for (const country of countries) {
-        Api.receiveCountryData(country)
-            .then(data => {
-                dispatch(addInfoItemCreator(data))
-                console.log(data)
-            })
-            .catch(error => {
-                let fakeData = {error: 'Error: ' + error.response.status + ' for country: ' + country}
-                dispatch(addInfoItemCreator(fakeData))
-            })
+        try {
+            let data = await Api.receiveCountryData(country)
+            resData.push(data)
+        } catch (e) {
+            let fakeData = {error: 'Error: ' + e.response.status + ' for country: ' + country}
+            resData.push(fakeData)
+        }
     }
+
+    resData.forEach(value => {dispatch(addInfoItemCreator(value))})
+    dispatch(toggleFetching(false))
 }
 
 export const validateCountry = (name, addNewCountry) => (dispatch) => {
 
     Api.receiveCountryData(name)
-        .then( data => {
+        .then(data => {
             addNewCountry(data.country)
         })
         .catch(error =>
@@ -38,20 +48,28 @@ export const validateCountry = (name, addNewCountry) => (dispatch) => {
 
 
 let initialState = {
-    items: []
+    items: [],
+    fetching: false
 }
 
 const infoReducer = (state = initialState, action) => {
     switch (action.type) {
-        case itemAction.SET_ITEMS:
+        case infoAction.SET_ITEMS:
             return {
                 ...state,
                 items: action.items
             }
-        case itemAction.ADD_ITEM:
+        case infoAction.ADD_ITEM:
+            console.log(state.fetching)
             return {
                 ...state,
                 items: [...state.items, action.item],
+            }
+        case infoAction.TOGGLE_FETCHING:
+            console.log(1)
+            return {
+                ...state,
+                fetching: action.fetching
             }
         default:
             return state;

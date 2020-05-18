@@ -13,7 +13,7 @@ let initialState = {
 }
 
 
-const cardsReducer = (state = initialState, action) => {
+const todoReducer = (state = initialState, action) => {
     switch (action.type) {
         case cardAction.ADD_CARD:
             let newCard = {
@@ -35,4 +35,4 @@ const cardsReducer = (state = initialState, action) => {
     }
 }
 
-export default cardsReducer
+export default todoReducer

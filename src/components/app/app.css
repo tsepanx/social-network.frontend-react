@@ -3,13 +3,12 @@
 }
 
 .App {
-  width: 90%;
+  /*width: 90%;*/
   margin: auto;
 }
 
 .App-content {
   padding: 1.5rem;
-  margin: 0 auto 0 0;
 }
 
 .header {
@@ -26,4 +25,16 @@ input[type="text"] {
 
 .card {
   width: 20rem;
+}
+
+.form input {
+  /*margin: 10px 0;*/
+}
+
+.form {
+  display: flex;
+  max-width: fit-content;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 8px;
 }
