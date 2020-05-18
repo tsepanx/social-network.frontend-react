@@ -1,0 +1,8 @@
+.item .btn {
+    display: inline-flex;
+    float: right;
+    /*display: flex;*/
+}
+.toggle-checkbox {
+    margin-left: 10px;
+}

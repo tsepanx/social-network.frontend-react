@@ -1,0 +1,16 @@
+.btn-new {
+    margin-bottom: 10px;
+}
+
+.todo-list ul {
+    display: flex;
+    max-width: 400px;
+}
+
+.todo-list .list-group-item {
+    cursor: pointer;
+}
+
+.todo-list .list-group-item:hover {
+    background-color: #444;
+}

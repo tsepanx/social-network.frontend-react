@@ -4,9 +4,9 @@ import {Field, reduxForm} from "redux-form";
 import {connect} from "react-redux";
 
 import {reload, validateCountry} from "../../redux/info-reducer";
-import InfoItems from "./InfoItems";
+import InfoItems from "./info-items";
 
-import {input, textarea} from "../common/FormsControls/FormsControls";
+import {input, textarea} from "../common/form-control/form-control";
 import defaultValidators from "../../utils/validators";
 
 let AddNewItemForm = (props) => {

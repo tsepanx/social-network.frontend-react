@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import Cards from "./Cards";
+import TodoList from "./todo-list";
 import {addCardCreator, updateCardCreator} from "../../redux/cards-reducer";
 
 
@@ -21,6 +21,6 @@ let mapDispatchToProps = (dispatch) => {
     }
 }
 
-const CardsContainer = connect(mapStateToProps, mapDispatchToProps)(Cards);
+const TodoListContainer = connect(mapStateToProps, mapDispatchToProps)(TodoList);
 
-export default CardsContainer;
+export default TodoListContainer;

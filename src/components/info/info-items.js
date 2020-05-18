@@ -1,5 +1,5 @@
 import React from "react";
-import CountryInfo from "./CountryInfo";
+import CountryInfo from "./country-info";
 
 const InfoItems = (props) => {
 

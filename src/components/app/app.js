@@ -1,14 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Route, Router} from "react-router-dom";
 
-import './App.css';
+import "bootswatch/dist/darkly/bootstrap.min.css"
 
-import "bootstrap/dist/css/bootstrap.css";
+import './app.css';
 
-import Header from "./../header/Header";
-import Sidebar from "./../sidebar/Sidebar";
+import Header from "../header/header";
 
-import {contentComponents} from "../sidebar/Sidebar";
+import {contentComponents} from "../header/header";
 
 const App = () => {
 
@@ -22,7 +21,6 @@ const App = () => {
     return (
         <div className="App">
             <Header/>
-            <Sidebar/>
 
             <div className="App-content">{routeItems}</div>
         </div>

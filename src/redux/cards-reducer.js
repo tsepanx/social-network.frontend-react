@@ -8,7 +8,7 @@ export const updateCardCreator = (id, updatedState) => ({ type: cardAction.UPDAT
 
 let initialState = {
     items: [
-        {title: 'bbb', description: 'Do more!', isCompleted: true},
+        {label: 'Do more!', done: true},
     ]
 }
 
@@ -17,9 +17,8 @@ const cardsReducer = (state = initialState, action) => {
     switch (action.type) {
         case cardAction.ADD_CARD:
             let newCard = {
-                title: 'New Title',
-                description: 'New',
-                isCompleted: false
+                label: 'New',
+                done: false
             }
 
             return {
