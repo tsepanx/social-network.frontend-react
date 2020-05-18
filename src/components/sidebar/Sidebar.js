@@ -2,9 +2,9 @@ import React from "react";
 
 import s from './Sidebar.module.css'
 import {NavLink} from "react-router-dom";
-import CardsContainer from "../Cards/CardsContainer";
-import Messages from "../Messages/Messages";
-import InfoContainer from "../Info/InfoContainer";
+import CardsContainer from "../cards/CardsContainer";
+import Messages from "../messages/Messages";
+import InfoContainer from "../info/InfoContainer";
 
 export const contentComponents = [
     {component: <CardsContainer/>, path: '/posts', title: 'Cards'},
