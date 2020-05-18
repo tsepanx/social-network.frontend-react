@@ -1,26 +1,18 @@
 import React, {useState} from "react";
 
-import {Field, reduxForm} from "redux-form";
+import {reduxForm} from "redux-form";
 import {connect} from "react-redux";
 
 import {reload, validateCountry} from "../../redux/info-reducer";
 import InfoItems from "./info-items";
 
-import {input, textarea} from "../common/form-control/form-control";
-import defaultValidators from "../../utils/validators";
+import {commonInputFormField}  from "../common/form-control/form-control";
 
-let AddNewItemForm = (props) => {
+let AddNewItemForm = ({handleSubmit}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field
-                    component={input}
-                    placeholder={'Country name'}
-                    name={'name'}
-                    validate={defaultValidators}
-                />
-                <button>Add new item</button>
-            </div>
+        <form onSubmit={handleSubmit}>
+            { commonInputFormField('name', 'Country name') }
+            <button className='btn btn-info'>Add new item</button>
         </form>
     )
 }
@@ -42,20 +34,21 @@ const InfoContainer = (props) => {
     }
 
     const countriesList = () => countries.map((value, index) =>
-        ( <div>{index}: {value}</div> )
+        (<div>{index}: {value}</div>)
     )
 
     return (
         <div>
-            Some Info
-            <div>{ countriesList() }</div>
+            <div>{countriesList()}</div>
+
             <AddNewItemForm onSubmit={onSubmitNewItem}/>
-            <button onClick={onReload}>Reload </button>
-            <div><InfoItems list={props.items} /></div>
+
+            <button onClick={onReload}>Reload</button>
+            <div><InfoItems list={props.items}/></div>
         </div>
     )
 }
 
-let mapStateToProps = (state) => ({ ...state.info })
+let mapStateToProps = (state) => ({...state.info})
 
 export default connect(mapStateToProps, {reload, validateCountry})(InfoContainer)

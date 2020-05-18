@@ -1,22 +1,52 @@
 import React from "react";
 import styles from "./form-control.module.css";
+import {Field} from "redux-form";
+import defaultValidators from "../../../utils/validators";
 
-const FormControl = (Element) => ({input, meta, child, ...props}) => {
-    const hasError = meta.touched && meta.error;
+const FormControl = (Element) => ({input, meta: {touched, error}, child, ...props}) => {
+    const hasError = touched && error;
 
     return (
         <div className={styles.formControl + " " + (hasError ? styles.error : "")}>
-            <div>{React.createElement(Element, {...input, ...props})}</div>
-            {hasError && <span>{meta.error}</span>}
+            <div>{
+                React.createElement(Element,
+                    {
+                        ...input,
+                        ...props,
+                        className: 'form-control'
+                    })
+            }</div>
 
-            { props.error &&
+            {hasError && <span>{error}</span>}
+
+            {props.error &&
             <div className={styles.formSummaryError}>
                 {props.error}
             </div>}
-
         </div>
     )
 }
 
-export const textarea = FormControl('textarea')
-export const input = FormControl('input')
+const textarea = FormControl('textarea')
+const input = FormControl('input')
+
+const commonFormField = (name,
+                         component = input,
+                         placeholder = '',
+                         validators = defaultValidators) =>
+    (<Field
+        component={component}
+        placeholder={placeholder}
+        name={name}
+        validate={validators}
+    />)
+
+export const commonInputFormField = (name,
+                                     placeholder = '',
+                                     validators = defaultValidators) =>
+    commonFormField(name, input, placeholder, validators)
+
+export const commonTextareaFormField = (name,
+                                     placeholder = '',
+                                     validators = defaultValidators) =>
+    commonFormField(name, textarea, placeholder, validators)
