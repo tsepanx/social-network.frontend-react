@@ -7,6 +7,6 @@
     border: solid red 2px;
 }
 
-.formControl.error div {
+.formControl div.errorMsg {
     color: red;
 }

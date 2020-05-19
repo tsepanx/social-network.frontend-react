@@ -3,13 +3,16 @@ import React from "react";
 import './header.css'
 import {NavLink} from "react-router-dom";
 import TodoListContainer from "../todo-list/todo-list-container";
-import Messages from "../messages/messages";
+
 import InfoContainer from "../info/info-container";
+import Login from "../login/login";
+import Profile from "../profile/profile";
 
 export const contentComponents = [
-    {component: <Messages/>, path: '/login', title: 'Login'},
+    {component: <Profile/>, path: '/profile', title: 'Profile'},
     {component: <TodoListContainer/>, path: '/todo', title: 'TODO'},
-    {component: <InfoContainer/>, path: '/info', title: 'Statistics'}
+    {component: <InfoContainer/>, path: '/info', title: 'Statistics'},
+    {component: <Login/>, path: '/login', title: 'Login'}
 ]
 
 const Header = () => {

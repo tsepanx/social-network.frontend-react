@@ -1,4 +1,4 @@
-import Api from "../api/api";
+import { CountryApi } from "../api/api";
 import {stopSubmit, SubmissionError} from "redux-form";
 
 let infoAction = {
@@ -23,7 +23,7 @@ export const reload = (countries) => async (dispatch) => {
 
     for (const country of countries) {
         try {
-            let data = await Api.receiveCountryData(country)
+            let data = await CountryApi.receiveCountryData(country)
             resData.push(data)
         } catch (e) {
             let fakeData = {error: 'Error: ' + e.response.status + ' for country: ' + country}
@@ -39,10 +39,10 @@ export const reload = (countries) => async (dispatch) => {
 
 export const validateCountry = (name, addNewCountry) => async (dispatch) => {
     try {
-        let data = await Api.receiveCountryData(name)
+        let data = await CountryApi.receiveCountryData(name)
         addNewCountry(data.country)
     } catch (e) {
-        dispatch(stopSubmit('newItem', {name: 'Unknown country'}))
+        dispatch(stopSubmit('new', {name: 'Unknown country'}))
     }
 }
 
@@ -60,13 +60,11 @@ const infoReducer = (state = initialState, action) => {
                 items: action.items
             }
         case infoAction.ADD_ITEM:
-            console.log(state.fetching)
             return {
                 ...state,
                 items: [...state.items, action.item],
             }
         case infoAction.TOGGLE_FETCHING:
-            console.log(1)
             return {
                 ...state,
                 fetching: action.fetching

@@ -12,7 +12,9 @@ import {Provider} from "react-redux";
 ReactDOM.render(
     <BrowserRouter>
         <Provider store={store}>
-            <App/>
+            <div className="container">
+                <App/>
+            </div>
         </Provider>
     </BrowserRouter>, document.getElementById('root'));
 

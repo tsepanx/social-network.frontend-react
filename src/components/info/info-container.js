@@ -7,7 +7,7 @@ import {reload, validateCountry} from "../../redux/info-reducer";
 import InfoItems from "./info-items";
 
 import {commonInputFormField} from "../common/form-control/form-control";
-import Preloader from "../common/preloader/preloader";
+import Spinner from "../common/spinner/spinner";
 
 let AddNewItemForm = ({handleSubmit}) => {
     return (
@@ -20,7 +20,7 @@ let AddNewItemForm = ({handleSubmit}) => {
     )
 }
 
-AddNewItemForm = reduxForm({form: 'newItem'})(AddNewItemForm)
+AddNewItemForm = reduxForm({form: 'new'})(AddNewItemForm)
 
 const InfoContainer = (props) => {
 
@@ -49,7 +49,7 @@ const InfoContainer = (props) => {
             <div>{countriesList()}</div>
 
             <button className='btn btn-secondary' onClick={onReload}>Reload</button>
-            { props.fetching ? <Preloader width={48} /> : null }
+            { props.fetching ? <Spinner /> : null }
             <div><InfoItems list={props.items}/></div>
         </div>
     )

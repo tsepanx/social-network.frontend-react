@@ -1,16 +1,31 @@
 import * as axios from "axios";
 
 
-const instance = axios.create({
-    baseURL: 'https://corona.lmao.ninja/v2/'
-})
+export class CountryApi {
+    static _instance = axios.create({
+        baseURL: 'https://corona.lmao.ninja/v2/'
+    })
 
-const Api = {
-    receiveCountryData: (name) => {
+
+    static async receiveCountryData(name) {
         let url = `countries/${name}`
-        return instance.get(url).then(response => response.data)
+        return this._instance.get(url).then(response => response.data)
     }
 }
 
-export default Api
+export class AuthApi {
+    // _instance = axios.create({})
 
+    static authUser = (username, password) => {
+        // TODO logic for validating user using real api
+        return new Promise((resolve, reject) => {
+            resolve({data: true})
+        })
+    }
+
+    static logout = () => {
+        return new Promise((resolve, reject) => {
+            resolve({data: true})
+        })
+    }
+}

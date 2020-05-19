@@ -17,7 +17,7 @@ const FormControl = (Element) => ({input, meta: {touched, error}, child, ...prop
                     })
             }</div>
 
-            <div>
+            <div className={s.errorMsg}>
                 {hasError ? error : ''}
             </div>
         </div>

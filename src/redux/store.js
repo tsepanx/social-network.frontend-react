@@ -5,10 +5,13 @@ import {reducer as formReducer} from "redux-form";
 
 import todoReducer from "./todo-reducer";
 import infoReducer from "./info-reducer";
+import authReducer from "./auth-reducer";
 
 let reducers = combineReducers({
     cards: todoReducer,
     info: infoReducer,
+    auth: authReducer,
+
     form: formReducer
 });
 

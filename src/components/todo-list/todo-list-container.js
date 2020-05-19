@@ -2,6 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import TodoList from "./todo-list";
 import {addCardCreator, updateCardCreator} from "../../redux/todo-reducer";
+import {compose} from "redux";
+import {withAuthRedirect} from "../hoc/withAuthRedirect";
 
 
 let mapStateToProps = (state) => {
@@ -21,6 +23,9 @@ let mapDispatchToProps = (dispatch) => {
     }
 }
 
-const TodoListContainer = connect(mapStateToProps, mapDispatchToProps)(TodoList);
+const TodoListContainer = compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect,
+)(TodoList);
 
 export default TodoListContainer;
