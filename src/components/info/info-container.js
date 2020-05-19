@@ -7,14 +7,14 @@ import {reload, validateCountry} from "../../redux/info-reducer";
 import InfoItems from "./info-items";
 
 import {commonInputFormField} from "../common/form-control/form-control";
-import Preloader from "../common/preloader/Preloader";
+import Preloader from "../common/preloader/preloader";
 
 let AddNewItemForm = ({handleSubmit}) => {
     return (
         <div className="form bg-dark">
             <form onSubmit={handleSubmit}>
                 {commonInputFormField('name', 'Country name')}
-                <button className='btn btn-info'>Add new item</button>
+                <button className='btn btn-secondary'>Add new item</button>
             </form>
         </div>
     )
@@ -44,12 +44,12 @@ const InfoContainer = (props) => {
 
     return (
         <div>
-            <div>{countriesList()}</div>
 
             <AddNewItemForm onSubmit={onSubmitNewItem}/>
+            <div>{countriesList()}</div>
 
-            <button onClick={onReload}>Reload</button>
-            { props.fetching ? <Preloader /> : null }
+            <button className='btn btn-secondary' onClick={onReload}>Reload</button>
+            { props.fetching ? <Preloader width={48} /> : null }
             <div><InfoItems list={props.items}/></div>
         </div>
     )

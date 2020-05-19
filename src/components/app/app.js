@@ -8,7 +8,7 @@ import './app.css';
 import Header from "../header/header";
 
 import {contentComponents} from "../header/header";
-import Preloader from "../common/preloader/Preloader";
+import Preloader from "../common/preloader/preloader";
 
 const App = () => {
 

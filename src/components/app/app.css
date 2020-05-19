@@ -3,7 +3,6 @@
 }
 
 .App {
-  /*width: 90%;*/
   margin: auto;
 }
 
@@ -11,30 +10,9 @@
   padding: 1.5rem;
 }
 
-.header {
-}
-
-ul {
-  list-style-type: none;
-  /*padding: 10px;*/
-}
-
-input[type="text"] {
-  margin-left: 10px;
-}
-
-.card {
-  width: 20rem;
-}
-
-.form input {
-  /*margin: 10px 0;*/
-}
-
 .form {
-  display: flex;
+  min-width: 20rem;
   max-width: fit-content;
   padding: 1rem;
-  margin: 1rem;
   border-radius: 8px;
 }
