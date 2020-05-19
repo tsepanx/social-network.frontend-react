@@ -9,7 +9,7 @@ export const updateTodoCreator = (id, updatedState) => ({type: cardAction.UPDATE
 let initialState = {
     items: [
         {text: 'Do something!', done: true},
-        {text: 'Repeat smth!', done: true},
+        {text: 'Drink a coffee!', done: true},
     ]
 }
 

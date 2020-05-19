@@ -7,11 +7,19 @@ const profileActions = {
 
 let initialState = {
     profilePhoto: 'https://starwars-visualguide.com/assets/img/characters/2.jpg',
-    status: '',
+    status: 'Yo!!!',
     posts: [
         {
             title: 'Some post',
             text: 'Some very long post text...'
+        },
+        {
+            title: 'Some another',
+            text: 'Some another very long post text...'
+        },
+        {
+            title: 'Some another',
+            text: 'Some another very long post text...Some another very long post text...Some another very long post text...Some another very long post text...'
         }
     ]
 }

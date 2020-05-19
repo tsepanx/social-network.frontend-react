@@ -1,0 +1,33 @@
+.profile {
+    display: flex;
+}
+
+.profile div {
+    border-radius: 10px;
+}
+
+.profile .left {
+    height: fit-content;
+    max-width: fit-content;
+    padding: 15px;
+}
+
+.profile .right {
+    margin-left: 30px;
+}
+
+.profile .post {
+    margin: 10px;
+    max-width: 400px;
+}
+
+.profile .status {
+    max-width: available;
+    padding-top: 10px;
+}
+
+.profile .photo img {
+    border-radius: 10px;
+    width: 150px;
+}
+
