@@ -3,12 +3,13 @@ let cardAction = {
     UPDATE_CARD: 'UPDATE_CARD',
 }
 
-export const addCardCreator = () => ({type: cardAction.ADD_CARD})
-export const updateCardCreator = (id, updatedState) => ({type: cardAction.UPDATE_CARD, id, updatedState})
+export const addTodoCreator = (item) => ({type: cardAction.ADD_CARD, item})
+export const updateTodoCreator = (id, updatedState) => ({type: cardAction.UPDATE_CARD, id, updatedState})
 
 let initialState = {
     items: [
-        {label: 'Do more!', done: true},
+        {text: 'Do something!', done: true},
+        {text: 'Repeat smth!', done: true},
     ]
 }
 
@@ -16,12 +17,11 @@ let initialState = {
 const todoReducer = (state = initialState, action) => {
     switch (action.type) {
         case cardAction.ADD_CARD:
-            let newCard = {label: 'New', done: false}
-
             return {
                 ...state,
-                items: [...state.items, newCard]
+                items: [...state.items, action.item]
             }
+
         case cardAction.UPDATE_CARD:
             let copy = {...state, items: [...state.items,]}
             copy.items[action.id] = action.updatedState
@@ -30,6 +30,14 @@ const todoReducer = (state = initialState, action) => {
         default:
             return state;
     }
+}
+
+export const addTodo = (item) => (dispatch) => {
+    dispatch(addTodoCreator(item));
+}
+
+export const updateTodo = (id, updatedState) => (dispatch) => {
+    dispatch(updateTodoCreator(id, updatedState))
 }
 
 export default todoReducer

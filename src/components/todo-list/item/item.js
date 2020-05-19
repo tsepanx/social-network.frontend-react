@@ -10,7 +10,7 @@ const Item = (props) => {
 
     return (
         <li className='item list-group-item'>
-            {props.state.label}
+            {props.state.text}
             <div
                 onClick={handleClick}
                 className={`btn ${props.state.done ? 'btn-info' : ''}`}>

@@ -1,16 +1,16 @@
 import React from "react";
+import {NavLink} from "react-router-dom";
 
 import './header.css'
-import {NavLink} from "react-router-dom";
-import TodoListContainer from "../todo-list/todo-list-container";
 
 import InfoContainer from "../info/info-container";
 import Login from "../login/login";
 import Profile from "../profile/profile";
+import TodoList from "../todo-list/todo-list";
 
 const leftItems = [
     {component: <Profile/>, path: '/profile', title: 'Profile'},
-    {component: <TodoListContainer/>, path: '/todo', title: 'TODO'},
+    {component: <TodoList/>, path: '/todo', title: 'TODO'},
     {component: <InfoContainer/>, path: '/stats', title: 'Statistics'},
 ]
 

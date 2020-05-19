@@ -2,28 +2,27 @@ import React from "react";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {withAuthRedirect} from "../hoc/withAuthRedirect";
+import {addPost, setStatus, setUser} from "../../redux/profile-reducer";
 
-const mapStateToProps = (state) => {
-    return {
-        //TODO
-    }
-}
+const mapStateToProps = (state) => ({...state.profile})
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        // TODO
-    }
+const ProfileContainer = (props) => {
+    return (<Profile {...props}/>)
 }
 
 const Profile = (props) => {
+    let {profilePhoto, status, posts} = props
+
+    console.log(props)
+
     return (
         <div>
-            My Profile
+
         </div>
     )
 }
 
 export default compose(
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, {setStatus, addPost, setUser}),
     withAuthRedirect
-)(Profile)
+)(ProfileContainer)

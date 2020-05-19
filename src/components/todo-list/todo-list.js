@@ -2,27 +2,40 @@ import React from "react";
 import './todo-list.css'
 
 import Item from "./item/item";
+import {compose} from "redux";
+import {connect} from "react-redux";
+import {addTodo, updateTodo} from "../../redux/todo-reducer";
+import {withAuthRedirect} from "../hoc/withAuthRedirect";
 
 const TodoList = (props) => {
 
-    const cards = props.items.map((cardItem, index) =>
+    const todoItems = props.items.map((cardItem, index) =>
         <Item
             key={index}
             id={index}
-            updateCard={props.updateCard}
+            updateCard={props.updateTodo}
             state={cardItem}>
         </Item>
     )
 
+    const onAddNew = () => {
+        props.addTodo({text: 'New Item'})
+    }
+
     return (
         <div className='todo-list'>
-            <div onClick={props.addCard} className={'btn btn-success ' + 'btn-new'}>Add New</div>
+            <div onClick={onAddNew} className={'btn btn-success ' + 'btn-new'}>Add New</div>
 
             <ul className="list-group">
-                {cards}
+                {todoItems}
             </ul>
         </div>
     )
 }
 
-export default TodoList
+const mapStateToProps = (state) => ({...state.todo})
+
+export default compose(
+    connect(mapStateToProps, {addTodo, updateTodo}),
+    withAuthRedirect,
+)(TodoList);
