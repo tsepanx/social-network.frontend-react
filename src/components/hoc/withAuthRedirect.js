@@ -8,7 +8,7 @@ let mapStateToPropsForRedirect = (state) => ({
 
 export const withAuthRedirect = (Component) => {
 
-    function RedirectComponent(props) {
+    const RedirectComponent = (props) => {
         if (!props.authorized) return <Redirect to={{
             pathname: '/login',
             state: {id: 1}

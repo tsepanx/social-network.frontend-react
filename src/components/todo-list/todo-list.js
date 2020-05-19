@@ -9,12 +9,12 @@ import {withAuthRedirect} from "../hoc/withAuthRedirect";
 
 const TodoList = (props) => {
 
-    const todoItems = props.items.map((cardItem, index) =>
+    const todoItems = props.items.map((todoItem, index) =>
         <Item
             key={index}
             id={index}
-            updateCard={props.updateTodo}
-            state={cardItem}>
+            updateTodo={props.updateTodo}
+            state={todoItem}>
         </Item>
     )
 

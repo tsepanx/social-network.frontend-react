@@ -1,10 +1,10 @@
-let cardAction = {
-    ADD_CARD: 'ADD_CARD',
-    UPDATE_CARD: 'UPDATE_CARD',
+let todoAction = {
+    ADD_TODO: 'ADD_TODO',
+    UPDATE_TODO: 'UPDATE_TODO',
 }
 
-export const addTodoCreator = (item) => ({type: cardAction.ADD_CARD, item})
-export const updateTodoCreator = (id, updatedState) => ({type: cardAction.UPDATE_CARD, id, updatedState})
+export const addTodoCreator = (item) => ({type: todoAction.ADD_TODO, item})
+export const updateTodoCreator = (id, updatedState) => ({type: todoAction.UPDATE_TODO, id, updatedState})
 
 let initialState = {
     items: [
@@ -16,13 +16,13 @@ let initialState = {
 
 const todoReducer = (state = initialState, action) => {
     switch (action.type) {
-        case cardAction.ADD_CARD:
+        case todoAction.ADD_TODO:
             return {
                 ...state,
                 items: [...state.items, action.item]
             }
 
-        case cardAction.UPDATE_CARD:
+        case todoAction.UPDATE_TODO:
             let copy = {...state, items: [...state.items,]}
             copy.items[action.id] = action.updatedState
 

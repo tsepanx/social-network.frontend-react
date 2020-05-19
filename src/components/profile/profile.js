@@ -25,11 +25,11 @@ const Profile = (props) => {
     return (
         <div className='profile'>
             <div className="left bg-dark">
-                <ProfilePhoto src={props.profilePhoto}/>
-                <ProfileStatus text={props.status}/>
+                <ProfilePhoto src={profilePhoto}/>
+                <ProfileStatus text={status}/>
             </div>
             <div className='right'>
-                <ProfilePosts items={props.posts}/>
+                <ProfilePosts items={posts}/>
             </div>
         </div>
     )

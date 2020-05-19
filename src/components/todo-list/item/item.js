@@ -1,26 +1,26 @@
 import React from "react";
 import './item.css'
 
-const Item = (props) => {
+const Item = ({state, id, updateTodo}) => {
 
     const handleClick = () => {
-        props.state.done = !props.state.done
-        props.updateCard(props.id, props.state)
+        state.done = !state.done
+        updateTodo(id, state)
     }
 
     return (
         <li className='item list-group-item'>
-            {props.state.text}
+            {state.text}
             <div
                 onClick={handleClick}
-                className={`btn ${props.state.done ? 'btn-info' : ''}`}>
+                className={`btn ${state.done ? 'btn-info' : ''}`}>
 
                 <div>Single toggle</div>
                 <input
                     className="toggle-checkbox"
                     type="checkbox"
                     readOnly={true}
-                    checked={props.state.done}/>
+                    checked={state.done}/>
             </div>
         </li>
     )
