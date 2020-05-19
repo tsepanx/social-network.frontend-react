@@ -9,15 +9,14 @@ import Header from "../header/header";
 
 import {contentComponents} from "../header/header";
 
+let routeItems = contentComponents.map((value, index) =>
+    <Route
+        key={index}
+        path={value.path}
+        render={() => value.component}
+    />)
+
 const App = () => {
-
-    let routeItems = contentComponents.map((value, index) =>
-        <Route
-            key={index}
-            path={value.path}
-            render={() => value.component}
-        />)
-
     return (
         <div className="App">
 
@@ -29,7 +28,9 @@ const App = () => {
 
             <div className="row">
                 <div className="col-12">
-                    <div className="App-content">{routeItems}</div>
+                    <div className="App-content">
+                        {routeItems}
+                    </div>
                 </div>
             </div>
         </div>

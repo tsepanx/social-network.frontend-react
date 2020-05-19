@@ -35,7 +35,6 @@ const authReducer = (state = initialState, action) => {
 
 export const submitLogin = ({username, password}) => async (dispatch) => {
     const response = await AuthApi.authUser(username, password)
-    console.log(response)
     let isAuthorized = response.data === true
 
     if (isAuthorized) {

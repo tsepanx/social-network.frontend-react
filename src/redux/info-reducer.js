@@ -9,11 +9,7 @@ let infoAction = {
 
 export const setInfoItemsCreator = (items) => ({type: infoAction.SET_ITEMS, items})
 export const addInfoItemCreator = (itemData) => ({type: infoAction.ADD_ITEM, item: itemData})
-export const toggleFetching = (isFetching) => {
-    let a = {type: infoAction.TOGGLE_FETCHING, fetching: isFetching}
-    console.log(a)
-    return a
-}
+export const toggleFetching = (isFetching) => ({type: infoAction.TOGGLE_FETCHING, fetching: isFetching})
 
 export const reload = (countries) => async (dispatch) => {
     dispatch(setInfoItemsCreator([]))
