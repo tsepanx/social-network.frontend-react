@@ -5,25 +5,33 @@ const baseValidator = (statement, errorMessage) => {
     return errorMessage
 }
 
-export const fieldIsNotIncorrect = value => baseValidator(
+const fieldIsNotNull = value => baseValidator(
     value && value.trim() !== '',
-    'Incorrect field text'
+    'Field is required'
 )
 
-export const fieldLengthLessThan = maxLength => value => baseValidator(
-    value.length < maxLength,
-    `Field should be shorter than ${maxLength} symbols`
+const fieldIsShorterEqualThan = maxLength => value => baseValidator(
+    value.length <= maxLength,
+    `Max length is ${maxLength}`
 )
 
-export const fieldShouldContainOnlyLowercase = value => baseValidator(
+const fieldIsLongerEqualThan = minLength => value => baseValidator(
+    value.length >= minLength,
+    `Min length is ${minLength}`
+)
+
+const fieldShouldContainOnlyLowercase = value => baseValidator(
     value.toLowerCase() === value,
-    'Field should contain only lowercase'
+    `Cannot contain uppercase`
 )
 
-const defaultInputValidators = [
-    fieldIsNotIncorrect,
-    fieldLengthLessThan(10),
+export const defaultInputValidators = [
+    fieldIsNotNull,
+    fieldIsShorterEqualThan(10),
     fieldShouldContainOnlyLowercase,
 ]
 
-export default defaultInputValidators
+export const defaultPasswordValidators = [
+    fieldIsNotNull,
+    fieldIsLongerEqualThan(4)
+]

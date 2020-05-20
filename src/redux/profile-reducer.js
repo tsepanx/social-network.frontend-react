@@ -1,12 +1,12 @@
 const profileActions = {
-    SET_USER: 'SET_USER',
+    SET_PROFILE: 'SET_PROFILE',
     ADD_POST: 'ADD_POST',
     SET_STATUS: 'SET_STATUS'
 }
 
 
 let initialState = {
-    profilePhoto: 'https://starwars-visualguide.com/assets/img/characters/2.jpg',
+    profilePhoto: 'https://starwars-visualguide.com/assets/img/characters/4.jpg',
     status: 'Yo!!!',
     posts: [
         {
@@ -20,7 +20,7 @@ let initialState = {
 const setStatusCreator = (status) => ({type: profileActions.SET_STATUS, status})
 const addPostCreator = (post) => ({type: profileActions.ADD_POST, post})
 
-const setUserCreator = (user) => ({type: profileActions.SET_USER, user})
+const setProfileCreator = (profile) => ({type: profileActions.SET_PROFILE, profile})
 
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -33,6 +33,10 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 status: action.status
+            }
+        case profileActions.SET_PROFILE:
+            return {
+                ...action.profile
             }
         default:
             return state;
@@ -47,8 +51,8 @@ export const setStatus = (status) => (dispatch) => {
     dispatch(setStatusCreator(status))
 }
 
-export const setUser = (user) => (dispatch) => {
-    dispatch(setUserCreator(user))
+export const setProfile = (profile) => (dispatch) => {
+    dispatch(setProfileCreator(profile))
 }
 
 

@@ -1,17 +1,17 @@
 import React from "react";
 import {connect} from "react-redux";
 import {compose} from "redux";
-import {addPost, setStatus, setUser} from "../../redux/profile-reducer";
+import {addPost, setStatus, setProfile} from "../../redux/profile-reducer";
 
 import './profile.css'
-import {commonInputFormField, commonReduxForm, commonTextareaFormField} from "../common/form-control/form-control";
-
-const mapStateToProps = (state) => ({...state.profile})
+import {commonReduxForm, commonFormField, input, textarea} from "../common/form-control/form-control";
 
 
 const SubmitNewPostContext = React.createContext(null)
 
 const ProfileContainer = (props) => {
+
+    console.log(props)
 
     const onSubmitNewPost = (formData) => {
         // console.log(formData)
@@ -21,22 +21,18 @@ const ProfileContainer = (props) => {
     return (
         <SubmitNewPostContext.Provider value={onSubmitNewPost}>
             <React.Fragment>
-                My Profile
                 <Profile {...props}/>
             </React.Fragment>
         </SubmitNewPostContext.Provider>
     )
 }
 
-const Profile = (props) => {
-    let {profilePhoto, status, posts} = props
-
-    console.log(props)
-
+const Profile = ({profilePhoto, status, posts}) => {
     return (
         <div className='profile'>
             <div className="row">
                 <div className="col-md-6">
+                    My Profile
                     <div className="left bg-dark">
                         <ProfilePhoto src={profilePhoto}/>
                         <ProfileStatus text={status}/>
@@ -63,8 +59,8 @@ const ProfilePosts = ({items}) => {
     )
 
     const fields = [
-        commonInputFormField('title', 'Post title'),
-        commonTextareaFormField('text', 'Post text')
+        commonFormField('title', input, 'Post title'),
+        commonFormField('text', textarea, 'Post text')
     ]
 
     return (
@@ -111,7 +107,12 @@ const ProfileStatus = ({text}) => {
         </div>
     )
 }
+
+const mapStateToProps = (state) => ({
+    ...state.profile,
+})
+
 export default compose(
-    connect(mapStateToProps, {setStatus, addPost, setUser}),
+    connect(mapStateToProps, {setStatus, addPost, setProfile}),
     // withAuthRedirect
 )(ProfileContainer)

@@ -1,8 +1,7 @@
 import React from 'react';
 import s from './form-control.module.css';
 import {Field, reduxForm} from 'redux-form';
-import defaultValidators from '../../../utils/validators';
-import Spinner from "../spinner/spinner";
+import {defaultInputValidators} from '../../../utils/validators';
 
 const FormComponent = (Element) => ({input, meta: {touched, error}, child, ...props}) => {
     const hasError = touched && error;
@@ -25,29 +24,21 @@ const FormComponent = (Element) => ({input, meta: {touched, error}, child, ...pr
     )
 }
 
-const textarea = FormComponent('textarea')
-const input = FormComponent('input')
+export const textarea = FormComponent('textarea')
+export const input = FormComponent('input')
 
-const commonFormField = (name,
+export const commonFormField = (name,
                          component = input,
                          placeholder = '',
-                         validators = defaultValidators) =>
+                         validators = defaultInputValidators,
+                         type = 'text') =>
     (<Field
         component={component}
         placeholder={placeholder}
         name={name}
+        type={type}
         validate={validators}
     />)
-
-export const commonInputFormField = (name,
-                                     placeholder = '',
-                                     validators = defaultValidators) =>
-    commonFormField(name, input, placeholder, validators)
-
-export const commonTextareaFormField = (name,
-                                        placeholder = '',
-                                        validators = defaultValidators) =>
-    commonFormField(name, textarea, placeholder, validators)
 
 export const commonReduxForm = (name,
                                 onSubmit,

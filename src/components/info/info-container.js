@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {connect} from "react-redux";
 
 import Spinner from "../common/spinner/spinner";
-import {commonInputFormField, commonReduxForm} from "../common/form-control/form-control";
+import {commonFormField, commonReduxForm, input} from "../common/form-control/form-control";
 
 import {reload, validateCountry} from "../../redux/info-reducer";
 import InfoItems from "./info-items";
@@ -28,7 +28,12 @@ const InfoContainer = (props) => {
     )
 
     const fields = [
-        commonInputFormField('name', 'Country name')
+        commonFormField('name',
+            input,
+            'Country name',
+            null,
+            'text'
+        )
     ]
 
     return (

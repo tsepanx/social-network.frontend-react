@@ -1,8 +1,9 @@
 import React from 'react';
-import {commonReduxForm, commonInputFormField} from '../common/form-control/form-control';
+import {commonReduxForm, commonFormField, input} from '../common/form-control/form-control';
 import {connect} from "react-redux";
 import {submitLogin} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
+import {defaultPasswordValidators} from "../../utils/validators";
 
 const Login = (props) => {
     const onSubmit = (formData) => {
@@ -13,17 +14,26 @@ const Login = (props) => {
         return <Redirect to={'/profile'}/>
     }
 
-    const loginFields = [
-        commonInputFormField('username', 'Username'),
-        commonInputFormField('password', 'Password')
-    ]
+    const usernameField = commonFormField(
+        'username',
+        input,
+        'Username'
+    )
+
+    const passwordField = commonFormField(
+        'password',
+        input,
+        'Password',
+        defaultPasswordValidators,
+        'password'
+    )
 
     return <div>
         <h2>Login</h2>
         {commonReduxForm(
             'login',
             onSubmit,
-            loginFields,
+            [usernameField, passwordField],
             'Login')}
     </div>
 }
