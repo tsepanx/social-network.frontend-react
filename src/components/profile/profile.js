@@ -1,19 +1,30 @@
 import React from "react";
 import {connect} from "react-redux";
 import {compose} from "redux";
-import {withAuthRedirect} from "../hoc/withAuthRedirect";
 import {addPost, setStatus, setUser} from "../../redux/profile-reducer";
 
 import './profile.css'
+import {commonInputFormField, commonReduxForm, commonTextareaFormField} from "../common/form-control/form-control";
 
 const mapStateToProps = (state) => ({...state.profile})
 
+
+const SubmitNewPostContext = React.createContext(null)
+
 const ProfileContainer = (props) => {
+
+    const onSubmitNewPost = (formData) => {
+        // console.log(formData)
+        props.addPost(formData)
+    }
+
     return (
-        <React.Fragment>
-            My Profile
-            <Profile {...props}/>
-        </React.Fragment>
+        <SubmitNewPostContext.Provider value={onSubmitNewPost}>
+            <React.Fragment>
+                My Profile
+                <Profile {...props}/>
+            </React.Fragment>
+        </SubmitNewPostContext.Provider>
     )
 }
 
@@ -24,27 +35,20 @@ const Profile = (props) => {
 
     return (
         <div className='profile'>
-            <div className="left bg-dark">
-                <ProfilePhoto src={profilePhoto}/>
-                <ProfileStatus text={status}/>
-            </div>
-            <div className='right'>
-                <ProfilePosts items={posts}/>
-            </div>
-        </div>
-    )
-}
+            <div className="row">
+                <div className="col-md-6">
+                    <div className="left bg-dark">
+                        <ProfilePhoto src={profilePhoto}/>
+                        <ProfileStatus text={status}/>
+                    </div>
+                </div>
 
-const ProfilePhoto = ({src}) => (
-    <div className='photo'>
-        <img src={src} alt='Profile image'/>
-    </div>
-)
-
-const ProfileStatus = ({text}) => {
-    return (
-        <div className='status'>
-            Status: {text}
+                <div className="col-md-6">
+                    <div className='right'>
+                        <ProfilePosts items={posts}/>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
@@ -58,11 +62,25 @@ const ProfilePosts = ({items}) => {
         />
     )
 
+    const fields = [
+        commonInputFormField('title', 'Post title'),
+        commonTextareaFormField('text', 'Post text')
+    ]
+
     return (
-        <div className="posts">
-            Posts
-            {posts}
-        </div>
+        <SubmitNewPostContext.Consumer>
+            {value => (
+                <div className="posts">
+                    Posts
+                    {commonReduxForm('new-post',
+                        value,
+                        fields,
+                        'Create new post')}
+                    {posts}
+                </div>
+            )}
+        </SubmitNewPostContext.Consumer>
+
     )
 }
 
@@ -79,6 +97,20 @@ const ProfilePost = ({title, text}) => {
     )
 }
 
+
+const ProfilePhoto = ({src}) => (
+    <div className='photo'>
+        <img src={src} alt='Profile image'/>
+    </div>
+)
+
+const ProfileStatus = ({text}) => {
+    return (
+        <div className='status'>
+            Status: {text}
+        </div>
+    )
+}
 export default compose(
     connect(mapStateToProps, {setStatus, addPost, setUser}),
     // withAuthRedirect

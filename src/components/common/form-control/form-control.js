@@ -2,6 +2,7 @@ import React from 'react';
 import s from './form-control.module.css';
 import {Field, reduxForm} from 'redux-form';
 import defaultValidators from '../../../utils/validators';
+import Spinner from "../spinner/spinner";
 
 const FormComponent = (Element) => ({input, meta: {touched, error}, child, ...props}) => {
     const hasError = touched && error;

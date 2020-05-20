@@ -10,14 +10,6 @@ let initialState = {
     status: 'Yo!!!',
     posts: [
         {
-            title: 'Some post',
-            text: 'Some very long post text...'
-        },
-        {
-            title: 'Some another',
-            text: 'Some another very long post text...'
-        },
-        {
             title: 'Some another',
             text: 'Some another very long post text...Some another very long post text...Some another very long post text...Some another very long post text...'
         }
@@ -35,7 +27,7 @@ const profileReducer = (state = initialState, action) => {
         case profileActions.ADD_POST:
             return {
                 ...state,
-                posts: action.posts
+                posts: [action.post, ...state.posts]
             }
         case profileActions.SET_STATUS:
             return {

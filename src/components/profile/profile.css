@@ -1,8 +1,9 @@
 .profile {
     display: flex;
+    flex-wrap: wrap;
 }
 
-.profile div {
+.profile div.bg-dark {
     border-radius: 10px;
 }
 
@@ -10,10 +11,6 @@
     height: fit-content;
     max-width: fit-content;
     padding: 15px;
-}
-
-.profile .right {
-    margin-left: 30px;
 }
 
 .profile .post {
