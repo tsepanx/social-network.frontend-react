@@ -1,24 +1,8 @@
 import React from 'react';
-import {reduxForm} from "redux-form";
-import {commonInputFormField} from "../common/form-control/form-control";
+import {commonReduxForm, commonInputFormField} from '../common/form-control/form-control';
 import {connect} from "react-redux";
 import {submitLogin} from "../../redux/auth-reducer";
-import {withAuthRedirect} from "../hoc/withAuthRedirect";
 import {Redirect} from "react-router-dom";
-
-const LoginForm = ({handleSubmit}) => {
-    return (
-        <div className="form bg-dark">
-            <form onSubmit={handleSubmit}>
-                {commonInputFormField('username', 'Username')}
-                {commonInputFormField('password', 'Password')}
-                <button className='btn btn-info'>Login</button>
-            </form>
-        </div>
-    )
-}
-
-const LoginReduxForm = reduxForm({form: 'login'})(LoginForm)
 
 const Login = (props) => {
     const onSubmit = (formData) => {
@@ -26,12 +10,21 @@ const Login = (props) => {
     }
 
     if (props.authorized) {
-        return <Redirect to={"/profile"} />
+        return <Redirect to={'/profile'}/>
     }
+
+    const loginFields = [
+        commonInputFormField('username', 'Username'),
+        commonInputFormField('password', 'Password')
+    ]
 
     return <div>
         <h2>Login</h2>
-        <LoginReduxForm onSubmit={onSubmit}/>
+        {commonReduxForm(
+            'login',
+            onSubmit,
+            loginFields,
+            'Login')}
     </div>
 }
 

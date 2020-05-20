@@ -1,7 +1,7 @@
 import React from 'react';
-import {Route} from "react-router-dom";
+import {Route} from 'react-router-dom';
 
-import "bootswatch/dist/darkly/bootstrap.min.css"
+import 'bootswatch/dist/darkly/bootstrap.min.css'
 
 import './app.css';
 

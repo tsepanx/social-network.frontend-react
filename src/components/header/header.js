@@ -1,12 +1,12 @@
-import React from "react";
-import {NavLink} from "react-router-dom";
+import React from 'react';
+import {NavLink} from 'react-router-dom';
 
 import './header.css'
 
-import InfoContainer from "../info/info-container";
-import Login from "../login/login";
-import Profile from "../profile/profile";
-import TodoList from "../todo-list/todo-list";
+import InfoContainer from '../info/info-container';
+import Login from '../login/login';
+import Profile from '../profile/profile';
+import TodoList from '../todo-list/todo-list';
 
 const leftItems = [
     {component: <Profile/>, path: '/profile', title: 'Profile'},

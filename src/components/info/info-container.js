@@ -1,26 +1,11 @@
 import React, {useState} from "react";
-
-import {reduxForm} from "redux-form";
 import {connect} from "react-redux";
+
+import Spinner from "../common/spinner/spinner";
+import {commonInputFormField, commonReduxForm} from "../common/form-control/form-control";
 
 import {reload, validateCountry} from "../../redux/info-reducer";
 import InfoItems from "./info-items";
-
-import {commonInputFormField} from "../common/form-control/form-control";
-import Spinner from "../common/spinner/spinner";
-
-let AddNewItemForm = ({handleSubmit}) => {
-    return (
-        <div className="form bg-dark">
-            <form onSubmit={handleSubmit}>
-                {commonInputFormField('name', 'Country name')}
-                <button className='btn btn-secondary'>Add new item</button>
-            </form>
-        </div>
-    )
-}
-
-AddNewItemForm = reduxForm({form: 'new'})(AddNewItemForm)
 
 const InfoContainer = (props) => {
 
@@ -42,10 +27,13 @@ const InfoContainer = (props) => {
         (<div>{index}: {value}</div>)
     )
 
+    const fields = [
+        commonInputFormField('name', 'Country name')
+    ]
+
     return (
         <div>
-
-            <AddNewItemForm onSubmit={onSubmitNewItem}/>
+            {commonReduxForm('new', onSubmitNewItem, fields, 'Add new item')}
             <div>{countriesList()}</div>
 
             <button className='btn btn-secondary' onClick={onReload}>Reload</button>

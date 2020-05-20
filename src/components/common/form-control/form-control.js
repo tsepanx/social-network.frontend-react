@@ -1,13 +1,13 @@
-import React from "react";
-import s from "./form-control.module.css";
-import {Field} from "redux-form";
-import defaultValidators from "../../../utils/validators";
+import React from 'react';
+import s from './form-control.module.css';
+import {Field, reduxForm} from 'redux-form';
+import defaultValidators from '../../../utils/validators';
 
-const FormControl = (Element) => ({input, meta: {touched, error}, child, ...props}) => {
+const FormComponent = (Element) => ({input, meta: {touched, error}, child, ...props}) => {
     const hasError = touched && error;
 
     return (
-        <div className={s.formControl + " " + (hasError ? s.error : "")}>
+        <div className={s.formControl + ' ' + (hasError ? s.error : '')}>
             <div>{
                 React.createElement(Element,
                     {
@@ -24,8 +24,8 @@ const FormControl = (Element) => ({input, meta: {touched, error}, child, ...prop
     )
 }
 
-const textarea = FormControl('textarea')
-const input = FormControl('input')
+const textarea = FormComponent('textarea')
+const input = FormComponent('input')
 
 const commonFormField = (name,
                          component = input,
@@ -44,6 +44,26 @@ export const commonInputFormField = (name,
     commonFormField(name, input, placeholder, validators)
 
 export const commonTextareaFormField = (name,
-                                     placeholder = '',
-                                     validators = defaultValidators) =>
+                                        placeholder = '',
+                                        validators = defaultValidators) =>
     commonFormField(name, textarea, placeholder, validators)
+
+export const commonReduxForm = (name,
+                                onSubmit,
+                                fields,
+                                buttonText = 'Submit',
+                                buttonClass = 'btn-info') => {
+    const Form = ({handleSubmit}) => (
+        <div className='form bg-dark'>
+            <form onSubmit={handleSubmit}>
+                <>{fields}</>
+                <button className={`btn ${buttonClass}`}>
+                    {buttonText}
+                </button>
+            </form>
+        </div>
+    )
+
+    const ReduxForm = reduxForm({form: name})(Form)
+    return <ReduxForm onSubmit={onSubmit}/>
+}

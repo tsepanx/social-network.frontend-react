@@ -1,18 +1,18 @@
-import React from "react";
+import React from 'react';
 import * as serviceWorker from './serviceWorker';
-import ReactDOM from "react-dom";
-import {BrowserRouter} from "react-router-dom";
+import ReactDOM from 'react-dom';
+import {BrowserRouter} from 'react-router-dom';
 
 import './index.css';
 
-import App from "./components/app/app";
-import store from "./redux/store";
-import {Provider} from "react-redux";
+import App from './components/app/app';
+import store from './redux/store';
+import {Provider} from 'react-redux';
 
 ReactDOM.render(
     <BrowserRouter>
         <Provider store={store}>
-            <div className="container">
+            <div className='container'>
                 <App/>
             </div>
         </Provider>

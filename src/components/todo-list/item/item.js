@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import './item.css'
 
 const Item = ({state, id, updateTodo}) => {
@@ -17,8 +17,8 @@ const Item = ({state, id, updateTodo}) => {
 
                 <div>Single toggle</div>
                 <input
-                    className="toggle-checkbox"
-                    type="checkbox"
+                    className='toggle-checkbox'
+                    type='checkbox'
                     readOnly={true}
                     checked={state.done}/>
             </div>

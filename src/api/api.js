@@ -19,7 +19,11 @@ export class AuthApi {
     static authUser = (username, password) => {
         // TODO logic for validating user using real api
         return new Promise((resolve, reject) => {
-            resolve({data: true})
+            if (['st'].includes(username)) {
+                resolve({data: true})
+            } else {
+                resolve({data: false})
+            }
         })
     }
 
