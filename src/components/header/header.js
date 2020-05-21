@@ -20,7 +20,7 @@ const rightItems = [
 
 export const contentComponents = [...leftItems, ...rightItems]
 
-console.log(contentComponents)
+// console.log(contentComponents)
 
 const itemToNavLink = (value, index) =>
     (<li>

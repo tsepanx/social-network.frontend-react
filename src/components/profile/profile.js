@@ -6,7 +6,6 @@ import {addPost, setStatus, setProfile} from "../../redux/profile-reducer";
 import './profile.css'
 import {commonReduxForm, commonFormField, input, textarea} from "../common/form-control/form-control";
 
-
 const SubmitNewPostContext = React.createContext(null)
 
 const ProfileContainer = (props) => {
@@ -20,9 +19,7 @@ const ProfileContainer = (props) => {
 
     return (
         <SubmitNewPostContext.Provider value={onSubmitNewPost}>
-            <React.Fragment>
-                <Profile {...props}/>
-            </React.Fragment>
+            <><Profile {...props}/></>
         </SubmitNewPostContext.Provider>
     )
 }
@@ -93,12 +90,13 @@ const ProfilePost = ({title, text}) => {
     )
 }
 
-
-const ProfilePhoto = ({src}) => (
-    <div className='photo'>
-        <img src={src} alt='Profile image'/>
-    </div>
-)
+const ProfilePhoto = ({src}) => {
+    return (
+        <div className='photo'>
+            <img src={src} alt='Profile image'/>
+        </div>
+    )
+}
 
 const ProfileStatus = ({text}) => {
     return (
@@ -114,5 +112,6 @@ const mapStateToProps = (state) => ({
 
 export default compose(
     connect(mapStateToProps, {setStatus, addPost, setProfile}),
+    // withData
     // withAuthRedirect
 )(ProfileContainer)
