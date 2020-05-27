@@ -8,6 +8,7 @@ import './app.css';
 import Header from "../header/header";
 
 import {contentComponents} from "../header/header";
+import {Provider} from "react-redux";
 
 let routeItems = contentComponents.map((value, index) =>
     <Route
@@ -19,17 +20,18 @@ let routeItems = contentComponents.map((value, index) =>
 const App = () => {
     return (
         <div className="App">
-
-            <div className='row'>
-                <div className="col-12">
-                    <Header/>
+            <div className='container'>
+                <div className='row'>
+                    <div className="col-12">
+                        <Header/>
+                    </div>
                 </div>
-            </div>
 
-            <div className="row">
-                <div className="col-12">
-                    <div className="App-content">
-                        {routeItems}
+                <div className="row">
+                    <div className="col-12">
+                        <div className="App-content">
+                            {routeItems}
+                        </div>
                     </div>
                 </div>
             </div>

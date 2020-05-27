@@ -5,6 +5,7 @@ import {addPost, setStatus, setProfile} from "../../redux/profile-reducer";
 
 import './profile.css'
 import {commonReduxForm, commonFormField, input, textarea} from "../common/form-control/form-control";
+import {TestApi} from "../../api/api";
 
 const SubmitNewPostContext = React.createContext(null)
 
@@ -25,6 +26,8 @@ const ProfileContainer = (props) => {
 }
 
 const Profile = ({profilePhoto, status, posts}) => {
+    TestApi.testPosts()
+
     return (
         <div className='profile'>
             <div className="row">

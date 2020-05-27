@@ -15,7 +15,6 @@ const setUserCredentials = (username, authorized) => ({
 
 let initialState = {
     credentials: {
-        // id: null,
         username: null,
     },
     authorized: false

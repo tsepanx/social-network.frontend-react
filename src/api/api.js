@@ -33,3 +33,20 @@ export class AuthApi {
         })
     }
 }
+
+export class TestApi {
+    static testPosts = () => {
+        // fetch('api/posts/1')
+        fetch('127.0.0.1:8000/api/posts/1/')
+            .then((r) => {
+                console.log('Success')
+                console.log(r)
+            })
+            .catch(err => {
+                console.log('Error')
+                console.log(err)
+            })
+
+
+    }
+}
