@@ -6,8 +6,8 @@ const profileActions = {
 
 
 let initialState = {
-    profilePhoto: 'https://starwars-visualguide.com/assets/img/characters/4.jpg',
-    status: 'Yo!!!',
+    profilePhoto: '',
+    status: '',
     posts: [
         {
             title: 'Some another',
@@ -36,6 +36,7 @@ const profileReducer = (state = initialState, action) => {
             }
         case profileActions.SET_PROFILE:
             return {
+                ...state,
                 ...action.profile
             }
         default:

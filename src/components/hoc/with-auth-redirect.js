@@ -5,9 +5,11 @@ import {AuthApi} from "../../api/api";
 import {compose} from "redux";
 import {setLoggedIn} from "../../redux/auth-reducer";
 import Spinner from "../common/spinner/spinner";
+import {setProfile, setStatus} from "../../redux/profile-reducer";
 
 let mapStateToPropsForRedirect = (state) => ({
-    authorized: state.auth.authorized
+    authorized: state.auth.authorized,
+    profile: state.profile,
 });
 
 export const withAuthRedirect = (Component) => {
@@ -16,19 +18,28 @@ export const withAuthRedirect = (Component) => {
 
         let [fetching, setFetching] = useState(true)
 
-        useEffect(() => {
-            AuthApi.getMe()
-                .then(r => {
-                    if (r) {
-                        props.setLoggedIn(r.data.username)
-                    } else {
-                        console.log('Error while logging in...')
-                    }
+        let apiFetch = async () => {
+            if (!props.authorized) {
+                setFetching(true)
+                let response = await AuthApi.getMe()
+                let isAuthorized = response !== false
 
-                    setTimeout(() => {
-                        setFetching(false)
-                    }, 500)
-                })
+                if (isAuthorized) {
+                    props.setLoggedIn(response.data.username)
+
+                    let r = await AuthApi.getProfile(response.data.id)
+                    props.setProfile({
+                        profilePhoto: r.data.profile_photo,
+                        status: r.data.status
+                    })
+
+                }
+            }
+        }
+
+        useEffect(() => {
+            apiFetch()
+                .then(r => { setTimeout(() => { setFetching(false) }, 300) })
         })
 
         if (!fetching) {
@@ -43,6 +54,6 @@ export const withAuthRedirect = (Component) => {
     }
 
     return compose(
-        connect(mapStateToPropsForRedirect, {setLoggedIn})
+        connect(mapStateToPropsForRedirect, {setLoggedIn, setProfile})
     )(RedirectComponent)
 }

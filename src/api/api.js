@@ -47,6 +47,14 @@ export class AuthApi {
         } catch (e) { return false }
     }
 
+    static getProfile = async (id) => {
+        let url = `profile/${id}`
+
+        try {
+            return await this.instance.get(url)
+        } catch (e) { return false }
+    }
+
     static logout = () => {
         this.removeToken()
         return true

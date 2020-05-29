@@ -1,6 +1,5 @@
 import {stopSubmit} from "redux-form";
 import {AuthApi} from "../api/api";
-import {setProfile} from "./profile-reducer";
 
 const authActions = {
     SET_USER_CREDENTIALS: 'SET_USER_CREDENTIALS',
@@ -24,7 +23,6 @@ let initialState = {
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case authActions.SET_USER_CREDENTIALS:
-            // debugger
             return {
                 ...state,
                 credentials: action.credentials,
@@ -36,7 +34,6 @@ const authReducer = (state = initialState, action) => {
 }
 
 export const setLoggedIn = (credentials) => (dispatch) => {
-    // debugger
     dispatch(setUserCredentials(credentials, true))
 }
 

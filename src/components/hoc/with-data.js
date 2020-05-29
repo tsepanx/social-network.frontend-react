@@ -2,11 +2,11 @@ import React, {useEffect, useState} from 'react';
 import Spinner from "../common/spinner/spinner";
 
 const withData = (View) => {
-    return (props) => {
-        const {getData} = props
+    return ({getData, ...props}) => {
 
-        const [loading, setLoading] = useState(true)
         const [data, setData] = useState(null)
+
+        const [fetching, setFetching] = useState(true)
         const [error, setError] = useState(false)
 
         useEffect(() => {
@@ -14,31 +14,38 @@ const withData = (View) => {
         })
 
         const update = () => {
-            setLoading(true)
+            setFetching(true)
             setError(false)
 
             getData()
                 .then((data) => {
                     debugger
-                    setLoading(false)
-                    setData(data)
+                    setTimeout(() => {
+                        setFetching(false)
+                        setData(data)
+                    }, 3000)
                 })
                 .catch(() => {
-                    setLoading(false)
+                    setFetching(false)
                     setError(true)
                 })
         }
 
         if (error) {
             console.log('Error')
+            debugger
+            return <>Error</>
         }
 
-        return (
-            <>
-                {loading ? <Spinner/> : null}
-                <View {...props} data={data}/>;
-            </>
-        )
+        if (fetching) {
+            return <Spinner/>
+        }
+
+        if (data) {
+            return <View {...props} data={data}/>
+        }
+
+        return <>Other content</>
     }
 };
 
