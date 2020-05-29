@@ -5,7 +5,7 @@ import Item from "./item/item";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {addTodo, updateTodo} from "../../redux/todo-reducer";
-import {withAuthRedirect} from "../hoc/withAuthRedirect";
+import {withAuthRedirect} from "../hoc/with-auth-redirect";
 
 const TodoList = (props) => {
 

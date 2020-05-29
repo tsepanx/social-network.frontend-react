@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {submitLogin} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 import {defaultPasswordValidators} from "../../utils/validators";
+import {compose} from "redux";
 
 const Login = (props) => {
     const onSubmit = (formData) => {
@@ -44,4 +45,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {submitLogin})(Login);
+export default compose(
+    connect(mapStateToProps, {submitLogin})
+)(Login)

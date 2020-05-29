@@ -33,5 +33,5 @@ export const defaultInputValidators = [
 
 export const defaultPasswordValidators = [
     fieldIsNotNull,
-    fieldIsLongerEqualThan(4)
+    fieldIsLongerEqualThan(3)
 ]

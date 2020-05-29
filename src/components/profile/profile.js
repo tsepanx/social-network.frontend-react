@@ -6,15 +6,13 @@ import {addPost, setStatus, setProfile} from "../../redux/profile-reducer";
 import './profile.css'
 import {commonReduxForm, commonFormField, input, textarea} from "../common/form-control/form-control";
 import {TestApi} from "../../api/api";
+import {withAuthRedirect} from "../hoc/with-auth-redirect";
 
 const SubmitNewPostContext = React.createContext(null)
 
 const ProfileContainer = (props) => {
 
-    console.log(props)
-
     const onSubmitNewPost = (formData) => {
-        // console.log(formData)
         props.addPost(formData)
     }
 
@@ -26,7 +24,6 @@ const ProfileContainer = (props) => {
 }
 
 const Profile = ({profilePhoto, status, posts}) => {
-    TestApi.testPosts()
 
     return (
         <div className='profile'>
@@ -116,5 +113,5 @@ const mapStateToProps = (state) => ({
 export default compose(
     connect(mapStateToProps, {setStatus, addPost, setProfile}),
     // withData
-    // withAuthRedirect
+    withAuthRedirect
 )(ProfileContainer)

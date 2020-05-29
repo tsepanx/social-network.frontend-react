@@ -6,15 +6,16 @@ const authActions = {
     SET_USER_CREDENTIALS: 'SET_USER_CREDENTIALS',
 }
 
-const setUserCredentials = (username, authorized) => ({
+const setUserCredentials = (credentials, authorized) => ({
         type: authActions.SET_USER_CREDENTIALS,
-        credentials: {username},
+        credentials,
         authorized
     }
 )
 
 let initialState = {
     credentials: {
+        id: null,
         username: null,
     },
     authorized: false
@@ -23,22 +24,32 @@ let initialState = {
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case authActions.SET_USER_CREDENTIALS:
+            // debugger
             return {
                 ...state,
                 credentials: action.credentials,
-                authorized: true
+                authorized: action.authorized
             }
         default:
             return state;
     }
 }
 
+export const setLoggedIn = (credentials) => (dispatch) => {
+    // debugger
+    dispatch(setUserCredentials(credentials, true))
+}
+
+export const setLoggedOut = () => (dispatch) => {
+    dispatch(setUserCredentials(initialState.credentials, false))
+}
+
 export const submitLogin = ({username, password}) => async (dispatch) => {
-    const response = await AuthApi.authUser(username, password)
-    let isAuthorized = response.data === true
+    let response = await AuthApi.authUser(username, password)
+    const isAuthorized = response !== false
 
     if (isAuthorized) {
-        dispatch(setUserCredentials(username, true))
+        setLoggedIn(response)(dispatch)
     } else {
         dispatch(stopSubmit('login', {password: 'Wrong password or username'}))
     }
@@ -49,9 +60,9 @@ export const submitLogout = () => async (dispatch) => {
     let success = response.data === true
 
     if (success) {
-        dispatch(setUserCredentials(null, false))
+        setLoggedOut()(dispatch)
     } else {
-        console.log('couldnt logout')
+        console.log('Error while logging out')
     }
 }
 
