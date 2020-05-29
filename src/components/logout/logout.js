@@ -5,14 +5,8 @@ import {submitLogout} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 
 const Logout = (props) => {
-    if (props.authorized) {
-        // debugger
-        props.submitLogout()
-        return <Redirect to={'/profile'}/>
-    }
-
-    return <>AAA</>
-
+    props.submitLogout()
+    return <Redirect to={'/profile'}/>
 }
 
 const mapStateToProps = (state) => ({

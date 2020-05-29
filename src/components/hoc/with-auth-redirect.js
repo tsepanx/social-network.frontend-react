@@ -5,10 +5,11 @@ import {AuthApi} from "../../api/api";
 import {compose} from "redux";
 import {setLoggedIn} from "../../redux/auth-reducer";
 import Spinner from "../common/spinner/spinner";
-import {setProfile} from "../../redux/profile-reducer";
+import {obtainProfile} from "../../redux/profile-reducer";
 
 let mapStateToPropsForRedirect = (state) => ({
-    authorized: state.auth.authorized,
+    auth: state.auth,
+    profile: state.profile
 });
 
 export const withAuthRedirect = (Component) => {
@@ -18,32 +19,44 @@ export const withAuthRedirect = (Component) => {
         let [fetching, setFetching] = useState(true)
 
         let apiFetch = async () => {
-            if (!props.authorized) {
+            if (!props.auth.authorized) {
+                console.log(props)
                 setFetching(true)
                 let response = await AuthApi.getMe()
-                let isAuthorized = response !== false
+                let success = response !== false
 
-                if (isAuthorized) {
-                    props.setLoggedIn(response.data)
-
-                    let r = await AuthApi.getProfile(response.data.id)
-                    props.setProfile({
-                        profilePhoto: r.data.profile_photo,
-                        status: r.data.status
-                    })
+                if (success) {
+                    props.setLoggedIn({...response.data})
                 }
+            }
+        }
+
+        const profileFetch = async () => {
+            if (props.auth.authorized) {
+                props.obtainProfile(props.auth.credentials.id)
             }
         }
 
         useEffect(() => {
             apiFetch()
-                .then(r => { setTimeout(() => { setFetching(false) }, 300) })
+                .then(r => {
+                    setFetching(false)
+                })
+            if (props.profile.status === '') {  // TODO Some less stupid selector
+                console.log('status', props)
+                profileFetch()
+                    .then(r => {})
+            }
         })
 
+        useEffect(() => {
+            console.log('name', props)
+            profileFetch()
+                .then(r => {})
+        }, [props.auth.username])
+
         if (!fetching) {
-            if (!props.authorized) return <Redirect to={{
-                pathname: '/login',
-            }}/>
+            if (!props.auth.authorized) return <Redirect to={'/login'}/>
 
             return <Component {...props}/>
         } else {
@@ -52,6 +65,6 @@ export const withAuthRedirect = (Component) => {
     }
 
     return compose(
-        connect(mapStateToPropsForRedirect, {setLoggedIn, setProfile})
+        connect(mapStateToPropsForRedirect, {setLoggedIn, obtainProfile})
     )(RedirectComponent)
 }

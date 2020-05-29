@@ -14,11 +14,11 @@ export class CountryApi {
 
 export class AuthApi {
 
-    static getAuthorizationParam = () => `JWT ${localStorage.getItem('token')}`
+    static getAuthorizationParam = (token) => `JWT ${token}`
 
     static instance = axios.create({
         baseURL: 'http://127.0.0.1:8000/api/',
-        headers: {'Authorization': this.getAuthorizationParam()}
+        headers: {'Authorization': this.getAuthorizationParam(localStorage.getItem('token'))}
     })
 
     static authUser = async (username, password) => {
@@ -30,7 +30,6 @@ export class AuthApi {
 
             this.setToken(token)
             console.log(r.status, r.statusText, token)
-            console.log(r.data)
 
             return r.data.user
         } catch (e) {
@@ -52,7 +51,7 @@ export class AuthApi {
 
         try {
             return await this.instance.get(url)
-        } catch (e) { return false }
+        } catch (e) { return e }
     }
 
     static logout = () => {
@@ -61,7 +60,7 @@ export class AuthApi {
     }
 
     static setToken = (token) => {
-        this.instance.defaults.headers.Authorization = this.getAuthorizationParam()
+        this.instance.defaults.headers.Authorization = this.getAuthorizationParam(token)
         localStorage.setItem('token', token)
     }
 

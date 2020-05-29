@@ -1,11 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
 import {compose} from "redux";
-import {addPost, setStatus, setProfile} from "../../redux/profile-reducer";
+import {addPost, setProfile, obtainProfile} from "../../redux/profile-reducer";
 
 import './profile.css'
 import {commonReduxForm, commonFormField, input, textarea} from "../common/form-control/form-control";
 import {withAuthRedirect} from "../hoc/with-auth-redirect";
+import withData from "../hoc/with-data";
 
 const SubmitNewPostContext = React.createContext(null)
 
@@ -110,7 +111,7 @@ const mapStateToProps = (state) => ({
 })
 
 export default compose(
-    connect(mapStateToProps, {setStatus, addPost, setProfile}),
-    // withData
-    withAuthRedirect
+    connect(mapStateToProps, {addPost, setProfile}),
+    withAuthRedirect,
+    // withData(obtainProfile)
 )(ProfileContainer)

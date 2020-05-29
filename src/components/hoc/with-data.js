@@ -1,49 +1,54 @@
 import React, {useEffect, useState} from 'react';
 import Spinner from "../common/spinner/spinner";
+import {connect} from "react-redux";
+import {compose} from "redux";
 
-const withData = (getData) => (View) => (props) => {
+const withData = (getData) => (View) => {
+    const Component = (props) => {
+        const [data, setData] = useState(null)
 
-    const [data, setData] = useState(null)
+        const [fetching, setFetching] = useState(true)
+        const [error, setError] = useState(false)
 
-    const [fetching, setFetching] = useState(true)
-    const [error, setError] = useState(false)
+        useEffect(() => {
+            update()
+        })
 
-    useEffect(() => {
-        update()
-    })
+        const update = () => {
+            setFetching(true)
+            setError(false)
 
-    const update = () => {
-        setFetching(true)
-        setError(false)
-
-        getData()
-            .then((data) => {
-                debugger
-                setTimeout(() => {
+            props.obtainProfile()
+                .then((data) => {
+                    setTimeout(() => {
+                        setFetching(false)
+                        setData(data)
+                    }, 3000)
+                })
+                .catch(() => {
                     setFetching(false)
-                    setData(data)
-                }, 3000)
-            })
-            .catch(() => {
-                setFetching(false)
-                setError(true)
-            })
-    }
+                    setError(true)
+                })
+        }
 
-    if (error) {
-        console.log('Error')
-        return <>Error</>
-    }
+        if (error) {
+            return <>Error</>
+        }
 
-    if (fetching) {
-        return <Spinner/>
-    }
+        if (fetching) {
+            return <Spinner/>
+        }
 
-    if (data) {
-        return <View {...props} data={data}/>
-    }
+        if (data) {
+            return <View {...props} />
+        }
 
-    return <>Other content</>
-};
+        return <>Other content</>
+    };
 
-export default withData;
+    return compose(
+        connect((state) => {}, {getData})
+    )(Component);
+}
+
+export default withData

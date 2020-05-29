@@ -2,7 +2,7 @@ import {stopSubmit} from "redux-form";
 import {AuthApi} from "../api/api";
 
 const authActions = {
-    SET_USER_CREDENTIALS: 'SET_USER_CREDENTIALS',
+    SET_USER_CREDENTIALS: 'SET_USER_CREDENTIALS'
 }
 
 const setUserCredentials = (credentials, authorized) => ({
@@ -17,7 +17,7 @@ let initialState = {
         id: null,
         username: null,
     },
-    authorized: false
+    authorized: false,
 }
 
 const authReducer = (state = initialState, action) => {

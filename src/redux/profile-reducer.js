@@ -1,3 +1,5 @@
+import {AuthApi} from "../api/api";
+
 const profileActions = {
     SET_PROFILE: 'SET_PROFILE',
     ADD_POST: 'ADD_POST',
@@ -6,6 +8,7 @@ const profileActions = {
 
 
 let initialState = {
+    username: '',
     profilePhoto: '',
     status: '',
     posts: [
@@ -17,7 +20,6 @@ let initialState = {
 }
 
 
-const setStatusCreator = (status) => ({type: profileActions.SET_STATUS, status})
 const addPostCreator = (post) => ({type: profileActions.ADD_POST, post})
 
 const setProfileCreator = (profile) => ({type: profileActions.SET_PROFILE, profile})
@@ -48,13 +50,17 @@ export const addPost = (post) => (dispatch) => {
     dispatch(addPostCreator(post))
 }
 
-export const setStatus = (status) => (dispatch) => {
-    dispatch(setStatusCreator(status))
-}
-
 export const setProfile = (profile) => (dispatch) => {
     dispatch(setProfileCreator(profile))
 }
 
+export const obtainProfile = (id) => async (dispatch) => {
+    let r = await AuthApi.getProfile(id)
+    setProfile({
+        username: r.data.user.username,
+        profilePhoto: r.data.profile_photo,
+        status: r.data.status
+    })(dispatch)
+}
 
 export default profileReducer
