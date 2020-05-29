@@ -1,5 +1,4 @@
 import {compose} from "redux";
-import {withAuthRedirect} from "../hoc/with-auth-redirect";
 import {contentComponents} from "../header/header";
 import {Route} from "react-router-dom";
 import React from "react";

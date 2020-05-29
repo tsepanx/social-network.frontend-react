@@ -5,7 +5,7 @@ import {AuthApi} from "../../api/api";
 import {compose} from "redux";
 import {setLoggedIn} from "../../redux/auth-reducer";
 import Spinner from "../common/spinner/spinner";
-import {setProfile, setStatus} from "../../redux/profile-reducer";
+import {setProfile} from "../../redux/profile-reducer";
 
 let mapStateToPropsForRedirect = (state) => ({
     authorized: state.auth.authorized,
@@ -25,14 +25,13 @@ export const withAuthRedirect = (Component) => {
                 let isAuthorized = response !== false
 
                 if (isAuthorized) {
-                    props.setLoggedIn(response.data.username)
+                    props.setLoggedIn(response.data)
 
                     let r = await AuthApi.getProfile(response.data.id)
                     props.setProfile({
                         profilePhoto: r.data.profile_photo,
                         status: r.data.status
                     })
-
                 }
             }
         }

@@ -7,20 +7,21 @@ import InfoContainer from '../info/info-container';
 import Login from '../login/login';
 import Profile from '../profile/profile';
 import TodoList from '../todo-list/todo-list';
+import {compose} from "redux";
+import {connect} from "react-redux";
+import Logout from "../logout/logout";
 
-const leftItems = [
-    {component: <Profile/>, path: '/profile', title: 'Profile'},
-    {component: <TodoList/>, path: '/todo', title: 'TODO'},
-    {component: <InfoContainer/>, path: '/stats', title: 'Statistics'},
-]
+const loginItem = {component: <Login/>, path: '/login', title: 'Login'}
+const logoutItem = {component: <Logout/>, path: '/logout', title: 'Logout'}
 
-const rightItems = [
-    {component: <Login/>, path: '/login', title: 'Login'}
-]
+const profileItem = {component: <Profile/>, path: '/profile', title: 'Profile'}
+const todoListItem = {component: <TodoList/>, path: '/todo', title: 'TODO'}
+const info = {component: <InfoContainer/>, path: '/stats', title: 'Statistics'}
 
-export const contentComponents = [...leftItems, ...rightItems]
+export const contentComponents = [profileItem, todoListItem, info, loginItem, logoutItem]
 
-// console.log(contentComponents)
+const leftItems = [profileItem, todoListItem, info]
+const rightItems = [loginItem]
 
 const itemToNavLink = (value, index) =>
     (<li>
@@ -29,17 +30,26 @@ const itemToNavLink = (value, index) =>
         </NavLink>
     </li>)
 
-let leftHeaderItems = leftItems.map(itemToNavLink)
-let rightHeaderItems = rightItems.map(itemToNavLink)
+let mapStateToProps = (state) => ({
+    auth: state.auth
+});
 
-const Header = () => {
+const Header = (props) => {
+
+    const userProfileItem = {component: <Profile/>, path: '/profile', title: props.auth.credentials.username}
+
+    const rightHeaderContent = props.auth.authorized ?
+        [userProfileItem, logoutItem] :
+        rightItems
 
     return (
         <div className='header'>
-            <ul className='d-flex'>{leftHeaderItems}</ul>
-            <ul className='d-flex'>{rightHeaderItems}</ul>
+            <ul className='d-flex'>{leftItems.map(itemToNavLink)}</ul>
+            <ul className='d-flex'>{rightHeaderContent.map(itemToNavLink)}</ul>
         </div>
     )
 }
 
-export default Header
+export default compose(
+    connect(mapStateToProps)
+)(Header)
