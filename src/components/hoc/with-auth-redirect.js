@@ -9,7 +9,6 @@ import {setProfile} from "../../redux/profile-reducer";
 
 let mapStateToPropsForRedirect = (state) => ({
     authorized: state.auth.authorized,
-    profile: state.profile,
 });
 
 export const withAuthRedirect = (Component) => {

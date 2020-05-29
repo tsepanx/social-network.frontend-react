@@ -5,7 +5,6 @@ import {addPost, setStatus, setProfile} from "../../redux/profile-reducer";
 
 import './profile.css'
 import {commonReduxForm, commonFormField, input, textarea} from "../common/form-control/form-control";
-import {TestApi} from "../../api/api";
 import {withAuthRedirect} from "../hoc/with-auth-redirect";
 
 const SubmitNewPostContext = React.createContext(null)

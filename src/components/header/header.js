@@ -31,14 +31,14 @@ const itemToNavLink = (value, index) =>
     </li>)
 
 let mapStateToProps = (state) => ({
-    auth: state.auth
+    ...state.auth
 });
 
 const Header = (props) => {
 
-    const userProfileItem = {component: <Profile/>, path: '/profile', title: props.auth.credentials.username}
+    const userProfileItem = {component: <Profile/>, path: '/profile', title: props.credentials.username}
 
-    const rightHeaderContent = props.auth.authorized ?
+    const rightHeaderContent = props.authorized ?
         [userProfileItem, logoutItem] :
         rightItems
 

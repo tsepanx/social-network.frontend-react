@@ -48,13 +48,13 @@ export const submitLogin = ({username, password}) => async (dispatch) => {
     if (isAuthorized) {
         setLoggedIn(response)(dispatch)
     } else {
-        dispatch(stopSubmit('login', {password: 'Wrong password or username'}))
+        dispatch(stopSubmit('login', {password: 'wrong password or username'}))
     }
 }
 
 export const submitLogout = () => async (dispatch) => {
     const response = await AuthApi.logout()
-    let success = response.data === true
+    let success = response === true
 
     if (success) {
         setLoggedOut()(dispatch)

@@ -66,7 +66,7 @@ export class AuthApi {
     }
 
     static removeToken = () => {
-        delete this.headers.Authorization
+        delete this.instance.defaults.headers.Authorization
         localStorage.removeItem('token')
     }
 }
