@@ -30,7 +30,17 @@ export const withAuthRedirect = (Component) => {
                     status: r.data.status
                 })
             } else {
-                props.submitLogout()
+                let status = r.response.status
+
+                switch (status) {
+                    case 401:
+                        props.submitLogout()
+                        break
+                    case 404:
+                        props.setProfile({
+                            loaded: true
+                        })
+                }
             }
         }
 
