@@ -23,7 +23,7 @@ const ProfileContainer = (props) => {
             let id = Number(url.split('/').slice(-1))
             if (!id) { throw 1}
             return id
-        } catch (e) { return 19 }
+        } catch (e) { return e }
     }
 
     const fetchProfile = async (id) => {

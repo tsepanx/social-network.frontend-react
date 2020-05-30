@@ -26,7 +26,7 @@ export const withAuthRedirect = (Component) => {
 
         if (!fetching) {
             // if (!props.auth.authorized)
-                // return <Redirect to={'/login'}/>
+                // return <Redirect to={'/login'}/> // TODO do redirect when unauthorized
 
             return <Component {...props}/>
         } else {

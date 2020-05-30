@@ -12,6 +12,7 @@ import {connect} from "react-redux";
 import Logout from "../logout/logout";
 import StartPage from "../start-page/start-page";
 import Settings from "../settings/settings";
+import Feed from "../feed/feed";
 
 const loginItem = {component: <Login/>, path: '/login', title: 'Login'}
 const logoutItem = {component: <Logout/>, path: '/logout', title: 'Logout'}
@@ -23,8 +24,10 @@ const settingsItem = {component: <Settings/>, path: '/settings', title: null}
 const profileItem = {component: <Profile/>, path: '/profile', title: 'Profile', exact: false}
 const todoListItem = {component: <TodoList/>, path: '/todo', title: 'TODO'}
 const info = {component: <InfoContainer/>, path: '/stats', title: 'Statistics'}
+const feed = {component: <Feed/>, path: '/feed', title: 'My News'}
 
-export const contentComponents = [profileItem, todoListItem, info, loginItem, logoutItem, startPageItem, settingsItem]
+
+export const contentComponents = [profileItem, todoListItem, info, feed, loginItem, logoutItem, startPageItem, settingsItem]
 
 const itemToNavLink = (value, index) =>
     (<li>
@@ -40,10 +43,10 @@ let mapStateToProps = (state) => ({
 const Header = (props) => {
 
     const settingsItem = {component: <Settings/>, path: '/settings', title: props.credentials.username}
-    const profileItem = {component: <Profile/>, path: `/profile/${props.credentials.id}`, title: 'Profile'}
+    const profileItem = {component: <Profile/>, path: `/profile/${props.credentials.id}`, title: 'My Profile'}
 
     const leftHeaderItems = props.authorized ?
-        [profileItem, todoListItem, info] :
+        [profileItem, todoListItem, info, feed] :
         []
 
     const rightHeaderContent = props.authorized ?
