@@ -1,6 +1,3 @@
-import {AuthApi} from "../api/api";
-import {submitLogout} from "./auth-reducer";
-
 const profileActions = {
     SET_PROFILE: 'SET_PROFILE',
     ADD_POST: 'ADD_POST'
@@ -18,7 +15,7 @@ let initialState = {
 
 const addPostCreator = (post) => ({type: profileActions.ADD_POST, post})
 
-const setProfileCreator = (profile) => ({type: profileActions.SET_PROFILE, profile: {...profile, loaded: true}})
+const setProfileCreator = (profile, loaded) => ({type: profileActions.SET_PROFILE, profile: {...profile, loaded: loaded}})
 
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -42,21 +39,11 @@ export const addPost = (post) => (dispatch) => {
 }
 
 export const setProfile = (profile) => (dispatch) => {
-    dispatch(setProfileCreator(profile))
+    dispatch(setProfileCreator(profile, true))
 }
 
-const obtainProfile = (id) => async (dispatch) => {
-    let r = await AuthApi.getProfile(id)
-
-    if (r.data) {
-        setProfile({
-            username: r.data.user.username,
-            profilePhoto: r.data.profile_photo,
-            status: r.data.status
-        })(dispatch)
-    } else {
-        submitLogout()
-    }
+export const resetProfile = () => (dispatch) => {
+    dispatch(setProfileCreator(initialState, false))
 }
 
 export default profileReducer

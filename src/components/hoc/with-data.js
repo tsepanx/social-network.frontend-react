@@ -51,4 +51,4 @@ const withData = (getData) => (View) => {
     )(Component);
 }
 
-export default withData
+// export default withData

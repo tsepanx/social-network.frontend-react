@@ -1,5 +1,6 @@
 import {stopSubmit} from "redux-form";
 import {AuthApi} from "../api/api";
+import {resetProfile} from "./profile-reducer";
 
 const authActions = {
     SET_USER_CREDENTIALS: 'SET_USER_CREDENTIALS'
@@ -52,12 +53,22 @@ export const submitLogin = ({username, password}) => async (dispatch) => {
     }
 }
 
+export const authCurrentUser = () => async (dispatch) => {
+    let response = await AuthApi.getMe()
+    let success = response !== false
+
+    if (success) {
+        setLoggedIn({...response.data})(dispatch)
+    }
+}
+
 export const submitLogout = () => async (dispatch) => {
     const response = await AuthApi.logout()
     let success = response === true
 
     if (success) {
         setLoggedOut()(dispatch)
+        resetProfile()(dispatch)
     } else {
         console.log('Error while logging out')
     }
