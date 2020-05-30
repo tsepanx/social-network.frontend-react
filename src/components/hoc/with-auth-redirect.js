@@ -17,7 +17,7 @@ export const withAuthRedirect = (Component) => {
     const RedirectComponent = (props) => {
 
         let [fetching, setFetching] = useState(true)
-        setTimeout(() => {setFetching(false)}, 200)
+        setTimeout(() => {setFetching(false)}, 300)
 
         const fetchProfile = async () => {
             const id = props.auth.credentials.id
@@ -55,7 +55,7 @@ export const withAuthRedirect = (Component) => {
         })
 
         if (!fetching) {
-            if (!props.auth.authorized) return <Redirect to={'/login'}/>
+            if (!props.auth.authorized && props.profile.loaded) return <Redirect to={'/login'}/>
 
             return <Component {...props}/>
         } else {

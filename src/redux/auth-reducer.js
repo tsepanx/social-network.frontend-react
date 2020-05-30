@@ -1,6 +1,6 @@
 import {stopSubmit} from "redux-form";
 import {AuthApi} from "../api/api";
-import {resetProfile} from "./profile-reducer";
+import {resetProfile, setProfileLoaded} from "./profile-reducer";
 
 const authActions = {
     SET_USER_CREDENTIALS: 'SET_USER_CREDENTIALS'
@@ -58,6 +58,7 @@ export const authCurrentUser = () => async (dispatch) => {
     let success = response !== false
 
     if (success) {
+        // await AuthApi.refreshToken()
         setLoggedIn({...response.data})(dispatch)
     }
 }

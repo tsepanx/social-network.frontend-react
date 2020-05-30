@@ -12,13 +12,42 @@ export class CountryApi {
     }
 }
 
+let storage = {
+    _get: (name) => {
+        let value = localStorage.getItem(name)
+        if (value) { return value }
+        throw `No such value in storage: ${name}`
+    },
+
+    _set: (name, value) => {
+        return localStorage.setItem(name, value)
+    },
+
+    _remove: (name) => {
+        return localStorage.removeItem(name)
+    },
+
+
+    getToken: () => {
+        return storage._get('token')
+    },
+
+    setToken: (value) => {
+        return storage._set('token', value)
+    },
+
+    removeToken: () => {
+        return storage._remove('token')
+    }
+}
+
 export class AuthApi {
 
     static getAuthorizationParam = (token) => `JWT ${token}`
 
     static instance = axios.create({
         baseURL: 'http://127.0.0.1:8000/api/',
-        headers: {'Authorization': this.getAuthorizationParam(localStorage.getItem('token'))}
+        headers: {'Authorization': this.getAuthorizationParam(storage.getToken())}
     })
 
     static authUser = async (username, password) => {
@@ -40,7 +69,9 @@ export class AuthApi {
 
         try {
             return await this.instance.get(url)
-        } catch (e) { return false }
+        } catch (e) {
+            return false
+        }
     }
 
     static getProfile = async (id) => {
@@ -48,7 +79,9 @@ export class AuthApi {
 
         try {
             return await this.instance.get(url)
-        } catch (e) { return e }
+        } catch (e) {
+            return e
+        }
     }
 
     static logout = () => {
@@ -56,13 +89,24 @@ export class AuthApi {
         return true
     }
 
+    static refreshToken = async () => {
+        let url = 'refresh/'
+
+        try {
+            let r = await this.instance.post(url, { token: storage.getToken() })
+            storage.setToken(r.data.token)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     static setToken = (token) => {
         this.instance.defaults.headers.Authorization = this.getAuthorizationParam(token)
-        localStorage.setItem('token', token)
+        storage.setToken(token)
     }
 
     static removeToken = () => {
         delete this.instance.defaults.headers.Authorization
-        localStorage.removeItem('token')
+        storage.removeToken()
     }
 }
