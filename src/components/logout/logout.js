@@ -6,7 +6,7 @@ import {Redirect} from "react-router-dom";
 
 const Logout = (props) => {
     props.submitLogout()
-    return <Redirect to={'/profile'}/>
+    return <Redirect to={'/'}/>
 }
 
 const mapStateToProps = (state) => ({

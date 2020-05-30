@@ -20,14 +20,11 @@ const startPageItem = {component: <StartPage/>, path: '/', title: null}
 const settingsItem = {component: <Settings/>, path: '/settings', title: null}
 
 
-const profileItem = {component: <Profile/>, path: '/profile', title: 'Profile'}
+const profileItem = {component: <Profile/>, path: '/profile', title: 'Profile', exact: false}
 const todoListItem = {component: <TodoList/>, path: '/todo', title: 'TODO'}
 const info = {component: <InfoContainer/>, path: '/stats', title: 'Statistics'}
 
 export const contentComponents = [profileItem, todoListItem, info, loginItem, logoutItem, startPageItem, settingsItem]
-
-const leftItems = [profileItem, todoListItem, info]
-const rightItems = [loginItem]
 
 const itemToNavLink = (value, index) =>
     (<li>
@@ -42,15 +39,20 @@ let mapStateToProps = (state) => ({
 
 const Header = (props) => {
 
-    const userProfileItem = {component: <Settings/>, path: '/settings', title: props.credentials.username}
+    const settingsItem = {component: <Settings/>, path: '/settings', title: props.credentials.username}
+    const profileItem = {component: <Profile/>, path: `/profile/${props.credentials.id}`, title: 'Profile'}
+
+    const leftHeaderItems = props.authorized ?
+        [profileItem, todoListItem, info] :
+        []
 
     const rightHeaderContent = props.authorized ?
-        [userProfileItem, logoutItem] :
-        rightItems
+        [settingsItem, logoutItem] :
+        [loginItem]
 
     return (
         <div className='header'>
-            <ul className='d-flex'>{leftItems.map(itemToNavLink)}</ul>
+            <ul className='d-flex'>{leftHeaderItems.map(itemToNavLink)}</ul>
             <ul className='d-flex'>{rightHeaderContent.map(itemToNavLink)}</ul>
         </div>
     )

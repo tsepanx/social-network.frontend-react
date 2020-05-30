@@ -43,7 +43,7 @@ let storage = {
 
 export class AuthApi {
 
-    static getAuthorizationParam = (token) => `JWT ${token}`
+    static getAuthorizationParam = (token) => token ? `JWT ${token}` : ''
 
     static instance = axios.create({
         baseURL: 'http://127.0.0.1:8000/api/',

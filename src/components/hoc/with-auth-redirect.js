@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {Redirect, useHistory} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
-import {AuthApi} from "../../api/api";
 import {compose} from "redux";
 import {authCurrentUser, submitLogout} from "../../redux/auth-reducer";
 import Spinner from "../common/spinner/spinner";
@@ -17,46 +16,17 @@ export const withAuthRedirect = (Component) => {
     const RedirectComponent = (props) => {
 
         let [fetching, setFetching] = useState(true)
-        setTimeout(() => {setFetching(false)}, 300)
-
-        const fetchProfile = async () => {
-            const id = props.auth.credentials.id
-            let r = await AuthApi.getProfile(id)
-
-            if (r.data) {
-                props.setProfile({
-                    profilePhoto: r.data.profile_photo,
-                    status: r.data.status,
-                    posts: r.data.posts
-                })
-            } else {
-                let status = r.response.status
-
-                switch (status) {
-                    case 401:
-                        props.submitLogout()
-                        break
-                    case 404:
-                        props.setProfile({
-                            loaded: true
-                        })
-                }
-            }
-        }
+        setTimeout(() => {setFetching(false)}, 200)
 
         useEffect(() => {
             if (!props.auth.authorized) {
                 props.authCurrentUser()
-            } else {
-                if (!props.profile.loaded) {
-                    fetchProfile()
-                }
             }
         })
 
         if (!fetching) {
-            if (!props.auth.authorized)
-                return <Redirect to={'/login'}/>
+            // if (!props.auth.authorized)
+                // return <Redirect to={'/login'}/>
 
             return <Component {...props}/>
         } else {

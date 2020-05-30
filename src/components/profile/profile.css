@@ -1,6 +1,6 @@
 .profile {
-    display: flex;
-    flex-wrap: wrap;
+    /*display: flex;*/
+    /*flex-wrap: wrap;*/
 }
 
 .profile div.bg-dark {
@@ -10,6 +10,7 @@
 .profile .left {
     height: fit-content;
     max-width: fit-content;
+    min-width: fit-content;
     padding: 15px;
 }
 
