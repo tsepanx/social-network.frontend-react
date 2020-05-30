@@ -26,10 +26,7 @@ export class AuthApi {
 
         try {
             let r = await this.instance.post(url, {username, password})
-            let token = r.data.token
-
-            this.setToken(token)
-            console.log(r.status, r.statusText, token)
+            this.setToken(r.data.token)
 
             return r.data.user
         } catch (e) {

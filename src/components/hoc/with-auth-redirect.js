@@ -25,9 +25,9 @@ export const withAuthRedirect = (Component) => {
 
             if (r.data) {
                 props.setProfile({
-                    username: r.data.user.username,
                     profilePhoto: r.data.profile_photo,
-                    status: r.data.status
+                    status: r.data.status,
+                    posts: r.data.posts
                 })
             } else {
                 let status = r.response.status
