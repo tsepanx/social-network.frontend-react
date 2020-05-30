@@ -10,15 +10,18 @@ import TodoList from '../todo-list/todo-list';
 import {compose} from "redux";
 import {connect} from "react-redux";
 import Logout from "../logout/logout";
+import StartPage from "../start-page/start-page";
 
 const loginItem = {component: <Login/>, path: '/login', title: 'Login'}
 const logoutItem = {component: <Logout/>, path: '/logout', title: 'Logout'}
+
+const startPageItem = {component: <StartPage/>, path: '/', title: null}
 
 const profileItem = {component: <Profile/>, path: '/profile', title: 'Profile'}
 const todoListItem = {component: <TodoList/>, path: '/todo', title: 'TODO'}
 const info = {component: <InfoContainer/>, path: '/stats', title: 'Statistics'}
 
-export const contentComponents = [profileItem, todoListItem, info, loginItem, logoutItem]
+export const contentComponents = [profileItem, todoListItem, info, loginItem, logoutItem, startPageItem]
 
 const leftItems = [profileItem, todoListItem, info]
 const rightItems = [loginItem]

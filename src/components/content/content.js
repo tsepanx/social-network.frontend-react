@@ -6,7 +6,7 @@ import React from "react";
 let routeItems = contentComponents.map((value, index) =>
     <Route
         key={index}
-        path={value.path}
+        exact path={value.path}
         render={() => value.component}
     />)
 

@@ -42,18 +42,18 @@ export const withAuthRedirect = (Component) => {
                 .then(r => {
                     setFetching(false)
                 })
-            if (props.profile.status === '') {  // TODO Some less stupid selector
-                console.log('status', props)
+            if (props.profile.status === '' && !fetching) {  // TODO Some less stupid selector
+                console.log('fetching', props)
                 profileFetch()
                     .then(r => {})
             }
         })
 
         useEffect(() => {
-            console.log('name', props)
+            console.log(props.auth.credentials.username, props)
             profileFetch()
                 .then(r => {})
-        }, [props.auth.username])
+        }, [props.auth.credentials.username])
 
         if (!fetching) {
             if (!props.auth.authorized) return <Redirect to={'/login'}/>
