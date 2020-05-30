@@ -11,17 +11,20 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import Logout from "../logout/logout";
 import StartPage from "../start-page/start-page";
+import Settings from "../settings/settings";
 
 const loginItem = {component: <Login/>, path: '/login', title: 'Login'}
 const logoutItem = {component: <Logout/>, path: '/logout', title: 'Logout'}
 
 const startPageItem = {component: <StartPage/>, path: '/', title: null}
+const settingsItem = {component: <Settings/>, path: '/settings', title: null}
+
 
 const profileItem = {component: <Profile/>, path: '/profile', title: 'Profile'}
 const todoListItem = {component: <TodoList/>, path: '/todo', title: 'TODO'}
 const info = {component: <InfoContainer/>, path: '/stats', title: 'Statistics'}
 
-export const contentComponents = [profileItem, todoListItem, info, loginItem, logoutItem, startPageItem]
+export const contentComponents = [profileItem, todoListItem, info, loginItem, logoutItem, startPageItem, settingsItem]
 
 const leftItems = [profileItem, todoListItem, info]
 const rightItems = [loginItem]
@@ -39,7 +42,7 @@ let mapStateToProps = (state) => ({
 
 const Header = (props) => {
 
-    const userProfileItem = {component: <Profile/>, path: '/profile', title: props.credentials.username}
+    const userProfileItem = {component: <Settings/>, path: '/settings', title: props.credentials.username}
 
     const rightHeaderContent = props.authorized ?
         [userProfileItem, logoutItem] :
@@ -52,6 +55,8 @@ const Header = (props) => {
         </div>
     )
 }
+
+
 
 export default compose(
     connect(mapStateToProps)
