@@ -37,7 +37,7 @@ export const setLoggedIn = (credentials) => (dispatch) => {
     dispatch(setUserCredentials(credentials, true))
 }
 
-export const setLoggedOut = () => (dispatch) => {
+const setLoggedOut = () => (dispatch) => {
     dispatch(setUserCredentials(initialState.credentials, false))
 }
 

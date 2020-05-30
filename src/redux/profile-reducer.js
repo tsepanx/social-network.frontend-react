@@ -1,28 +1,24 @@
 import {AuthApi} from "../api/api";
+import {submitLogout} from "./auth-reducer";
 
 const profileActions = {
     SET_PROFILE: 'SET_PROFILE',
-    ADD_POST: 'ADD_POST',
-    SET_STATUS: 'SET_STATUS'
+    ADD_POST: 'ADD_POST'
 }
 
 
 let initialState = {
-    username: '',
-    profilePhoto: '',
-    status: '',
-    posts: [
-        {
-            title: 'Some another',
-            text: 'Some another very long post text...Some another very long post text...Some another very long post text...Some another very long post text...'
-        }
-    ]
+    loaded: false,
+
+    profilePhoto: null,
+    status: null,
+    posts: []
 }
 
 
 const addPostCreator = (post) => ({type: profileActions.ADD_POST, post})
 
-const setProfileCreator = (profile) => ({type: profileActions.SET_PROFILE, profile})
+const setProfileCreator = (profile) => ({type: profileActions.SET_PROFILE, profile: {...profile, loaded: true}})
 
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -30,11 +26,6 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: [action.post, ...state.posts]
-            }
-        case profileActions.SET_STATUS:
-            return {
-                ...state,
-                status: action.status
             }
         case profileActions.SET_PROFILE:
             return {
@@ -54,13 +45,18 @@ export const setProfile = (profile) => (dispatch) => {
     dispatch(setProfileCreator(profile))
 }
 
-export const obtainProfile = (id) => async (dispatch) => {
+const obtainProfile = (id) => async (dispatch) => {
     let r = await AuthApi.getProfile(id)
-    setProfile({
-        username: r.data.user.username,
-        profilePhoto: r.data.profile_photo,
-        status: r.data.status
-    })(dispatch)
+
+    if (r.data) {
+        setProfile({
+            username: r.data.user.username,
+            profilePhoto: r.data.profile_photo,
+            status: r.data.status
+        })(dispatch)
+    } else {
+        submitLogout()
+    }
 }
 
 export default profileReducer
