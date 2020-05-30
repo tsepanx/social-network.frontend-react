@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Redirect} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import {connect} from "react-redux";
 import {AuthApi} from "../../api/api";
 import {compose} from "redux";
@@ -55,7 +55,8 @@ export const withAuthRedirect = (Component) => {
         })
 
         if (!fetching) {
-            if (!props.auth.authorized && props.profile.loaded) return <Redirect to={'/login'}/>
+            if (!props.auth.authorized)
+                return <Redirect to={'/login'}/>
 
             return <Component {...props}/>
         } else {

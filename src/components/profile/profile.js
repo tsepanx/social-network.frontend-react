@@ -6,46 +6,36 @@ import {addPost} from "../../redux/profile-reducer";
 import './profile.css'
 import {commonReduxForm, commonFormField, input, textarea} from "../common/form-control/form-control";
 import {withAuthRedirect} from "../hoc/with-auth-redirect";
-import Spinner from "../common/spinner/spinner";
 
 const SubmitNewPostContext = React.createContext(null)
 
 const ProfileContainer = (props) => {
 
-    // let [fetching, setFetching] = useState(true)
-    // setTimeout(() => {setFetching(false)}, 200)
-
     const onSubmitNewPost = (formData) => {
         props.addPost(formData)
     }
 
-    // if (!fetching) {
         return (
             <SubmitNewPostContext.Provider value={onSubmitNewPost}>
                 <><Profile {...props}/></>
             </SubmitNewPostContext.Provider>
         )
-    // } else {
-    //     return <Spinner/>
-    // }
-
-
 }
 
-const Profile = ({profilePhoto, status, posts}) => {
+const Profile = ({profilePhoto, status, posts, ...props}) => {
 
     return (
         <div className='profile'>
             <div className="row">
-                <div className="col-md-6">
-                    My Profile
+                <div className="col-md-3">
                     <div className="left bg-dark">
                         <ProfilePhoto src={profilePhoto}/>
+                        {/*Username: {props.auth.credentials.username}*/}
                         <ProfileStatus text={status}/>
                     </div>
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-8">
                     <div className='right'>
                         <ProfilePosts items={posts}/>
                     </div>
@@ -73,12 +63,15 @@ const ProfilePosts = ({items}) => {
         <SubmitNewPostContext.Consumer>
             {value => (
                 <div className="posts">
-                    Posts
-                    {commonReduxForm('new-post',
-                        value,
-                        fields,
-                        'Create new post')}
-                    {posts}
+                    <div>
+                        {posts}
+                    </div>
+                    <div>
+                        {commonReduxForm('new-post',
+                            value,
+                            fields,
+                            'Create new post')}
+                    </div>
                 </div>
             )}
         </SubmitNewPostContext.Consumer>
@@ -117,6 +110,7 @@ const ProfileStatus = ({text}) => {
 
 const mapStateToProps = (state) => ({
     ...state.profile,
+    auth: state.auth
 })
 
 export default compose(

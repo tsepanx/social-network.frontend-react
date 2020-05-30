@@ -1,6 +1,6 @@
 import {stopSubmit} from "redux-form";
 import {AuthApi} from "../api/api";
-import {resetProfile, setProfileLoaded} from "./profile-reducer";
+import {resetProfile} from "./profile-reducer";
 
 const authActions = {
     SET_USER_CREDENTIALS: 'SET_USER_CREDENTIALS'

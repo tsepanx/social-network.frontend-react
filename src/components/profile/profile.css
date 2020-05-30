@@ -13,9 +13,16 @@
     padding: 15px;
 }
 
+.profile .right .posts {
+    display: flex;
+    /*flex-direction: row;*/
+    /*flex-wrap: wrap;*/
+}
+
 .profile .post {
     margin: 10px;
-    max-width: 400px;
+    min-width: 400px;
+    /*max-width: 400px;*/
 }
 
 .profile .status {

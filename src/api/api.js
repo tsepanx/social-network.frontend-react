@@ -15,8 +15,8 @@ export class CountryApi {
 let storage = {
     _get: (name) => {
         let value = localStorage.getItem(name)
-        if (value) { return value }
-        throw `No such value in storage: ${name}`
+        return value ? value : ''
+        // throw `No such value in storage: ${name}`
     },
 
     _set: (name, value) => {
@@ -75,7 +75,7 @@ export class AuthApi {
     }
 
     static getProfile = async (id) => {
-        let url = `profile/${id}`
+        let url = `profile/${id}/`
 
         try {
             return await this.instance.get(url)
