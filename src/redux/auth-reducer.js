@@ -58,7 +58,7 @@ export const authCurrentUser = () => async (dispatch) => {
     let success = response !== false
 
     if (success) {
-        // await AuthApi.refreshToken()
+        await AuthApi.refreshToken()
         setLoggedIn({...response.data})(dispatch)
     }
 }
