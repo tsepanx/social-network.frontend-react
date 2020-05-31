@@ -17,9 +17,10 @@ const SubmitNewPostContext = React.createContext(null)
 const ProfileContainer = (props) => {
     let {profilePhoto} = props
 
-    let [fetching, setFetching] = useState(true)
+    let [fetching, setFetching] = useState(false)
+    let [loaded, setLoaded] = useState(false)
 
-    let imgSrc = fetching ? (TRANSPARENT_PROFILE_IMAGE) : (profilePhoto ? profilePhoto : DEFAULT_PROFILE_IMAGE)
+    let imgSrc = !loaded ? (TRANSPARENT_PROFILE_IMAGE) : (profilePhoto ? profilePhoto : DEFAULT_PROFILE_IMAGE)
     profilePhoto = <img src={imgSrc} alt='Profile photo'/>
 
 
@@ -60,9 +61,10 @@ const ProfileContainer = (props) => {
     }
 
     useEffect(() => {
-        if (fetching) {
+        if (!fetching && !loaded) {
+            setFetching(true)
             fetchProfile(getCurrentId())
-                .then(() => { setTimeout(() => { setFetching(false)}) })
+                .then(() => { setTimeout(() => {setLoaded(true)}) })
         }
     })
 
