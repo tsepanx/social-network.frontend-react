@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink, useHistory, withRouter} from 'react-router-dom';
 
 import './header.css'
 
@@ -36,9 +36,26 @@ const itemToNavLink = (value, index) =>
         </NavLink>
     </li>)
 
+const itemToButton = (value, index) => {
+    return (<SidebarButton {...value}/>)
+}
+
 let mapStateToProps = (state) => ({
     ...state.auth
 });
+
+const SidebarButton = withRouter(({component, path, title}) => {
+    // debugger
+    let history = useHistory()
+
+    const onClick = () => {
+        history.push(path)
+    }
+
+    return (
+        <div className="btn" onClick={onClick}>{title}</div>
+    )
+})
 
 const Header = (props) => {
 
@@ -55,8 +72,8 @@ const Header = (props) => {
 
     return (
         <div className='header'>
-            <ul className='d-flex'>{leftHeaderItems.map(itemToNavLink)}</ul>
-            <ul className='d-flex'>{rightHeaderContent.map(itemToNavLink)}</ul>
+            <ul className='d-flex left'>{leftHeaderItems.map(itemToNavLink)}</ul>
+            <ul className='d-flex right'>{rightHeaderContent.map(itemToNavLink)}</ul>
         </div>
     )
 }

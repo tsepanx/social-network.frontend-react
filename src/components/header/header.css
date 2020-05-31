@@ -5,6 +5,10 @@
     margin-top: .5rem;
 }
 
+.header ul.right li {
+    border: 1px solid #ad8cad;
+}
+
 .header ul li {
     list-style: none;
     padding: .5rem;

@@ -100,6 +100,16 @@ export class AuthApi {
         }
     }
 
+    static changeUsername = async (id, username) => {
+        let url = `user/${id}/`
+
+        try {
+            let r = await this.instance.put(url, {id, username})
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     static setToken = (token) => {
         this.instance.defaults.headers.Authorization = this.getAuthorizationParam(token)
         storage.setToken(token)
