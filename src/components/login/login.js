@@ -1,11 +1,12 @@
 import React from 'react';
-import {commonReduxForm, commonFormField, input} from '../common/form-control/form-control';
+import {commonFormField, input} from '../common/form/form-field/form-field';
 import {connect} from "react-redux";
 import {submitLogin} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
 import {defaultPasswordValidators} from "../../utils/validators";
 import {compose} from "redux";
 import {resetProfile} from "../../redux/profile-reducer";
+import {commonReduxForm} from "../common/form/form/form";
 
 const Login = (props) => {
 

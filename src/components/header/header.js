@@ -13,9 +13,11 @@ import Logout from "../logout/logout";
 import StartPage from "../start-page/start-page";
 import Settings from "../settings/settings";
 import Feed from "../feed/feed";
+import SignUp from "../signup";
 
 const loginItem = {component: <Login/>, path: '/login', title: 'Login'}
 const logoutItem = {component: <Logout/>, path: '/logout', title: 'Logout'}
+const signupItem = {component: <SignUp/>, path: '/join', title: 'Sign Up'}
 
 const startPageItem = {component: <StartPage/>, path: '/', title: null}
 const settingsItem = {component: <Settings/>, path: '/settings', title: null}
@@ -27,7 +29,18 @@ const info = {component: <InfoContainer/>, path: '/stats', title: 'Statistics'}
 const feed = {component: <Feed/>, path: '/feed', title: 'My News'}
 
 
-export const contentComponents = [profileItem, todoListItem, info, feed, loginItem, logoutItem, startPageItem, settingsItem]
+export const contentComponents = [profileItem,
+    todoListItem,
+    info,
+    feed,
+
+    loginItem,
+    logoutItem,
+    signupItem,
+
+    startPageItem,
+    settingsItem
+]
 
 const itemToNavLink = (value, index) =>
     (<li>
@@ -69,7 +82,7 @@ const Header = (props) => {
 
     const rightHeaderContent = props.authorized ?
         [settingsItem, logoutItem] :
-        [loginItem]
+        [signupItem, loginItem]
 
     return (
         <div className='header'>

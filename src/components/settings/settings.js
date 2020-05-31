@@ -6,8 +6,9 @@ import {useHistory} from "react-router-dom"
 import './settings.css'
 
 import {withAuthRedirect} from "../hoc/with-auth-redirect";
-import {commonFormField, commonReduxForm} from "../common/form-control/form-control";
+import {commonFormField} from "../common/form/form-field/form-field";
 import {AuthApi, UserApi} from "../../api/api";
+import {commonReduxForm} from "../common/form/form/form";
 
 const Settings = (props) => {
     return (<div className='settings'>

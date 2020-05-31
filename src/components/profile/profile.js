@@ -7,10 +7,11 @@ import DEFAULT_PROFILE_IMAGE from '../../assets/profile.png'
 import TRANSPARENT_PROFILE_IMAGE from '../../assets/transparent_profile.png'
 import './profile.css'
 
-import {commonReduxForm, commonFormField, input, textarea} from "../common/form-control/form-control";
+import {commonFormField, input, textarea} from "../common/form/form-field/form-field";
 import {withAuthRedirect} from "../hoc/with-auth-redirect";
 
 import {AuthApi, ProfileApi} from "../../api/api";
+import {commonReduxForm} from "../common/form/form/form";
 
 const SubmitNewPostContext = React.createContext(null)
 

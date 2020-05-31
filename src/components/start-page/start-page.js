@@ -4,9 +4,11 @@ import {connect} from "react-redux";
 import {withAuthRedirect} from "../hoc/with-auth-redirect";
 
 const StartPage = (props) => {
-    return <React.Fragment>
-        Start Page!!!
-    </React.Fragment>
+    return (
+        <div>
+            <h3>Start Page!!!</h3>
+        </div>
+    )
 }
 
 let mapStateToProps = (state) => ({
