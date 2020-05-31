@@ -16,9 +16,9 @@ const Settings = (props) => {
 const ChangeUsername = (props) => {
 
     const history = useHistory()
+    let userId = props.auth.credentials.id
 
     const onSubmit = (formData) => {
-        let userId = props.auth.credentials.id
         let newUsername = formData.username
 
         console.log(userId + newUsername)
@@ -39,8 +39,15 @@ const ChangeUsername = (props) => {
 }
 
 const DeleteAccount = (props) => {
+    const history = useHistory()
+    let userId = props.auth.credentials.id
+
     const onClick = () => {
-        console.log('account deleted')
+        AuthApi.deleteUser(userId)
+            .then(() => {
+                history.replace('/')
+                window.location.reload();
+            })
     }
 
     return (

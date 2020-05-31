@@ -110,6 +110,16 @@ export class AuthApi {
         }
     }
 
+    static deleteUser = async (id) => {
+        let url = `user/${id}/`
+
+        try {
+            let r = await this.instance.delete(url)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     static setToken = (token) => {
         this.instance.defaults.headers.Authorization = this.getAuthorizationParam(token)
         storage.setToken(token)
