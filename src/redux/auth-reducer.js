@@ -53,8 +53,8 @@ export const submitLogin = ({username, password}) => async (dispatch) => {
 
 export const submitSignUp = ({username, password}) => async (dispatch) => {
     try {
-        let response = await UserApi.createUser(username, password)
-        setLoggedIn(response)(dispatch)
+        await UserApi.createUser(username, password)
+        await authCurrentUser()(dispatch)
     } catch (e) {
         dispatch(stopSubmit('signup', e))
     }
@@ -65,20 +65,18 @@ export const authCurrentUser = () => async (dispatch) => {
         let r = await AuthApi.getMe()
         setLoggedIn(r.data)(dispatch)
 
-        await AuthApi.refreshToken()
+        return await AuthApi.refreshToken()
     } catch (e) {
         console.log(e)
     }
 }
 
 export const submitLogout = () => async (dispatch) => {
-    const response = await UserApi.logout()
-    let success = response === true
-
-    if (success) {
+    try {
+        await UserApi.logout()
         setLoggedOut()(dispatch)
         resetProfile()(dispatch)
-    } else {
+    } catch (e) {
         console.log('Error while logging out')
     }
 }

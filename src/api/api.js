@@ -27,7 +27,7 @@ const requestWithThrow = (func, onError = null) => async (...args) => {
         return await func(...args)
     } catch (e) {
         if (onError)
-            return onError()
+            onError()
 
         let data = e.response.data
 
@@ -49,8 +49,6 @@ export class AuthApi {
         setToken(r.data.token)
 
         return r.data.user
-    }, () => {
-        // debugger
     })
 
     static getMe = requestWithThrow(async () => {
@@ -76,20 +74,18 @@ export class AuthApi {
 export class UserApi {
     static endpointUrl = 'user/'
 
-    static logout = () => {
+    static logout = requestWithThrow(() => {
         removeToken()
-        return true
-    }
+    })
 
     static changeUsername = requestWithThrow(async (id, username) => {
         return instance.put(endpointUrlWithId(id)(this.endpointUrl), {id, username});
     })
 
     static createUser = requestWithThrow(async (username, password) => {
+        removeToken()
         let r = await instance.post(this.endpointUrl, {username, password})
         setToken(r.data.token)
-
-        return r.data
     })
 
     static deleteUser = requestWithThrow(async id => {
