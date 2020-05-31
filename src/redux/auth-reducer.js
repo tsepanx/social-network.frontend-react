@@ -47,7 +47,7 @@ export const submitLogin = ({username, password}) => async (dispatch) => {
         let response = await AuthApi.authUser(username, password)
         setLoggedIn(response)(dispatch)
     } catch (e) {
-        dispatch(stopSubmit('login', {error: e, password: e}))
+        dispatch(stopSubmit('login', e))
     }
 }
 

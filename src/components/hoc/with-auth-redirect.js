@@ -28,7 +28,7 @@ export const withAuthRedirect = (Component) => {
         })
 
         if (loaded) {
-            return <Component {...props}/>
+            return <Component {...props}/> // TODO divide components with auth to redirect able and not
         } else {
             return <Spinner/>
         }

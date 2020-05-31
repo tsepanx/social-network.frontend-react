@@ -22,44 +22,44 @@ const removeToken = () => {
 
 const endpointUrlWithId = (id) => (endpointUrl) => `${endpointUrl}${id}/`
 
-const requestWithThrow = (func) => async (...args) => {
+const requestWithThrow = (func, onError = null) => async (...args) => {
     try {
         return await func(...args)
     } catch (e) {
+        if (onError)
+            return onError()
+
         let data = e.response.data
 
         if (DEFAULT_ERROR_KEY in data)
-            throw {password: [DEFAULT_ERROR_KEY]}
+            throw {password: data[DEFAULT_ERROR_KEY]}
         if ('username' in data)
             throw {username: data.username[0]}
         if ('password' in data)
             throw {password: data.password[0]}
+        if ('detail' in data)
+            throw {detail: data.detail}
     }
 }
 
 export class AuthApi {
-    static authUser = async (username, password) => {
+    static authUser = requestWithThrow(async (username, password) => {
         let url = 'auth/'
+        let r = await instance.post(url, {username, password})
+        setToken(r.data.token)
 
-        try {
-            let r = await instance.post(url, {username, password})
-            setToken(r.data.token)
+        return r.data.user
+    }, () => {
+        // debugger
+    })
 
-            return r.data.user
-        } catch (e) {
-            throw e.response.data[DEFAULT_ERROR_KEY]
-        }
-    }
-
-    static getMe = async () => {
+    static getMe = requestWithThrow(async () => {
         let url = 'me/'
 
-        try {
-            return await instance.get(url)
-        } catch (e) {
-            return false
-        }
-    }
+        return await instance.get(url)
+    }, () => {
+        window.location.href = '/login'
+    })
 
     static refreshToken = async () => {
         let url = 'refresh/'
@@ -81,15 +81,9 @@ export class UserApi {
         return true
     }
 
-    static changeUsername = async (id, username) => {
-        try {
-            return await instance.put(
-                endpointUrlWithId(id)(this.endpointUrl), {id, username}
-            )
-        } catch (e) {
-            console.log(e)
-        }
-    }
+    static changeUsername = requestWithThrow(async (id, username) => {
+        return instance.put(endpointUrlWithId(id)(this.endpointUrl), {id, username});
+    })
 
     static createUser = requestWithThrow(async (username, password) => {
         let r = await instance.post(this.endpointUrl, {username, password})
@@ -98,15 +92,11 @@ export class UserApi {
         return r.data
     })
 
-    static deleteUser = async (id) => {
-        try {
-            return await instance.delete(
-                endpointUrlWithId(id)(this.endpointUrl)
-            )
-        } catch (e) {
-            console.log(e)
-        }
-    }
+    static deleteUser = requestWithThrow(async id => {
+        return await instance.delete(
+            endpointUrlWithId(id)(this.endpointUrl)
+        )
+    })
 }
 
 export class ProfileApi {

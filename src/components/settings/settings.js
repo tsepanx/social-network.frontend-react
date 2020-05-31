@@ -11,6 +11,10 @@ import {AuthApi, UserApi} from "../../api/api";
 import {commonReduxForm} from "../common/form/form/form";
 
 const Settings = (props) => {
+
+    // if (!props.auth.authorized)
+
+
     return (<div className='settings'>
         <h2>Settings</h2>
         <ul>
