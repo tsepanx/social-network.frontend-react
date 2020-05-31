@@ -15,9 +15,13 @@ import {AuthApi} from "../../api/api";
 const SubmitNewPostContext = React.createContext(null)
 
 const ProfileContainer = (props) => {
+    let {profilePhoto} = props
 
     let [fetching, setFetching] = useState(true)
-    // setTimeout(() => { setFetching(false)}, 300)
+
+    let imgSrc = fetching ? (TRANSPARENT_PROFILE_IMAGE) : (profilePhoto ? profilePhoto : DEFAULT_PROFILE_IMAGE)
+    profilePhoto = <img src={imgSrc} alt='Profile photo'/>
+
 
     const getCurrentId = () => {
         let url = window.location.pathname
@@ -65,13 +69,9 @@ const ProfileContainer = (props) => {
         props.addPost(formData)
     }
 
-    // if (!fetching) {
-        return (<SubmitNewPostContext.Provider value={onSubmitNewPost}>
-            <><Profile {...props}/></>
-        </SubmitNewPostContext.Provider>)
-    // } else {
-    //     return <Spinner/>
-    // }
+    return (<SubmitNewPostContext.Provider value={onSubmitNewPost}>
+        <><Profile {...props} profilePhoto={profilePhoto}/></>
+    </SubmitNewPostContext.Provider>)
 
 }
 
@@ -82,7 +82,7 @@ const Profile = ({profilePhoto, status, posts, ...props}) => {
             <div className="row">
                 <div className="col-md-3">
                     <div className="left bg-dark">
-                        <ProfilePhoto src={profilePhoto}/>
+                        <ProfilePhoto profilePhoto={profilePhoto}/>
                         {/*Username: {props.auth.credentials.username}*/}
                         <ProfileStatus text={status}/>
                     </div>
@@ -145,23 +145,12 @@ const ProfilePost = ({title, text}) => {
     )
 }
 
-const ProfilePhoto = ({src}) => {
-
-    let [fetching, setFetching] = useState(true)
-    setTimeout(() => {setFetching(false)}, 200)
-
-    const alt = 'Profile image'
-
-    const imgSrc = src ? src : DEFAULT_PROFILE_IMAGE
-    const img = <img src={imgSrc} alt={alt}/>
-
-    if (fetching) {
-        return (<div className='photo'>
-            <img src={TRANSPARENT_PROFILE_IMAGE} alt={alt}/>
-        </div>)
-    } else {
-        return (<div className='photo'>{img}</div>)
-    }
+const ProfilePhoto = ({profilePhoto}) => {
+    return (
+        <div className='photo'>
+            {profilePhoto}
+        </div>
+    )
 }
 
 const ProfileStatus = ({text}) => {
