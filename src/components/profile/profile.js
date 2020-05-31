@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {compose} from "redux";
-import {addPost} from "../../redux/profile-reducer";
+import {addPost, resetProfile} from "../../redux/profile-reducer";
 
 import DEFAULT_PROFILE_IMAGE from '../../assets/profile.png'
 import TRANSPARENT_PROFILE_IMAGE from '../../assets/transparent_profile.png'
@@ -51,6 +51,7 @@ const ProfileContainer = (props) => {
                     props.submitLogout()
                     break
                 case 404:
+                    props.resetProfile()
                     props.setProfile({
                         loaded: true
                     })
@@ -63,7 +64,7 @@ const ProfileContainer = (props) => {
             fetchProfile(getCurrentId())
                 .then(() => { setTimeout(() => { setFetching(false)}) })
         }
-    }, [])
+    })
 
     const onSubmitNewPost = (formData) => {
         props.addPost(formData)
@@ -167,7 +168,6 @@ const mapStateToProps = (state) => ({
 })
 
 export default compose(
-    connect(mapStateToProps, {addPost}),
+    connect(mapStateToProps, {addPost, resetProfile}),
     withAuthRedirect,
-    // withData(obtainProfile)
 )(ProfileContainer)

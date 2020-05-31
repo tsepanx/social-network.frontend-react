@@ -2,20 +2,19 @@ import React from 'react';
 import {commonReduxForm, commonFormField, input} from '../common/form-control/form-control';
 import {connect} from "react-redux";
 import {submitLogin} from "../../redux/auth-reducer";
-import {Redirect, useHistory} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import {defaultPasswordValidators} from "../../utils/validators";
 import {compose} from "redux";
+import {resetProfile} from "../../redux/profile-reducer";
 
 const Login = (props) => {
-
-    const history = useHistory()
 
     const onSubmit = (formData) => {
         props.submitLogin(formData)
     }
 
     if (props.authorized) {
-        // history.goBack()
+        props.resetProfile()
         return <Redirect to={`/profile/${props.credentials.id}`}/>
     }
 
@@ -50,5 +49,5 @@ const mapStateToProps = (state) => {
 }
 
 export default compose(
-    connect(mapStateToProps, {submitLogin})
+    connect(mapStateToProps, {submitLogin, resetProfile})
 )(Login)
