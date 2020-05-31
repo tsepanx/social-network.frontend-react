@@ -39,4 +39,3 @@ export const commonFormField = (name,
         type={type}
         validate={validators}
     />
-

@@ -13,7 +13,7 @@ import Logout from "../logout/logout";
 import StartPage from "../start-page/start-page";
 import Settings from "../settings/settings";
 import Feed from "../feed/feed";
-import SignUp from "../signup";
+import SignUp from "../signup/signup";
 
 const loginItem = {component: <Login/>, path: '/login', title: 'Login'}
 const logoutItem = {component: <Logout/>, path: '/logout', title: 'Logout'}

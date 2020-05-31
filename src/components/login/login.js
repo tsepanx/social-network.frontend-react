@@ -3,8 +3,11 @@ import {commonFormField, input} from '../common/form/form-field/form-field';
 import {connect} from "react-redux";
 import {submitLogin} from "../../redux/auth-reducer";
 import {Redirect} from "react-router-dom";
-import {defaultPasswordValidators} from "../../utils/validators";
 import {compose} from "redux";
+
+import './login.css'
+
+import {defaultPasswordValidators} from "../../utils/validators";
 import {resetProfile} from "../../redux/profile-reducer";
 import {commonReduxForm} from "../common/form/form/form";
 
@@ -33,8 +36,8 @@ const Login = (props) => {
         'password'
     )
 
-    return <div>
-        <h2>Login</h2>
+    return <div className='login'>
+        <h3 className='login-title'>Login page</h3>
         {commonReduxForm(
             'login',
             onSubmit,

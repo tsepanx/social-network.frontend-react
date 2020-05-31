@@ -12,11 +12,12 @@ export const commonReduxForm = (name,
     const Form = ({handleSubmit}) => (
         <div className='form bg-dark'>
             <form onSubmit={handleSubmit}>
-                <h2 className='title'>{title}</h2>
-                <>{fields}</>
-                <button className={`btn ${buttonClass}`}>
-                    {buttonText}
-                </button>
+
+                <h3 className='form-title'>{title}</h3>
+
+                <div>{fields}</div>
+
+                <button className={`btn ${buttonClass}`}>{buttonText}</button>
             </form>
         </div>
     )
