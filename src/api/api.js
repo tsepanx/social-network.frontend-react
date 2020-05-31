@@ -22,6 +22,21 @@ const removeToken = () => {
 
 const endpointUrlWithId = (id) => (endpointUrl) => `${endpointUrl}${id}/`
 
+const requestWithThrow = (func) => async (...args) => {
+    try {
+        return await func(...args)
+    } catch (e) {
+        let data = e.response.data
+
+        if (DEFAULT_ERROR_KEY in data)
+            throw {password: [DEFAULT_ERROR_KEY]}
+        if ('username' in data)
+            throw {username: data.username[0]}
+        if ('password' in data)
+            throw {password: data.password[0]}
+    }
+}
+
 export class AuthApi {
     static authUser = async (username, password) => {
         let url = 'auth/'
@@ -76,19 +91,12 @@ export class UserApi {
         }
     }
 
-    static createUser = async (username, password) => {
-        try {
-            let r = await instance.post(this.endpointUrl, {username, password})
-            setToken(r.data.token)
+    static createUser = requestWithThrow(async (username, password) => {
+        let r = await instance.post(this.endpointUrl, {username, password})
+        setToken(r.data.token)
 
-            r = await AuthApi.getMe()
-
-            return r.data
-        } catch (e) {
-            console.log(e)
-            return false
-        }
-    }
+        return r.data
+    })
 
     static deleteUser = async (id) => {
         try {
