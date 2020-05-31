@@ -1,5 +1,5 @@
-import { CountryApi } from "../api/api";
 import {stopSubmit} from "redux-form";
+import {CountryApi} from "../api/other";
 
 let infoAction = {
     SET_ITEMS: 'SET_INFO_ITEMS',

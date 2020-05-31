@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {useHistory} from "react-router-dom"
 import {withAuthRedirect} from "../hoc/with-auth-redirect";
 import {commonFormField, commonReduxForm} from "../common/form-control/form-control";
-import {AuthApi} from "../../api/api";
+import {AuthApi, UserApi} from "../../api/api";
 
 const Settings = (props) => {
     return (<div className='settings'>
@@ -22,7 +22,7 @@ const ChangeUsername = (props) => {
         let newUsername = formData.username
 
         console.log(userId + newUsername)
-        AuthApi.changeUsername(userId, newUsername)
+        UserApi.changeUsername(userId, newUsername)
             .then(() => {
                 history.replace('/')
                 window.location.reload();
@@ -43,7 +43,7 @@ const DeleteAccount = (props) => {
     let userId = props.auth.credentials.id
 
     const onClick = () => {
-        AuthApi.deleteUser(userId)
+        UserApi.deleteUser(userId)
             .then(() => {
                 history.replace('/')
                 window.location.reload();

@@ -1,61 +1,32 @@
 import * as axios from "axios";
+import {storage} from "./other";
 
-export class CountryApi {
-    static _instance = axios.create({
-        baseURL: 'https://corona.lmao.ninja/v2/'
-    })
+const getAuthorizationParam = (token) => token ? `JWT ${token}` : ''
 
+const instance = axios.create({
+    baseURL: 'http://127.0.0.1:8000/api/',
+    headers: {'Authorization': getAuthorizationParam(storage.getToken())}
+})
 
-    static async receiveCountryData(name) {
-        let url = `countries/${name}`
-        return this._instance.get(url).then(response => response.data)
-    }
+const setToken = (token) => {
+    instance.defaults.headers.Authorization = getAuthorizationParam(token)
+    storage.setToken(token)
 }
 
-let storage = {
-    _get: (name) => {
-        let value = localStorage.getItem(name)
-        return value ? value : ''
-        // throw `No such value in storage: ${name}`
-    },
-
-    _set: (name, value) => {
-        return localStorage.setItem(name, value)
-    },
-
-    _remove: (name) => {
-        return localStorage.removeItem(name)
-    },
-
-
-    getToken: () => {
-        return storage._get('token')
-    },
-
-    setToken: (value) => {
-        return storage._set('token', value)
-    },
-
-    removeToken: () => {
-        return storage._remove('token')
-    }
+const removeToken = () => {
+    delete instance.defaults.headers.Authorization
+    storage.removeToken()
 }
+
+const baseUrlWithId = (id) => (baseUrl) => `${baseUrl}/${id}/`
 
 export class AuthApi {
-
-    static getAuthorizationParam = (token) => token ? `JWT ${token}` : ''
-
-    static instance = axios.create({
-        baseURL: 'http://127.0.0.1:8000/api/',
-        headers: {'Authorization': this.getAuthorizationParam(storage.getToken())}
-    })
-
     static authUser = async (username, password) => {
         let url = 'auth/'
 
         try {
-            let r = await this.instance.post(url, {username, password})
-            this.setToken(r.data.token)
+            let r = await instance.post(url, {username, password})
+            setToken(r.data.token)
 
             return r.data.user
         } catch (e) {
@@ -68,65 +39,63 @@ export class AuthApi {
         let url = 'me/'
 
         try {
-            return await this.instance.get(url)
+            return await instance.get(url)
         } catch (e) {
             return false
         }
-    }
-
-    static getProfile = async (id) => {
-        let url = `profile/${id}/`
-
-        try {
-            return await this.instance.get(url)
-        } catch (e) {
-            return e
-        }
-    }
-
-    static logout = () => {
-        this.removeToken()
-        return true
     }
 
     static refreshToken = async () => {
         let url = 'refresh/'
 
         try {
-            let r = await this.instance.post(url, { token: storage.getToken() })
+            let r = await instance.post(url, {token: storage.getToken()})
             storage.setToken(r.data.token)
         } catch (e) {
             console.log(e)
         }
     }
+}
+
+export class UserApi {
+    static baseUrl = 'user'
+
+    static logout = () => {
+        removeToken()
+        return true
+    }
 
     static changeUsername = async (id, username) => {
-        let url = `user/${id}/`
-
         try {
-            let r = await this.instance.put(url, {id, username})
+            return await instance.put(
+                baseUrlWithId(id)(this.baseUrl), {id, username}
+            )
         } catch (e) {
             console.log(e)
         }
     }
 
     static deleteUser = async (id) => {
-        let url = `user/${id}/`
-
         try {
-            let r = await this.instance.delete(url)
+            return await instance.delete(
+                baseUrlWithId(id)(this.baseUrl)
+            )
         } catch (e) {
             console.log(e)
         }
     }
+}
 
-    static setToken = (token) => {
-        this.instance.defaults.headers.Authorization = this.getAuthorizationParam(token)
-        storage.setToken(token)
-    }
+export class ProfileApi {
+    static baseUrl = 'profile'
 
-    static removeToken = () => {
-        delete this.instance.defaults.headers.Authorization
-        storage.removeToken()
+    static getProfile = async (id) => {
+        try {
+            return await instance.get(
+                baseUrlWithId(id)(this.baseUrl)
+            )
+        } catch (e) {
+            return e
+        }
     }
 }

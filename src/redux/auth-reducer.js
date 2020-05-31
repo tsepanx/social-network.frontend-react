@@ -1,5 +1,5 @@
 import {stopSubmit} from "redux-form";
-import {AuthApi} from "../api/api";
+import {AuthApi, UserApi} from "../api/api";
 import {resetProfile} from "./profile-reducer";
 
 const authActions = {
@@ -64,7 +64,7 @@ export const authCurrentUser = () => async (dispatch) => {
 }
 
 export const submitLogout = () => async (dispatch) => {
-    const response = await AuthApi.logout()
+    const response = await UserApi.logout()
     let success = response === true
 
     if (success) {

@@ -10,7 +10,7 @@ import './profile.css'
 import {commonReduxForm, commonFormField, input, textarea} from "../common/form-control/form-control";
 import {withAuthRedirect} from "../hoc/with-auth-redirect";
 
-import {AuthApi} from "../../api/api";
+import {AuthApi, ProfileApi} from "../../api/api";
 
 const SubmitNewPostContext = React.createContext(null)
 
@@ -36,7 +36,7 @@ const ProfileContainer = (props) => {
 
     const fetchProfile = async (id) => {
         // const id = props.auth.credentials.id
-        let r = await AuthApi.getProfile(id)
+        let r = await ProfileApi.getProfile(id)
 
         if (r.data) {
             props.setProfile({
