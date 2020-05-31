@@ -1,0 +1,13 @@
+.settings ul li {
+    list-style: none;
+    margin: 40px 0;
+}
+
+.settings .danger {
+    min-width: 50%;
+    max-width: fit-content;
+
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid red;
+}

@@ -2,15 +2,34 @@ import React from "react";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {useHistory} from "react-router-dom"
+
+import './settings.css'
+
 import {withAuthRedirect} from "../hoc/with-auth-redirect";
 import {commonFormField, commonReduxForm} from "../common/form-control/form-control";
 import {AuthApi, UserApi} from "../../api/api";
 
 const Settings = (props) => {
     return (<div className='settings'>
-        <ChangeUsername {...props}/>
-        <DeleteAccount {...props}/>
+        <h2>Settings</h2>
+        <ul>
+            <ChangeUsername {...props}/>
+            <DangerZone {...props}/>
+        </ul>
     </div>)
+}
+
+const DangerZone = (props) => {
+    return (
+        <li className="danger">
+            <h5>Danger zone</h5>
+
+            <div className='list-group'>
+                <div className='list-group-item'>Some danger option</div>
+                <DeleteAccount {...props}/>
+            </div>
+        </li>
+    )
 }
 
 const ChangeUsername = (props) => {
@@ -32,9 +51,10 @@ const ChangeUsername = (props) => {
     const usernameField = commonFormField('username', undefined, 'New username')
 
     return (
-        <div>
+        <li>
+            <h4>Change username</h4>
             {commonReduxForm('change-username', onSubmit, [usernameField])}
-        </div>
+        </li>
     )
 }
 
@@ -51,8 +71,9 @@ const DeleteAccount = (props) => {
     }
 
     return (
-        <div>
-            <div className="btn btn-danger" onClick={onClick}>Delete Account</div>
+        <div className="list-group-item">
+            <h5>Delete your account</h5>
+            <div className="btn btn-danger" onClick={onClick}>Delete</div>
         </div>
     )
 }

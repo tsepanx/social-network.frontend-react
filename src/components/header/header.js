@@ -45,7 +45,6 @@ let mapStateToProps = (state) => ({
 });
 
 const SidebarButton = withRouter(({component, path, title}) => {
-    // debugger
     let history = useHistory()
 
     const onClick = () => {
@@ -59,7 +58,9 @@ const SidebarButton = withRouter(({component, path, title}) => {
 
 const Header = (props) => {
 
-    const settingsItem = {component: <Settings/>, path: '/settings', title: props.credentials.username}
+    const usernameToLoggedTitle = username => `Logged: ${username}`
+
+    const settingsItem = {component: <Settings/>, path: '/settings', title: usernameToLoggedTitle(props.credentials.username)}
     const profileItem = {component: <Profile/>, path: `/profile/${props.credentials.id}`, title: 'My Profile'}
 
     const leftHeaderItems = props.authorized ?
