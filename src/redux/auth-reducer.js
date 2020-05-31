@@ -43,13 +43,24 @@ const setLoggedOut = () => (dispatch) => {
 }
 
 export const submitLogin = ({username, password}) => async (dispatch) => {
-    let response = await AuthApi.authUser(username, password)
-    const isAuthorized = response !== false
 
-    if (isAuthorized) {
+    try {
+        let response = await AuthApi.authUser(username, password)
+
+        setLoggedIn(response)(dispatch)
+    } catch (e) {
+        dispatch(stopSubmit('login', {password: e}))
+    }
+}
+
+export const submitSignUp = ({username, password}) => async (dispatch) => {
+    let response = await UserApi.createUser(username, password)
+    const success = response !== false
+
+    if (success) {
         setLoggedIn(response)(dispatch)
     } else {
-        dispatch(stopSubmit('login', {password: 'wrong password or username'}))
+        dispatch(stopSubmit('signup', {password: 'Error'}))
     }
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './form-field.module.css';
 import {Field} from 'redux-form';
-import {defaultInputValidators} from '../../../../utils/validators';
+import {defaultInputValidators, defaultPasswordValidators} from '../../../../utils/validators';
 
 const FormFieldComponent = (Element) => ({input, meta: {touched, error}, child, ...props}) => {
     const hasError = touched && error;
@@ -32,10 +32,26 @@ export const commonFormField = (name,
                          placeholder = '',
                          validators = defaultInputValidators,
                          type = 'text') =>
-    <Field
+    (<Field
         component={component}
         placeholder={placeholder}
         name={name}
         type={type}
         validate={validators}
-    />
+    />)
+
+export const defaultField = {
+    username: commonFormField(
+        'username',
+        input,
+        'Username'
+    ),
+
+    password: commonFormField(
+        'password',
+        input,
+        'Password',
+        defaultPasswordValidators,
+        'password'
+    )
+}

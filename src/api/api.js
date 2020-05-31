@@ -1,6 +1,8 @@
 import * as axios from "axios";
 import {storage} from "./other";
 
+const DEFAULT_ERROR_KEY = 'non_field_errors'
+
 const getAuthorizationParam = (token) => token ? `JWT ${token}` : ''
 
 const instance = axios.create({
@@ -18,7 +20,7 @@ const removeToken = () => {
     storage.removeToken()
 }
 
-const baseUrlWithId = (id) => (baseUrl) => `${baseUrl}/${id}/`
+const endpointUrlWithId = (id) => (endpointUrl) => `${endpointUrl}${id}/`
 
 export class AuthApi {
     static authUser = async (username, password) => {
@@ -30,8 +32,7 @@ export class AuthApi {
 
             return r.data.user
         } catch (e) {
-            console.log(e)
-            return false
+            throw e.response.data[DEFAULT_ERROR_KEY]
         }
     }
 
@@ -58,7 +59,7 @@ export class AuthApi {
 }
 
 export class UserApi {
-    static baseUrl = 'user'
+    static endpointUrl = 'user/'
 
     static logout = () => {
         removeToken()
@@ -68,17 +69,31 @@ export class UserApi {
     static changeUsername = async (id, username) => {
         try {
             return await instance.put(
-                baseUrlWithId(id)(this.baseUrl), {id, username}
+                endpointUrlWithId(id)(this.endpointUrl), {id, username}
             )
         } catch (e) {
             console.log(e)
         }
     }
 
+    static createUser = async (username, password) => {
+        try {
+            let r = await instance.post(this.endpointUrl, {username, password})
+            setToken(r.data.token)
+
+            r = await AuthApi.getMe()
+
+            return r.data
+        } catch (e) {
+            console.log(e)
+            return false
+        }
+    }
+
     static deleteUser = async (id) => {
         try {
             return await instance.delete(
-                baseUrlWithId(id)(this.baseUrl)
+                endpointUrlWithId(id)(this.endpointUrl)
             )
         } catch (e) {
             console.log(e)
@@ -87,12 +102,12 @@ export class UserApi {
 }
 
 export class ProfileApi {
-    static baseUrl = 'profile'
+    static endpointUrl = 'profile/'
 
     static getProfile = async (id) => {
         try {
             return await instance.get(
-                baseUrlWithId(id)(this.baseUrl)
+                endpointUrlWithId(id)(this.endpointUrl)
             )
         } catch (e) {
             return e
