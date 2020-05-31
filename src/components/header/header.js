@@ -46,7 +46,7 @@ const Header = (props) => {
     const profileItem = {component: <Profile/>, path: `/profile/${props.credentials.id}`, title: 'My Profile'}
 
     const leftHeaderItems = props.authorized ?
-        [profileItem, todoListItem, info, feed] :
+        [profileItem, feed, todoListItem, info] :
         []
 
     const rightHeaderContent = props.authorized ?

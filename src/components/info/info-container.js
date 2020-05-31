@@ -53,6 +53,6 @@ const InfoContainer = (props) => {
 let mapStateToProps = (state) => ({...state.info})
 
 export default compose(
-    withAuthRedirect,
+    // withAuthRedirect,
     connect(mapStateToProps, {reload, validateCountry})
 )(InfoContainer)

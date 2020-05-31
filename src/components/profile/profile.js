@@ -64,7 +64,7 @@ const ProfileContainer = (props) => {
         if (!fetching && !loaded) {
             setFetching(true)
             fetchProfile(getCurrentId())
-                .then(() => { setTimeout(() => {setLoaded(true)}) })
+                .then(() => { setLoaded(true) })
         }
     })
 

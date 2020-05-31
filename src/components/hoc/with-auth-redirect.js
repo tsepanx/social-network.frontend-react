@@ -14,16 +14,20 @@ export const withAuthRedirect = (Component) => {
 
     const RedirectComponent = (props) => {
 
-        let [fetching, setFetching] = useState(true)
-        setTimeout(() => {setFetching(false)}, 200)
+        let [fetching, setFetching] = useState(false)
+        let [loaded, setLoaded] = useState(false)
 
         useEffect(() => {
-            if (!props.auth.authorized) {
-                props.authCurrentUser()
+            if (!fetching && !loaded) {
+                setFetching(true)
+                if (!props.auth.authorized) {
+                    props.authCurrentUser()
+                }
             }
+            setTimeout(() => {setLoaded(true)}, 200)
         })
 
-        if (!fetching) {
+        if (loaded) {
             return <Component {...props}/>
         } else {
             return <Spinner/>

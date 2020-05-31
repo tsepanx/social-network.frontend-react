@@ -37,5 +37,5 @@ const mapStateToProps = (state) => ({...state.todo})
 
 export default compose(
     connect(mapStateToProps, {addTodo, updateTodo}),
-    withAuthRedirect,
+    // withAuthRedirect,
 )(TodoList);
