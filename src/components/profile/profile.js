@@ -3,11 +3,14 @@ import {connect} from "react-redux";
 import {compose} from "redux";
 import {addPost} from "../../redux/profile-reducer";
 
+import DEFAULT_PROFILE_IMAGE from '../../assets/profile.png'
+import TRANSPARENT_PROFILE_IMAGE from '../../assets/transparent_profile.png'
 import './profile.css'
+
 import {commonReduxForm, commonFormField, input, textarea} from "../common/form-control/form-control";
 import {withAuthRedirect} from "../hoc/with-auth-redirect";
+
 import {AuthApi} from "../../api/api";
-import Spinner from "../common/spinner/spinner";
 
 const SubmitNewPostContext = React.createContext(null)
 
@@ -143,11 +146,22 @@ const ProfilePost = ({title, text}) => {
 }
 
 const ProfilePhoto = ({src}) => {
-    return (
-        <div className='photo'>
-            <img src={src} alt='Profile image'/>
-        </div>
-    )
+
+    let [fetching, setFetching] = useState(true)
+    setTimeout(() => {setFetching(false)}, 200)
+
+    const alt = 'Profile image'
+
+    const imgSrc = src ? src : DEFAULT_PROFILE_IMAGE
+    const img = <img src={imgSrc} alt={alt}/>
+
+    if (fetching) {
+        return (<div className='photo'>
+            <img src={TRANSPARENT_PROFILE_IMAGE} alt={alt}/>
+        </div>)
+    } else {
+        return (<div className='photo'>{img}</div>)
+    }
 }
 
 const ProfileStatus = ({text}) => {
