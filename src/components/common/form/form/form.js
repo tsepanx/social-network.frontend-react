@@ -2,7 +2,7 @@ import {reduxForm} from "redux-form";
 import React from "react";
 
 import './form.css'
-import {defaultField} from "../form-field/form-field";
+import {commonFormField, defaultField, input, textarea} from "../form-field/form-field";
 
 export const commonReduxForm = (name,
                                 onSubmit,
@@ -34,5 +34,12 @@ export const defaultForm = (onSubmit) => ({
 
     signup: commonReduxForm('signup', onSubmit,
         [defaultField.username, defaultField.password],
-        'Sign Up')
+        'Sign Up'),
+
+
+    newPost: commonReduxForm('post', onSubmit,
+        [
+            commonFormField('title', input, 'Post title'),
+            commonFormField('text', textarea, 'Post text')
+        ], 'New post'),
 })

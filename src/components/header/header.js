@@ -14,6 +14,8 @@ import StartPage from "../start-page/start-page";
 import Settings from "../settings/settings";
 import Feed from "../feed/feed";
 import SignUp from "../signup/signup";
+import Friends from "../friends/friends";
+import Messages from "../messages/messages";
 
 const loginItem = {component: <Login/>, path: '/login', title: 'Login'}
 const logoutItem = {component: <Logout/>, path: '/logout', title: 'Logout'}
@@ -24,15 +26,22 @@ const settingsItem = {component: <Settings/>, path: '/settings', title: null}
 
 
 const profileItem = {component: <Profile/>, path: '/profile', title: 'Profile', exact: false}
+const feedItem = {component: <Feed/>, path: '/feed', title: 'News'}
+const friendsItem = {component: <Friends/>, path: '/friends', title: 'Friends'}
+const messagesItem = {component: <Messages/>, path: '/messages', title: 'Messages'}
+
 const todoListItem = {component: <TodoList/>, path: '/todo', title: 'TODO'}
 const info = {component: <InfoContainer/>, path: '/stats', title: 'Statistics'}
-const feed = {component: <Feed/>, path: '/feed', title: 'My News'}
 
 
-export const contentComponents = [profileItem,
+export const contentComponents = [
+    profileItem,
+    feedItem,
+    friendsItem,
+    messagesItem,
+
     todoListItem,
     info,
-    feed,
 
     loginItem,
     logoutItem,
@@ -77,7 +86,7 @@ const Header = (props) => {
     const profileItem = {component: <Profile/>, path: `/profile/${props.credentials.id}`, title: 'My Profile'}
 
     const leftHeaderItems = props.authorized ?
-        [profileItem, feed, todoListItem, info] :
+        [profileItem, feedItem, friendsItem, messagesItem, todoListItem, info] :
         []
 
     const rightHeaderContent = props.authorized ?

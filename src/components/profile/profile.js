@@ -7,13 +7,10 @@ import DEFAULT_PROFILE_IMAGE from '../../assets/profile.png'
 import TRANSPARENT_PROFILE_IMAGE from '../../assets/transparent_profile.png'
 import './profile.css'
 
-import {commonFormField, input, textarea} from "../common/form/form-field/form-field";
 import {withAuthRedirect} from "../hoc/with-auth-redirect";
 
-import {AuthApi, ProfileApi} from "../../api/api";
-import {commonReduxForm} from "../common/form/form/form";
-
-const SubmitNewPostContext = React.createContext(null)
+import {ProfileApi} from "../../api/api";
+import {defaultForm} from "../common/form/form/form";
 
 const ProfileContainer = (props) => {
     let {profilePhoto} = props
@@ -69,17 +66,14 @@ const ProfileContainer = (props) => {
         }
     })
 
-    const onSubmitNewPost = (formData) => {
-        props.addPost(formData)
-    }
-
-    return (<SubmitNewPostContext.Provider value={onSubmitNewPost}>
-        <><Profile {...props} profilePhoto={profilePhoto}/></>
-    </SubmitNewPostContext.Provider>)
-
+    return (
+        <div>
+            <Profile {...props} profilePhoto={profilePhoto}/>
+        </div>
+    )
 }
 
-const Profile = ({profilePhoto, status, posts, ...props}) => {
+const Profile = ({profilePhoto, status, posts, addPost, ...props}) => {
 
     return (
         <div className='profile'>
@@ -94,7 +88,7 @@ const Profile = ({profilePhoto, status, posts, ...props}) => {
 
                 <div className="col-md-8">
                     <div className='right'>
-                        <ProfilePosts items={posts}/>
+                        <ProfilePosts items={posts} addPost={addPost}/>
                     </div>
                 </div>
             </div>
@@ -102,7 +96,7 @@ const Profile = ({profilePhoto, status, posts, ...props}) => {
     )
 }
 
-const ProfilePosts = ({items}) => {
+const ProfilePosts = ({items, addPost}) => {
     let posts = items.map((value, index) =>
         <ProfilePost
             key={index}
@@ -111,28 +105,15 @@ const ProfilePosts = ({items}) => {
         />
     )
 
-    const fields = [
-        commonFormField('title', input, 'Post title'),
-        commonFormField('text', textarea, 'Post text')
-    ]
-
     return (
-        <SubmitNewPostContext.Consumer>
-            {value => (
-                <div className="posts">
-                    <div>
-                        {posts}
-                    </div>
-                    <div>
-                        {commonReduxForm('new-post',
-                            value,
-                            fields,
-                            'Create new post')}
-                    </div>
-                </div>
-            )}
-        </SubmitNewPostContext.Consumer>
-
+        <div className="posts">
+            <div>
+                {posts}
+            </div>
+            <div>
+                {defaultForm(addPost).newPost}
+            </div>
+        </div>
     )
 }
 
