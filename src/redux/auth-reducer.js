@@ -52,6 +52,16 @@ export const submitLogin = ({username, password}) => async (dispatch) => {
     }
 }
 
+export const submitLogout = () => async (dispatch) => {
+    try {
+        await UserApi.logout()
+        setLoggedOut()(dispatch)
+        resetProfile()(dispatch)
+    } catch (e) {
+        console.log('Error while logging out')
+    }
+}
+
 export const submitSignUp = ({username, password}) => async (dispatch) => {
     try {
         await UserApi.createUser(username, password)
@@ -77,14 +87,28 @@ export const authCurrentUser = (refreshToken = false) => async (dispatch) => {
     }
 }
 
-export const submitLogout = () => async (dispatch) => {
+export const submitChangeUsername = (id, username) => async (dispatch) => {
     try {
-        await UserApi.logout()
-        setLoggedOut()(dispatch)
-        resetProfile()(dispatch)
+        await UserApi.changeUsername(id, username)
+        await authCurrentUser(false)(dispatch)
+
+        window.location.reload()
     } catch (e) {
-        console.log('Error while logging out')
+        debugger
     }
 }
+
+export const submitChangePassword = (id, password) => async (dispatch) => {
+    try {
+        await UserApi.changePassword(id, password)
+        await authCurrentUser()(dispatch)
+
+        window.location.reload()
+    } catch (e) {
+        debugger
+        let r = e.response
+    }
+}
+
 
 export default authReducer

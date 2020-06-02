@@ -6,20 +6,21 @@ import {useHistory} from "react-router-dom"
 import './settings.css'
 
 import {withAuthRedirect} from "../hoc/with-auth-redirect";
-import {commonFormField} from "../common/form/form-field/form-field";
-import {AuthApi, UserApi} from "../../api/api";
+import {defaultField} from "../common/form/form-field/form-field";
+import {UserApi} from "../../api/api";
 import {commonReduxForm} from "../common/form/form/form";
+import {submitChangeUsername, submitChangePassword} from "../../redux/auth-reducer";
 
 const Settings = (props) => {
 
-    // if (!props.auth.authorized)
-
+    let userId = props.auth.credentials.id
 
     return (<div className='settings'>
         <h2>Settings</h2>
         <ul>
-            <ChangeUsername {...props}/>
-            <DangerZone {...props}/>
+            <ChangeUsername {...props} userId={userId}/>
+            <ChangePassword {...props} userId={userId}/>
+            <DangerZone {...props} userId={userId}/>
         </ul>
     </div>)
 }
@@ -39,21 +40,11 @@ const DangerZone = (props) => {
 
 const ChangeUsername = (props) => {
 
-    const history = useHistory()
-    let userId = props.auth.credentials.id
-
     const onSubmit = (formData) => {
-        let newUsername = formData.username
-
-        console.log(userId + newUsername)
-        UserApi.changeUsername(userId, newUsername)
-            .then(() => {
-                history.replace('/')
-                window.location.reload();
-            })
+        props.submitChangeUsername(props.userId, formData.username)
     }
 
-    const usernameField = commonFormField('username', undefined, 'New username')
+    const usernameField = defaultField.username
 
     return (
         <li>
@@ -63,12 +54,28 @@ const ChangeUsername = (props) => {
     )
 }
 
+const ChangePassword = (props) => {
+
+    const onSubmit = (formData) => {
+        props.submitChangePassword(props.userId, formData.password)
+    }
+
+    const passwordField = defaultField.password
+
+    return (
+        <li>
+            <h4>Change password</h4>
+            {commonReduxForm('change-password', onSubmit, [passwordField])}
+        </li>
+    )
+
+}
+
 const DeleteAccount = (props) => {
     const history = useHistory()
-    let userId = props.auth.credentials.id
 
     const onClick = () => {
-        UserApi.deleteUser(userId)
+        UserApi.deleteUser(props.userId)
             .then(() => {
                 history.replace('/')
                 window.location.reload();
@@ -88,6 +95,6 @@ let mapStateToProps = (state) => ({
 });
 
 export default compose(
-    connect(mapStateToProps, {}),
+    connect(mapStateToProps, {submitChangeUsername, submitChangePassword}),
     withAuthRedirect,
 )(Settings)

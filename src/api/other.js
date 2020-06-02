@@ -32,11 +32,11 @@ export let storage = {
         return storage._get('token')
     },
 
-    setToken: (value) => {
+    _setToken: (value) => {
         return storage._set('token', value)
     },
 
-    removeToken: () => {
+    _removeToken: () => {
         return storage._remove('token')
     }
 }

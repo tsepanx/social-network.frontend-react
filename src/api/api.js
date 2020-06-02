@@ -12,12 +12,16 @@ const instance = axios.create({
 
 const setToken = (token) => {
     instance.defaults.headers.Authorization = getAuthorizationParam(token)
-    storage.setToken(token)
+    storage._setToken(token)
 }
 
 const removeToken = () => {
     delete instance.defaults.headers.Authorization
-    storage.removeToken()
+    storage._removeToken()
+}
+
+const getInstanceToken = () => {
+    return instance.defaults.headers.Authorization
 }
 
 const endpointUrlWithId = (id) => (endpointUrl) => `${endpointUrl}${id}/`
@@ -54,6 +58,7 @@ export class AuthApi {
     static getMe = requestWithThrow(async () => {
         let url = 'me/'
 
+        console.log('me', getInstanceToken())
         return await instance.get(url)
     }, () => {
         window.location.href = '/login'
@@ -64,7 +69,7 @@ export class AuthApi {
 
         try {
             let r = await instance.post(url, {token: storage.getToken()})
-            storage.setToken(r.data.token)
+            setToken(r.data.token)
         } catch (e) {
             console.log(e)
         }
@@ -79,7 +84,12 @@ export class UserApi {
     })
 
     static changeUsername = requestWithThrow(async (id, username) => {
-        return instance.put(endpointUrlWithId(id)(this.endpointUrl), {id, username});
+        let r = await instance.put(endpointUrlWithId(id)(this.endpointUrl), {id, username});
+        setToken(r.data.token)
+    })
+
+    static changePassword = requestWithThrow(async (id, password) => {
+        instance.put(endpointUrlWithId(id)(this.endpointUrl), {id, password})
     })
 
     static createUser = requestWithThrow(async (username, password) => {
