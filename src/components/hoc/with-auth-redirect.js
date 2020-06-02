@@ -21,7 +21,7 @@ export const withAuthRedirect = (Component) => {
             if (!fetching && !loaded) {
                 setFetching(true)
                 if (!props.auth.authorized) {
-                    props.authCurrentUser()
+                    props.authCurrentUser(false)
                 }
             }
             setTimeout(() => {setLoaded(true)}, 200)

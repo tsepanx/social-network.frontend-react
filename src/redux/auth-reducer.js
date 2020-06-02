@@ -44,8 +44,9 @@ const setLoggedOut = () => (dispatch) => {
 
 export const submitLogin = ({username, password}) => async (dispatch) => {
     try {
-        let response = await AuthApi.authUser(username, password)
-        setLoggedIn(response)(dispatch)
+        await AuthApi.authUser(username, password)
+        await authCurrentUser(true)(dispatch)
+        // setLoggedIn(response)(dispatch)
     } catch (e) {
         dispatch(stopSubmit('login', e))
     }
@@ -54,18 +55,23 @@ export const submitLogin = ({username, password}) => async (dispatch) => {
 export const submitSignUp = ({username, password}) => async (dispatch) => {
     try {
         await UserApi.createUser(username, password)
-        await authCurrentUser()(dispatch)
+        let id = await authCurrentUser(false)(dispatch)
+
+        window.location.href = `/profile/${id}`
     } catch (e) {
         dispatch(stopSubmit('signup', e))
     }
 }
 
-export const authCurrentUser = () => async (dispatch) => {
+export const authCurrentUser = (refreshToken = false) => async (dispatch) => {
     try {
         let r = await AuthApi.getMe()
         setLoggedIn(r.data)(dispatch)
 
-        return await AuthApi.refreshToken()
+        if (refreshToken)
+            await AuthApi.refreshToken()
+
+        return r.data.id
     } catch (e) {
         console.log(e)
     }
