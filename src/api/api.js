@@ -10,6 +10,8 @@ const instance = axios.create({
     headers: {'Authorization': getAuthorizationParam(storage.getToken())}
 })
 
+window.instance = instance
+
 const setToken = (token) => {
     instance.defaults.headers.Authorization = getAuthorizationParam(token)
     storage._setToken(token)
@@ -58,9 +60,9 @@ export class AuthApi {
     static getMe = requestWithThrow(async () => {
         let url = 'me/'
 
-        console.log('me', getInstanceToken())
         return await instance.get(url)
     }, () => {
+        debugger
         window.location.href = '/login'
     })
 
@@ -84,12 +86,12 @@ export class UserApi {
     })
 
     static changeUsername = requestWithThrow(async (id, username) => {
-        let r = await instance.put(endpointUrlWithId(id)(this.endpointUrl), {id, username});
+        let r = await instance.patch(endpointUrlWithId(id)(this.endpointUrl), {id, username});
         setToken(r.data.token)
     })
 
     static changePassword = requestWithThrow(async (id, password) => {
-        instance.put(endpointUrlWithId(id)(this.endpointUrl), {id, password})
+        return instance.patch(endpointUrlWithId(id)(this.endpointUrl), {id, password});
     })
 
     static createUser = requestWithThrow(async (username, password) => {
@@ -115,6 +117,18 @@ export class ProfileApi {
             )
         } catch (e) {
             return e
+        }
+    }
+}
+
+export class FriendsApi {
+    static endpointUrl = 'social/'
+
+    static getRelationships = async (id) => {
+        try {
+            return await instance.get(endpointUrlWithId(id)(this.endpointUrl))
+        } catch (e) {
+            console.log(e)
         }
     }
 }

@@ -1,0 +1,30 @@
+.profile-card {
+    margin: 30px 0;
+
+    display: flex;
+    border-radius: 8px;
+
+    max-width: 25rem;
+    padding: 10px;
+}
+
+.profile-card .info {
+    margin: .5rem 1rem;
+
+    position: relative;
+}
+
+.profile-card .info .btn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+
+.profile-card img {
+    border-radius: 10px;
+    border-style: none;
+
+    padding: 5px;
+    width: 100px;
+}
