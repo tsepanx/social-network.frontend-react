@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {compose} from "redux";
-import {addPost, resetProfile} from "../../redux/profile-reducer";
+import {addPost, resetProfile} from "../../../redux/profile-reducer";
 
-import DEFAULT_PROFILE_IMAGE from '../../assets/profile.png'
-import TRANSPARENT_PROFILE_IMAGE from '../../assets/transparent_profile.png'
+import DEFAULT_PROFILE_IMAGE from '../../../assets/profile.png'
+import TRANSPARENT_PROFILE_IMAGE from '../../../assets/transparent_profile.png'
 import './profile.css'
 
-import {withAuthRedirect} from "../hoc/with-auth-redirect";
+import {withAuthRedirect} from "../../hoc/with-auth-redirect";
 
-import {ProfileApi} from "../../api/api";
-import {defaultForm} from "../common/form/form/form";
+import {ProfileApi} from "../../../api/api";
+import {defaultForm} from "../../common/form/form/form";
 
 const ProfileContainer = (props) => {
     let {profilePhoto} = props

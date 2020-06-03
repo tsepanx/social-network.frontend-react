@@ -35,9 +35,7 @@ const profileReducer = (state = initialState, action) => {
 }
 
 export const addPost = (post) => (dispatch) => {
-    // if (Object.keys(post).length !== 0) {
-        dispatch(addPostCreator(post))
-    // }
+    dispatch(addPostCreator(post))
 }
 
 export const setProfile = (profile) => (dispatch) => {
@@ -47,7 +45,5 @@ export const setProfile = (profile) => (dispatch) => {
 export const resetProfile = () => (dispatch) => {
     dispatch(setProfileCreator(initialState, false))
 }
-
-// export const submitNewPost = (post) =>
 
 export default profileReducer

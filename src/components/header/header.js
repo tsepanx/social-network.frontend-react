@@ -5,7 +5,7 @@ import './header.css'
 
 import InfoContainer from '../info/info-container';
 import Login from '../login/login';
-import Profile from '../profile/profile';
+import Profile from '../profile/profile-page/profile';
 import TodoList from '../todo-list/todo-list';
 import {compose} from "redux";
 import {connect} from "react-redux";

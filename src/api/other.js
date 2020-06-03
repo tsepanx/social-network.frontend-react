@@ -16,11 +16,11 @@ export let storage = {
     _get: (name) => {
         let value = localStorage.getItem(name)
         return value ? value : ''
-        // throw `No such value in storage: ${name}`
     },
 
     _set: (name, value) => {
-        return localStorage.setItem(name, value)
+        if (value)
+            return localStorage.setItem(name, value)
     },
 
     _remove: (name) => {
