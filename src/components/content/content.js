@@ -29,5 +29,5 @@ let Content = () => {
 }
 
 export default compose(
-    // withAuthRedirect
+    // withAuth
 )(Content)

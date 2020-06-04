@@ -7,10 +7,7 @@ import DEFAULT_PROFILE_IMAGE from '../../../assets/profile.png'
 import TRANSPARENT_PROFILE_IMAGE from '../../../assets/transparent_profile.png'
 import './profile.css'
 
-import {withAuthRedirect} from "../../hoc/with-auth-redirect";
-
-import {ProfileApi} from "../../../api/api";
-import {defaultForm} from "../../common/form/form/form";
+import {withAuth} from "../../hoc/with-auth";
 
 const ProfileContainer = (props) => {
     let {profilePhoto} = props
@@ -32,43 +29,43 @@ const ProfileContainer = (props) => {
         } catch (e) { return e }
     }
 
-    const fetchProfile = async (id) => {
-        // const id = props.auth.credentials.id
-        let r = await ProfileApi.getProfile(id)
+    // const fetchProfile = async (id) => {
+    //     let r = await ProfileApi.getProfile(id)
+    //
+    //     if (r.data) {
+    //         props.setProfile({
+    //             profilePhoto: r.data.profile_photo,
+    //             status: r.data.status,
+    //             posts: r.data.posts
+    //         })
+    //     } else {
+    //         let status = r.response.status
+    //
+    //         switch (status) {
+    //             case 401:
+    //                 props.submitLogout()
+    //                 break
+    //             case 404:
+    //                 props.resetProfile()
+    //                 props.setProfile({
+    //                     loaded: true
+    //                 })
+    //         }
+    //     }
+    // }
 
-        if (r.data) {
-            props.setProfile({
-                profilePhoto: r.data.profile_photo,
-                status: r.data.status,
-                posts: r.data.posts
-            })
-        } else {
-            let status = r.response.status
-
-            switch (status) {
-                case 401:
-                    props.submitLogout()
-                    break
-                case 404:
-                    props.resetProfile()
-                    props.setProfile({
-                        loaded: true
-                    })
-            }
-        }
-    }
-
-    useEffect(() => {
-        if (!fetching && !loaded) {
-            setFetching(true)
-            fetchProfile(getCurrentId())
-                .then(() => { setLoaded(true) })
-        }
-    })
+    // useEffect(() => {
+    //     if (!fetching && !loaded) {
+    //         setFetching(true)
+    //         fetchProfile(getCurrentId())
+    //             .then(() => { setLoaded(true) })
+    //     }
+    // })
 
     return (
         <div>
-            <Profile {...props} profilePhoto={profilePhoto}/>
+            Profile
+            {/*<Profile {...props} profilePhoto={profilePhoto}/>*/}
         </div>
     )
 }
@@ -147,11 +144,10 @@ const ProfileStatus = ({text}) => {
 }
 
 const mapStateToProps = (state) => ({
-    ...state.profile,
     auth: state.auth
 })
 
 export default compose(
     connect(mapStateToProps, {addPost, resetProfile}),
-    withAuthRedirect,
+    withAuth,
 )(ProfileContainer)

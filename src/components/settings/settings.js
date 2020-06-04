@@ -5,7 +5,7 @@ import {useHistory} from "react-router-dom"
 
 import './settings.css'
 
-import {withAuthRedirect} from "../hoc/with-auth-redirect";
+import {withAuth} from "../hoc/with-auth";
 import {defaultField} from "../common/form/form-field/form-field";
 import {UserApi} from "../../api/api";
 import {commonReduxForm} from "../common/form/form/form";
@@ -96,5 +96,5 @@ let mapStateToProps = (state) => ({
 
 export default compose(
     connect(mapStateToProps, {submitChangeUsername, submitChangePassword}),
-    withAuthRedirect,
+    withAuth,
 )(Settings)

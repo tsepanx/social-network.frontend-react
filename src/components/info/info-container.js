@@ -7,7 +7,7 @@ import {commonFormField, input} from "../common/form/form-field/form-field";
 import {reload, validateCountry} from "../../redux/info-reducer";
 import InfoItems from "./info-items";
 import {compose} from "redux";
-import {withAuthRedirect} from "../hoc/with-auth-redirect";
+import {withAuth} from "../hoc/with-auth";
 import {commonReduxForm} from "../common/form/form/form";
 
 const InfoContainer = (props) => {
@@ -54,6 +54,6 @@ const InfoContainer = (props) => {
 let mapStateToProps = (state) => ({...state.info})
 
 export default compose(
-    // withAuthRedirect,
+    // withAuth,
     connect(mapStateToProps, {reload, validateCountry})
 )(InfoContainer)

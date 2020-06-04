@@ -1,7 +1,7 @@
 import React from "react";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {withAuthRedirect} from "../hoc/with-auth-redirect";
+import {withAuth} from "../hoc/with-auth";
 
 const StartPage = (props) => {
     return (
@@ -17,5 +17,5 @@ let mapStateToProps = (state) => ({
 
 export default compose(
     connect(mapStateToProps, {}),
-    // withAuthRedirect
+    // withAuth
 )(StartPage)

@@ -2,7 +2,7 @@ import React from "react";
 
 import {connect} from "react-redux";
 import {compose} from "redux";
-import {withAuthRedirect} from "../hoc/with-auth-redirect";
+import {withAuth} from "../hoc/with-auth";
 
 const Messages = (props) => {
     return (
@@ -16,5 +16,5 @@ const mapStateToProps = (state) => ({
 
 export default compose(
     connect(mapStateToProps, {}),
-    withAuthRedirect,
+    withAuth,
 )(Messages)

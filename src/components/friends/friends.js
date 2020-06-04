@@ -2,10 +2,9 @@ import React, {useEffect, useState} from "react";
 
 import {connect} from "react-redux";
 import {compose} from "redux";
-import {withAuthRedirect} from "../hoc/with-auth-redirect";
+import {withAuth} from "../hoc/with-auth";
 import {FriendsApi} from "../../api/api";
 import ProfileCard from "../profile/profile-card/profile-card";
-import Spinner from "../common/spinner/spinner";
 
 const friendsToCards = (value, index) => {
     return <ProfileCard
@@ -55,5 +54,5 @@ const mapStateToProps = (state) => ({
 
 export default compose(
     connect(mapStateToProps, {}),
-    withAuthRedirect
+    withAuth
 )(Friends)

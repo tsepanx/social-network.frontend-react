@@ -61,9 +61,6 @@ export class AuthApi {
         let url = 'me/'
 
         return await instance.get(url)
-    }, () => {
-        debugger
-        window.location.href = '/login'
     })
 
     static refreshToken = async () => {

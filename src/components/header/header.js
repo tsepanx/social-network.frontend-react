@@ -82,16 +82,18 @@ const Header = (props) => {
 
     const usernameToLoggedTitle = username => `Logged: ${username}`
 
-    const settingsItem = {component: <Settings/>, path: '/settings', title: usernameToLoggedTitle(props.credentials.username)}
-    const profileItem = {component: <Profile/>, path: `/profile/${props.credentials.id}`, title: 'My Profile'}
+    let leftHeaderItems = []
+    let rightHeaderContent = [signupItem, loginItem]
 
-    const leftHeaderItems = props.authorized ?
-        [profileItem, feedItem, friendsItem, messagesItem, todoListItem, info] :
-        []
+    if (props.authorized) {
+        // debugger
+        const settingsItem = {component: <Settings/>, path: '/settings', title: usernameToLoggedTitle(props.credentials.username)}
+        const profileItem = {component: <Profile/>, path: `/profile/${props.credentials.id}`, title: 'My Profile'}
 
-    const rightHeaderContent = props.authorized ?
-        [settingsItem, logoutItem] :
-        [signupItem, loginItem]
+
+        leftHeaderItems = [profileItem, feedItem, friendsItem, messagesItem, todoListItem, info]
+        rightHeaderContent = [settingsItem, logoutItem]
+    }
 
     return (
         <div className='header'>

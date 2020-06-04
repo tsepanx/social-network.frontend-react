@@ -5,7 +5,7 @@ import Item from "./item/item";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {addTodo, updateTodo} from "../../redux/todo-reducer";
-import {withAuthRedirect} from "../hoc/with-auth-redirect";
+import {withAuth} from "../hoc/with-auth";
 
 const TodoList = (props) => {
 
@@ -37,5 +37,5 @@ const mapStateToProps = (state) => ({...state.todo})
 
 export default compose(
     connect(mapStateToProps, {addTodo, updateTodo}),
-    // withAuthRedirect,
+    // withAuth,
 )(TodoList);
