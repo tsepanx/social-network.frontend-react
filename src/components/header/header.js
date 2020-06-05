@@ -5,7 +5,7 @@ import './header.css'
 
 import InfoContainer from '../info/info-container';
 import Login from '../login/login';
-import Profile from '../profile/profile-page/profile';
+import ProfileContent from "../content/profile-content";
 import TodoList from '../todo-list/todo-list';
 import {compose} from "redux";
 import {connect} from "react-redux";
@@ -25,7 +25,7 @@ const startPageItem = {component: <StartPage/>, path: '/', title: null}
 const settingsItem = {component: <Settings/>, path: '/settings', title: null}
 
 
-const profileItem = {component: <Profile/>, path: '/profile', title: 'Profile', exact: false}
+const profileItem = {component: <ProfileContent/>, path: '/profile', title: 'Profile', exact: false}
 const feedItem = {component: <Feed/>, path: '/feed', title: 'News'}
 const friendsItem = {component: <Friends/>, path: '/friends', title: 'Friends'}
 const messagesItem = {component: <Messages/>, path: '/messages', title: 'Messages'}
@@ -88,7 +88,7 @@ const Header = (props) => {
     if (props.authorized) {
         // debugger
         const settingsItem = {component: <Settings/>, path: '/settings', title: usernameToLoggedTitle(props.credentials.username)}
-        const profileItem = {component: <Profile/>, path: `/profile/${props.credentials.id}`, title: 'My Profile'}
+        const profileItem = {component: <ProfileContent/>, path: `/profile/${props.credentials.id}`, title: 'My Profile'}
 
 
         leftHeaderItems = [profileItem, feedItem, friendsItem, messagesItem, todoListItem, info]

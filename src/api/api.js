@@ -109,9 +109,7 @@ export class ProfileApi {
 
     static getProfile = async (id) => {
         try {
-            return await instance.get(
-                endpointUrlWithId(id)(this.endpointUrl)
-            )
+            return await instance.get(endpointUrlWithId(id)(this.endpointUrl))
         } catch (e) {
             return e
         }

@@ -15,7 +15,7 @@ const friendsToCards = (value, index) => {
 
 const Friends = ({auth}) => {
 
-    let [friends, setFriends] = useState([])  // TODO put data in state firstly
+    let [friends, setFriends] = useState([])  // TODO put data in state (friends-reducer)
     let [fetching, setFetching] = useState(true)
 
     const fetchFriends = async () => {

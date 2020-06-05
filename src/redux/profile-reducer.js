@@ -1,3 +1,5 @@
+import TRANSPARENT_PROFILE_IMAGE from '../assets/transparent_profile.png'
+
 const profileActions = {
     SET_PROFILE: 'SET_PROFILE',
     ADD_POST: 'ADD_POST'
@@ -6,6 +8,7 @@ const profileActions = {
 
 let initialState = {
     loaded: false,
+    id: null,
 
     profilePhoto: null,
     status: null,

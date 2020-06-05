@@ -41,7 +41,7 @@ const withData = (getData, onLoaded, onError) => (View) => {
     };
 
     return compose(
-        connect((state) => {}, {getData})
+        connect(() => {}, {getData})
     )(Component);
 }
 
