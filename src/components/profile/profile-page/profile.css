@@ -23,12 +23,15 @@
 .profile .post {
     margin: 10px;
     min-width: 400px;
-    /*max-width: 400px;*/
 }
 
-.profile .status {
+.profile .profile-info {
     max-width: available;
     padding-top: 10px;
+}
+
+.profile .profile-info h6 {
+    color: lightcyan;
 }
 
 .profile .photo img {

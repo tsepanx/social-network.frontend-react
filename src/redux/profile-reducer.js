@@ -1,18 +1,18 @@
-import TRANSPARENT_PROFILE_IMAGE from '../assets/transparent_profile.png'
-
 const profileActions = {
     SET_PROFILE: 'SET_PROFILE',
     ADD_POST: 'ADD_POST'
 }
 
 
-let initialState = {
+export let profileInitialState = {
     loaded: false,
     id: null,
 
     profilePhoto: null,
     status: null,
-    posts: []
+    posts: [],
+
+    friends: []
 }
 
 
@@ -20,7 +20,7 @@ const addPostCreator = (post) => ({type: profileActions.ADD_POST, post})
 
 const setProfileCreator = (profile, loaded) => ({type: profileActions.SET_PROFILE, profile: {...profile, loaded: loaded}})
 
-const profileReducer = (state = initialState, action) => {
+const profileReducer = (state = profileInitialState, action) => {
     switch (action.type) {
         case profileActions.ADD_POST:
             return {
@@ -46,7 +46,7 @@ export const setProfile = (profile) => (dispatch) => {
 }
 
 export const resetProfile = () => (dispatch) => {
-    dispatch(setProfileCreator(initialState, false))
+    dispatch(setProfileCreator(profileInitialState, false))
 }
 
 export default profileReducer

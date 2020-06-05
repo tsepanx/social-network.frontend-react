@@ -121,8 +121,13 @@ export class FriendsApi {
 
     static getRelationships = async (id) => {
         try {
-            return await instance.get(endpointUrlWithId(id)(this.endpointUrl))
+            let r = await instance.get(endpointUrlWithId(id)(this.endpointUrl))
+            return {
+                ...r,
+                data: r.data.list
+            }
         } catch (e) {
+            debugger
             console.log(e)
         }
     }

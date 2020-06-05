@@ -3,29 +3,42 @@ import {connect} from "react-redux";
 import {compose} from "redux";
 import {resetProfile, setProfile} from "../../../redux/profile-reducer";
 
-import DEFAULT_PROFILE_IMAGE from '../../../assets/profile.png'
-import TRANSPARENT_PROFILE_IMAGE from '../../../assets/transparent_profile.png'
 import './profile.css'
 
-import {ProfileApi} from "../../../api/api";
+import {FriendsApi, ProfileApi} from "../../../api/api";
 import withData from "../../hoc/with-data";
+import {Friends} from "../friends/friends";
 
 const getData = async (props) => {
-    let r = await ProfileApi.getProfile(props.id)
-    return r.data
+    let id = props.match.params.userId
+
+    let profile = await ProfileApi.getProfile(id)
+    let friends = await FriendsApi.getRelationships(id)
+
+    profile = profile.data
+    friends = friends.data
+
+    return {profile, friends}
 }
 
 const onLoaded = async (props, data) => {
+    let {profile, friends} = data
+
     try {
-        props.setProfile({...data,
-            profilePhoto: data["profile_photo"],
+        props.setProfile({
+            ...profile,
+            profilePhoto: profile["profile_photo"],
         })
+
+        props.setProfile({friends})
     } catch (e) {
+        debugger
         props.resetProfile();
     }
 }
 
 const onError = async (props, err) => {
+    debugger
     let status = err.response.status
 
     switch (status) {
@@ -40,24 +53,8 @@ const onError = async (props, err) => {
     }
 }
 
-
-const ProfileContainer = (props) => {
-    let {profilePhoto} = props.profile
-
-    if (!profilePhoto)
-        profilePhoto = props.auth.authorized ?
-            DEFAULT_PROFILE_IMAGE :
-            TRANSPARENT_PROFILE_IMAGE
-
-    return (
-        <div>
-            Profile
-            <Profile {...props.profile} profilePhoto={profilePhoto} />
-        </div>
-    )
-}
-
-const Profile = ({profilePhoto, status, posts}) => {
+const Profile = ({profile}) => {
+    let {profilePhoto, username, status, posts, friends} = profile
 
     return (
         <div className='profile'>
@@ -65,14 +62,16 @@ const Profile = ({profilePhoto, status, posts}) => {
                 <div className="col-md-3">
                     <div className="left bg-dark">
                         <ProfilePhoto src={profilePhoto}/>
-                        {/*Username: {props.auth.credentials.username}*/}
-                        <ProfileStatus text={status}/>
+                        <ProfileInfo status={status} username={username}/>
                     </div>
                 </div>
 
                 <div className="col-md-8">
                     <div className='right'>
                         <ProfilePosts items={posts}/>
+                        <div className="profile-friends">
+                            <Friends list={friends}/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -117,10 +116,11 @@ const ProfilePhoto = ({src}) => {
     )
 }
 
-const ProfileStatus = ({text}) => {
+const ProfileInfo = ({username, status}) => {
     return (
-        <div className='status'>
-            Status: {text}
+        <div className='profile-info'>
+            <h6>Username: {username}</h6>
+            <h6>Status: {status}</h6>
         </div>
     )
 }
@@ -133,4 +133,4 @@ const mapStateToProps = (state) => ({
 export default compose(
     connect(mapStateToProps, {resetProfile, setProfile}),
     withData(getData, onLoaded, onError),
-)(ProfileContainer)
+)(Profile)

@@ -2,14 +2,15 @@ import React from "react";
 
 import {connect} from "react-redux";
 import {compose} from "redux";
-import {withAuth} from "../hoc/with-auth";
-import {FriendsApi} from "../../api/api";
-import ProfileCard from "../profile/profile-card/profile-card";
-import withData from "../hoc/with-data";
-import {setFriends} from "../../redux/user-reducer";
+import {withAuth} from "../../hoc/with-auth";
+import {FriendsApi} from "../../../api/api";
+import ProfileCard from "../profile-card/profile-card";
+import withData from "../../hoc/with-data";
+import {setFriends} from "../../../redux/user-reducer";
 
 const getData = async (props) => {
-    let id = props.auth.credentials.id
+    // let id = props.auth.credentials.id
+    let id = props.id
     let r = await FriendsApi.getRelationships(id)
     return r.data
 }
@@ -23,7 +24,17 @@ const onError = async (props, err) => {
     console.log(err)
 }
 
-const Friends = ({user}) => {
+const FriendsContainer = (props) => {
+    let friends = props.user.friends
+
+    return (
+        <div>
+            <Friends list={friends}/>
+        </div>
+    )
+}
+
+export const Friends = ({list}) => {
     const friendsToCards = (value, index) => {
         return <ProfileCard
             key={index}
@@ -31,13 +42,11 @@ const Friends = ({user}) => {
         />
     }
 
-    const friendsList = user.friends
-
     return (
         <div>
             <h3>Friends</h3>
 
-            {friendsList.map(friendsToCards)}
+            {list.map(friendsToCards)}
         </div>
     )
 }
@@ -48,6 +57,5 @@ const mapStateToProps = (state) => ({
 
 export default compose(
     connect(mapStateToProps, {setFriends}),
-    withAuth,
     withData(getData, onLoaded, onError)
-)(Friends)
+)(FriendsContainer)

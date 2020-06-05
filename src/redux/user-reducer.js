@@ -1,14 +1,16 @@
+import {profileInitialState} from "./profile-reducer";
+
 const userAction = {
     SET_FRIENDS: 'SET_FRIENDS'
 }
 
-const setFriendsCreator = (friends) => ({
+const setFriendsCreator = (list) => ({
     type: userAction.SET_FRIENDS,
-    friends
+    list
 })
 
 let initialState = {
-    friends: []
+    profile: profileInitialState,
 }
 
 const userReducer = (state = initialState, action) => {
@@ -16,15 +18,18 @@ const userReducer = (state = initialState, action) => {
         case userAction.SET_FRIENDS:
             return {
                 ...state,
-                friends: action.friends
+                profile: {
+                    ...state.profile,
+                    friends: action.list
+                }
             }
         default:
             return state;
     }
 }
 
-export const setFriends = (friends) => (dispatch) => {
-    dispatch(setFriendsCreator(friends))
+export const setFriends = (list) => (dispatch) => {
+    dispatch(setFriendsCreator(list))
 }
 
 

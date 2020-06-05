@@ -6,18 +6,19 @@ import React from "react";
 let routeItems = contentComponents.map((value, index) => {
 
     let isExact = !('exact' in value && !value.exact)
+    // let isExact = false
 
     if (isExact) {
         return (<Route
             key={index}
             exact path={value.path}
-            render={() => value.component}
+            component={value.component}
         />)
     } else {
         return (<Route
             key={index}
             path={value.path}
-            render={() => value.component}
+            component={value.component}
         />)
     }
 })
