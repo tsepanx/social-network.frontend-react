@@ -1,22 +1,22 @@
-const friendsAction = {
+const userAction = {
     SET_FRIENDS: 'SET_FRIENDS'
 }
 
-const setFriendsCreator = (list) => ({
-    type: friendsAction.SET_FRIENDS,
-    list
+const setFriendsCreator = (friends) => ({
+    type: userAction.SET_FRIENDS,
+    friends
 })
 
 let initialState = {
-    list: []
+    friends: []
 }
 
-const friendsReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
     switch (action.type) {
-        case friendsAction.SET_FRIENDS:
+        case userAction.SET_FRIENDS:
             return {
                 ...state,
-                list: action.list
+                friends: action.friends
             }
         default:
             return state;
@@ -28,4 +28,4 @@ export const setFriends = (friends) => (dispatch) => {
 }
 
 
-export default friendsReducer
+export default userReducer

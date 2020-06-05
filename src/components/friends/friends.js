@@ -6,7 +6,7 @@ import {withAuth} from "../hoc/with-auth";
 import {FriendsApi} from "../../api/api";
 import ProfileCard from "../profile/profile-card/profile-card";
 import withData from "../hoc/with-data";
-import {setFriends} from "../../redux/friends-reducer";
+import {setFriends} from "../../redux/user-reducer";
 
 const getData = async (props) => {
     let id = props.auth.credentials.id
@@ -15,7 +15,7 @@ const getData = async (props) => {
 }
 
 const onLoaded = async (props, data) => {
-    props.setFriends(data.users)
+    props.setFriends(data["users"]);
 }
 
 const onError = async (props, err) => {
@@ -23,7 +23,7 @@ const onError = async (props, err) => {
     console.log(err)
 }
 
-const Friends = ({auth, friends}) => {
+const Friends = ({user}) => {
     const friendsToCards = (value, index) => {
         return <ProfileCard
             key={index}
@@ -31,7 +31,7 @@ const Friends = ({auth, friends}) => {
         />
     }
 
-    const friendsList = friends.list
+    const friendsList = user.friends
 
     return (
         <div>
@@ -43,8 +43,7 @@ const Friends = ({auth, friends}) => {
 }
 
 const mapStateToProps = (state) => ({
-    auth: state.auth,
-    friends: state.friends
+    user: state.user
 })
 
 export default compose(

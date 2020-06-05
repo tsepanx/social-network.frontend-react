@@ -18,10 +18,10 @@ const getData = async (props) => {
 const onLoaded = async (props, data) => {
     try {
         props.setProfile({...data,
-            profilePhoto: data.profile_photo,
+            profilePhoto: data["profile_photo"],
         })
     } catch (e) {
-        props.resetProfile()
+        props.resetProfile();
     }
 }
 

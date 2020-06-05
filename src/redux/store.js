@@ -7,14 +7,14 @@ import todoReducer from "./todo-reducer";
 import infoReducer from "./info-reducer";
 import authReducer from "./auth-reducer";
 import profileReducer from "./profile-reducer";
-import friendsReducer from "./friends-reducer";
+import userReducer from "./user-reducer";
 
 let reducers = combineReducers({
     todo: todoReducer,
     info: infoReducer,
     auth: authReducer,
     profile: profileReducer,
-    friends: friendsReducer,
+    user: userReducer,
     form: formReducer
 });
 
