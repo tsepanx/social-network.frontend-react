@@ -15,9 +15,8 @@ import StartPage from "../start-page/start-page";
 import Settings from "../settings/settings";
 import Feed from "../feed/feed";
 import SignUp from "../signup/signup";
-import Friends from "../profile/friends/friends";
 import Messages from "../messages/messages";
-import Profile from "../profile/profile-page/profile";
+import {ProfileContainer} from "../profile/profile-page/profile";
 
 const loginItem = {component: Login, path: '/login', title: 'Login'}
 const logoutItem = {component: Logout, path: '/logout', title: 'Logout'}
@@ -28,7 +27,7 @@ const settingsItem = {component: Settings, path: '/settings'}
 
 
 const authedProfileItem = {component: AuthedUserPage, path: '/me', title: 'Profile'}
-const profileItem = {component: Profile, path: '/profile/:userId', exact: false}
+const profileItem = {component: ProfileContainer, path: '/profile/:userId', exact: false}
 const feedItem = {component: Feed, path: '/feed', title: 'News'}
 const messagesItem = {component: Messages, path: '/messages', title: 'Messages'}
 
@@ -54,10 +53,7 @@ export const contentComponents = [
 
 const itemToNavLink = (value, index) =>
     (<li>
-        <NavLink key={index} to={{
-            pathname: value.path,
-            query: {userid: 10}
-        }}>
+        <NavLink key={index} to={{pathname: value.path}}>
             {value.title}
         </NavLink>
     </li>)
@@ -65,22 +61,6 @@ const itemToNavLink = (value, index) =>
 let mapStateToProps = (state) => ({
     ...state.auth
 });
-
-// const itemToButton = (value, index) => {
-//     return (<SidebarButton {...value}/>)
-// }
-//
-// const SidebarButton = withRouter(({component, path, title}) => {
-//     let history = useHistory()
-//
-//     const onClick = () => {
-//         history.push(path)
-//     }
-//
-//     return (
-//         <div className="btn" onClick={onClick}>{title}</div>
-//     )
-// })
 
 const Header = (props) => {
 
@@ -90,10 +70,7 @@ const Header = (props) => {
     let rightHeaderContent = [signupItem, loginItem]
 
     if (props.authorized) {
-        // debugger
-        const settingsItem = {component: <Settings/>, path: '/settings', title: usernameToLoggedTitle(props.credentials.username)}
-        // const profileItem = {component: <ProfileContent/>, path: `/profile/${props.credentials.id}`, title: 'My Profile'}
-
+        const settingsItem = {component: Settings, path: '/settings', title: usernameToLoggedTitle(props.credentials.username)}
 
         leftHeaderItems = [authedProfileItem, feedItem, messagesItem, todoListItem, info]
         rightHeaderContent = [settingsItem, logoutItem]

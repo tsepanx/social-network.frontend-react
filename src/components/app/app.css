@@ -26,5 +26,6 @@
 }
 
 .bg-dark {
+  border-radius: 8px;
   border: 1px solid #444;
 }

@@ -2,29 +2,28 @@
     margin: 30px 0;
 
     display: flex;
-    border-radius: 8px;
 
     max-width: 25rem;
     padding: 10px;
-}
-
-.profile-card .info {
-    margin: .5rem 1rem;
 
     position: relative;
 }
 
-.profile-card .info .btn {
+.profile-card .info {
+    margin: .5rem 1rem;
+}
+
+.profile-card .btn {
     position: absolute;
-    bottom: 0;
-    left: 0;
+    bottom: 1.1rem;
+    right: 1.1rem; /* TODO WHAT!!*/
 }
 
 
 .profile-card img {
-    border-radius: 10px;
+    border-radius: 30px;
     border-style: none;
 
     padding: 5px;
-    width: 100px;
+    width: 70px;
 }

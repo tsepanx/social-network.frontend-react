@@ -13,8 +13,8 @@ const ProfileCard = (props) => {
                 <h6>Username: {props.username}</h6>
                 <h6>Status: {props.status}</h6>
                 <a href={`/profile/${props.id}`}>Profile page</a>
-                <div className="btn btn-info">Follow</div>
             </div>
+            <div><div className="btn btn-info">Follow</div></div>
         </div>
     )
 }

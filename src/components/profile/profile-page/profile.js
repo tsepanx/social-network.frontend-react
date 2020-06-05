@@ -8,12 +8,11 @@ import './profile.css'
 import {FriendsApi, ProfileApi} from "../../../api/api";
 import withData from "../../hoc/with-data";
 import {Friends} from "../friends/friends";
+import {withAuth} from "../../hoc/with-auth";
 
 const getData = async (props) => {
-    let id = props.match.params.userId
-
-    let profile = await ProfileApi.getProfile(id)
-    let friends = await FriendsApi.getRelationships(id)
+    let profile = await ProfileApi.getProfile(props.id)
+    let friends = await FriendsApi.getRelationships(props.id)
 
     profile = profile.data
     friends = friends.data
@@ -28,9 +27,8 @@ const onLoaded = async (props, data) => {
         props.setProfile({
             ...profile,
             profilePhoto: profile["profile_photo"],
+            friends
         })
-
-        props.setProfile({friends})
     } catch (e) {
         debugger
         props.resetProfile();
@@ -53,7 +51,13 @@ const onError = async (props, err) => {
     }
 }
 
-const Profile = ({profile}) => {
+let ProfileContainer = (props) => {
+    let id = props.match.params.userId
+
+    return (<Profile {...props} id={id}/>)
+}
+
+let Profile = ({profile}) => { // TODO /profile/id:userId link to profile
     let {profilePhoto, username, status, posts, friends} = profile
 
     return (
@@ -130,7 +134,11 @@ const mapStateToProps = (state) => ({
     profile: state.profile
 })
 
-export default compose(
+ProfileContainer = compose(withAuth)(ProfileContainer)
+
+Profile = compose(
     connect(mapStateToProps, {resetProfile, setProfile}),
     withData(getData, onLoaded, onError),
 )(Profile)
+
+export {Profile, ProfileContainer}
