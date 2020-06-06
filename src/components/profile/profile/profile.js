@@ -7,8 +7,7 @@ import './profile.css'
 
 import {FriendsApi, ProfileApi} from "../../../api/api";
 import withData from "../../hoc/with-data";
-import {Friends} from "../friends/friends";
-import {withAuth} from "../../hoc/with-auth";
+import ProfileCard from "../profile-card/profile-card";
 
 const getData = async (props) => {
     let profile = await ProfileApi.getProfile(props.id)
@@ -51,12 +50,6 @@ const onError = async (props, err) => {
     }
 }
 
-let ProfileContainer = (props) => {
-    let id = props.match.params.userId
-
-    return (<Profile {...props} id={id}/>)
-}
-
 let Profile = ({profile}) => { // TODO /profile/id:userId link to profile
     let {profilePhoto, username, status, posts, friends} = profile
 
@@ -79,6 +72,22 @@ let Profile = ({profile}) => { // TODO /profile/id:userId link to profile
                     </div>
                 </div>
             </div>
+        </div>
+    )
+}
+
+export const Friends = ({list}) => {
+    const friendsToCards = (value, index) => {
+        return <ProfileCard
+            key={index}
+            {...value}
+        />
+    }
+
+    return (
+        <div>
+            <h3>Friends</h3>
+            {list.map(friendsToCards)}
         </div>
     )
 }
@@ -130,17 +139,12 @@ const ProfileInfo = ({username, status}) => {
 }
 
 const mapStateToProps = (state) => ({
-    auth: state.auth,
     profile: state.profile
 })
-
-ProfileContainer = compose(
-    withAuth(false)
-)(ProfileContainer)
 
 Profile = compose(
     connect(mapStateToProps, {resetProfile, setProfile}),
     withData(getData, onLoaded, onError, null),
 )(Profile)
 
-export {Profile, ProfileContainer}
+export default Profile

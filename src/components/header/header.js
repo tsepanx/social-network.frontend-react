@@ -6,17 +6,21 @@ import './header.css'
 import {compose} from "redux";
 import {connect} from "react-redux";
 
-import InfoContainer from '../info/info-container';
-import Login from '../login/login';
-import AuthedUserPage from "../content/authed-user-page";
-import TodoList from '../todo-list/todo-list';
-import Logout from "../logout/logout";
+import {AuthorizedProfilePage, ProfilePage} from "../profile/profile-containers";
+
 import StartPage from "../start-page/start-page";
+
+import Login from '../login/login';
+import SignUp from "../signup/signup";
+import Logout from "../logout/logout";
+
+import InfoContainer from '../info/info-container';
+import TodoList from '../todo-list/todo-list';
+
 import Settings from "../settings/settings";
 import Feed from "../feed/feed";
-import SignUp from "../signup/signup";
 import Messages from "../messages/messages";
-import {ProfileContainer} from "../profile/profile-page/profile";
+
 
 const loginItem = {component: Login, path: '/login', title: 'Login'}
 const logoutItem = {component: Logout, path: '/logout', title: 'Logout'}
@@ -26,8 +30,8 @@ const startPageItem = {component: StartPage, path: '/'}
 const settingsItem = {component: Settings, path: '/settings'}
 
 
-const authedProfileItem = {component: AuthedUserPage, path: '/me', title: 'Profile'}
-const profileItem = {component: ProfileContainer, path: '/profile/:userId', exact: false}
+const authedProfileItem = {component: AuthorizedProfilePage, path: '/me', title: 'Profile'}
+const profileItem = {component: ProfilePage, path: '/profile/:userId', exact: false}
 const feedItem = {component: Feed, path: '/feed', title: 'News'}
 const messagesItem = {component: Messages, path: '/messages', title: 'Messages'}
 
