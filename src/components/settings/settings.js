@@ -9,7 +9,7 @@ import {withAuth} from "../hoc/with-auth";
 import {defaultField} from "../common/form/form-field/form-field";
 import {UserApi} from "../../api/api";
 import {commonReduxForm} from "../common/form/form/form";
-import {submitChangeUsername, submitChangePassword} from "../../redux/auth-reducer";
+import {submitChangePassword, submitChangeUsername} from "../../redux/auth-reducer";
 
 const Settings = (props) => {
 
@@ -90,8 +90,8 @@ const DeleteAccount = (props) => {
     )
 }
 
-let mapStateToProps = (state) => ({
-    // ...state.auth
+let mapStateToProps = () => ({
+
 });
 
 export default compose(

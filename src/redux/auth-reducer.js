@@ -72,9 +72,12 @@ export const submitSignUp = ({username, password}) => async (dispatch) => {
     }
 }
 
-export const loginCurrentUser = () => async (dispatch) => {
+export const loginCurrentUser = (refreshToken = false) => async (dispatch) => {
     let r = await AuthApi.getMe()
     setLoggedIn(r.data)(dispatch)
+
+    if (refreshToken)
+        await AuthApi.refreshToken()
 
     return r.data
 }
@@ -82,9 +85,9 @@ export const loginCurrentUser = () => async (dispatch) => {
 export const submitChangeUsername = (id, username) => async (dispatch) => {
     try {
         await UserApi.changeUsername(id, username)
-        await loginCurrentUser()(dispatch)
+        await loginCurrentUser(true)(dispatch)
 
-        window.location.reload()
+        // window.location.reload()
     } catch (e) {
         debugger
     }
@@ -97,8 +100,8 @@ export const submitChangePassword = (id, password) => async (dispatch) => {
 
         window.location.reload()
     } catch (e) {
-        debugger
         let r = e.response
+        debugger
     }
 }
 

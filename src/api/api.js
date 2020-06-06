@@ -70,6 +70,7 @@ export class AuthApi {
             let r = await instance.post(url, {token: storage.getToken()})
             setToken(r.data.token)
         } catch (e) {
+            debugger
             console.log(e)
         }
     }
@@ -124,7 +125,7 @@ export class FriendsApi {
             let r = await instance.get(endpointUrlWithId(id)(this.endpointUrl))
             return {
                 ...r,
-                data: r.data.list
+                data: r.data.friends
             }
         } catch (e) {
             debugger

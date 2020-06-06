@@ -44,7 +44,7 @@ const withData = (getData, onLoaded, onError, Preloader = Spinner) => (View) => 
     };
 
     return compose(
-        connect(() => {}, {getData})
+        connect(() => {}, {})
     )(Component);
 }
 
