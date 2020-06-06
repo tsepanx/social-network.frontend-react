@@ -16,5 +16,5 @@ const mapStateToProps = (state) => ({
 
 export default compose(
     connect(mapStateToProps, {}),
-    withAuth,
+    withAuth(true),
 )(Messages)

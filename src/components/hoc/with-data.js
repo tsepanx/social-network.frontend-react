@@ -3,7 +3,7 @@ import Spinner from "../common/spinner/spinner";
 import {connect} from "react-redux";
 import {compose} from "redux";
 
-const withData = (getData, onLoaded, onError) => (View) => {
+const withData = (getData, onLoaded, onError, Preloader = Spinner) => (View) => {
     const Component = (props) => {
 
         const [fetching, setFetching] = useState(false)
@@ -22,19 +22,22 @@ const withData = (getData, onLoaded, onError) => (View) => {
                 let data = await getData(props)
 
                 await onLoaded(props, data)
-                setLoaded(true)
             } catch (e) {
-                await onError(props, e)
-                setLoaded(true)
-                setError(true)
+                let isError = await onError(props, e)
+                setError(isError)
             }
+
+            setLoaded(true)
         }
 
         if (error)
             return <>Error</>
 
         if (!loaded)
-            return <Spinner/>
+            if (Preloader)
+                return <Preloader/>
+            else
+                return <></>
         else
             return <View {...props} />
 

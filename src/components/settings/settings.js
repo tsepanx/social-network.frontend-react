@@ -96,5 +96,5 @@ let mapStateToProps = (state) => ({
 
 export default compose(
     connect(mapStateToProps, {submitChangeUsername, submitChangePassword}),
-    withAuth,
+    withAuth(true),
 )(Settings)

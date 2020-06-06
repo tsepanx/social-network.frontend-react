@@ -134,11 +134,13 @@ const mapStateToProps = (state) => ({
     profile: state.profile
 })
 
-ProfileContainer = compose(withAuth)(ProfileContainer)
+ProfileContainer = compose(
+    withAuth(false)
+)(ProfileContainer)
 
 Profile = compose(
     connect(mapStateToProps, {resetProfile, setProfile}),
-    withData(getData, onLoaded, onError),
+    withData(getData, onLoaded, onError, null),
 )(Profile)
 
 export {Profile, ProfileContainer}
