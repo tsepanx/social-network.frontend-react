@@ -13,7 +13,7 @@ const items = {
     signup: [...pages.signup, 'Sign Up'],
 
     me: [...pages.me, 'My profile'],
-    feed: [...pages.feed, 'Newss'],
+    feed: [...pages.feed, 'News'],
     messages: [...pages.messages, 'Messages'],
     tasks: [...pages.tasks, 'My tasks'],
     info: [...pages.info, 'My info']
@@ -42,7 +42,6 @@ const Header = (props) => {
 
     if (props.authorized) {
         const loggedTitle = name => `Logged: ${name}`
-        items.settings = [...pages.settings, loggedTitle(props.credentials.username)]
 
         leftHeaderItems = [
             items.me,
@@ -53,7 +52,7 @@ const Header = (props) => {
         ]
 
         rightHeaderContent = [
-            items.settings,
+            [...pages.settings, loggedTitle(props.credentials.username)],
             items.logout
         ]
     }

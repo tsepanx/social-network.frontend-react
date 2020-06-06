@@ -9,14 +9,7 @@ import Messages from "../messages/messages";
 import TodoList from "../todo-list/todo-list";
 import InfoContainer from "../info/info-container";
 
-// const authedProfileItem = {component: , title: 'Profile'}
-// const profileItem = {component: ProfilePage, path: }
-// const feedItem = {component: Feed, path: '/feed', title: 'News'}
-// const messagesItem = {component: Messages, path: '/messages', title: 'Messages'}
-//
-// const todoListItem = {component: TodoList, path: '/todo', title: 'TODO'}
-// const info = {component: InfoContainer, path: '/stats', title: 'Statistics'}
-
+// page: [Component, path]
 const contentComponents = {
     rootPage: [StartPage, '/'],
 
