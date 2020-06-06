@@ -1,26 +1,20 @@
-import {compose} from "redux";
-import {contentComponents} from "../header/header";
 import {Route} from "react-router-dom";
 import React from "react";
 
-let routeItems = contentComponents.map((value, index) => {
+import {compose} from "redux";
+import contentComponents from './content-items'
 
-    let isExact = !('exact' in value && !value.exact)
-    // let isExact = false
+let routeItems = Object.values(contentComponents).map((value, index) => {
+    const component = value[0]
+    const path = value[1]
 
-    if (isExact) {
-        return (<Route
+    return (
+        <Route
             key={index}
-            exact path={value.path}
-            component={value.component}
-        />)
-    } else {
-        return (<Route
-            key={index}
-            path={value.path}
-            component={value.component}
-        />)
-    }
+            exact path={path}
+            component={component}
+        />
+    )
 })
 
 let Content = () => {

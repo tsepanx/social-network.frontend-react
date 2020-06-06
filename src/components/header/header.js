@@ -5,62 +5,28 @@ import './header.css'
 
 import {compose} from "redux";
 import {connect} from "react-redux";
+import pages from "../content/content-items";
 
-import {AuthorizedProfilePage, ProfilePage} from "../profile/profile-containers";
+const items = {
+    login: [...pages.login, 'Login'],
+    logout: [...pages.logout, 'Logout'],
+    signup: [...pages.signup, 'Sign Up'],
 
-import StartPage from "../start-page/start-page";
+    me: [...pages.me, 'My profile'],
+    feed: [...pages.feed, 'Newss'],
+    messages: [...pages.messages, 'Messages'],
+    tasks: [...pages.tasks, 'My tasks'],
+    info: [...pages.info, 'My info']
+}
 
-import Login from '../login/login';
-import SignUp from "../signup/signup";
-import Logout from "../logout/logout";
+const itemToNavLink = (value, index) => {
+    const path = value[1]
+    const title = value[2]
 
-import InfoContainer from '../info/info-container';
-import TodoList from '../todo-list/todo-list';
-
-import Settings from "../settings/settings";
-import Feed from "../feed/feed";
-import Messages from "../messages/messages";
-
-
-const loginItem = {component: Login, path: '/login', title: 'Login'}
-const logoutItem = {component: Logout, path: '/logout', title: 'Logout'}
-const signupItem = {component: SignUp, path: '/join', title: 'Sign Up'}
-
-const startPageItem = {component: StartPage, path: '/'}
-const settingsItem = {component: Settings, path: '/settings'}
-
-
-const authedProfileItem = {component: AuthorizedProfilePage, path: '/me', title: 'Profile'}
-const profileItem = {component: ProfilePage, path: '/profile/:userId', exact: false}
-const feedItem = {component: Feed, path: '/feed', title: 'News'}
-const messagesItem = {component: Messages, path: '/messages', title: 'Messages'}
-
-const todoListItem = {component: TodoList, path: '/todo', title: 'TODO'}
-const info = {component: InfoContainer, path: '/stats', title: 'Statistics'}
-
-export const contentComponents = [
-    authedProfileItem,
-    profileItem,
-    feedItem,
-    messagesItem,
-
-    todoListItem,
-    info,
-
-    loginItem,
-    logoutItem,
-    signupItem,
-
-    startPageItem,
-    settingsItem
-]
-
-const itemToNavLink = (value, index) =>
-    (<li>
-        <NavLink key={index} to={{pathname: value.path}}>
-            {value.title}
-        </NavLink>
+    return (<li>
+        <NavLink key={index} to={path}>{title}</NavLink>
     </li>)
+}
 
 let mapStateToProps = (state) => ({
     ...state.auth
@@ -68,16 +34,28 @@ let mapStateToProps = (state) => ({
 
 const Header = (props) => {
 
-    const usernameToLoggedTitle = username => `Logged: ${username}`
-
     let leftHeaderItems = []
-    let rightHeaderContent = [signupItem, loginItem]
+    let rightHeaderContent = [
+        items.signup,
+        items.login
+    ]
 
     if (props.authorized) {
-        const settingsItem = {component: Settings, path: '/settings', title: usernameToLoggedTitle(props.credentials.username)}
+        const loggedTitle = name => `Logged: ${name}`
+        items.settings = [...pages.settings, loggedTitle(props.credentials.username)]
 
-        leftHeaderItems = [authedProfileItem, feedItem, messagesItem, todoListItem, info]
-        rightHeaderContent = [settingsItem, logoutItem]
+        leftHeaderItems = [
+            items.me,
+            items.feed,
+            items.messages,
+            items.tasks,
+            items.info
+        ]
+
+        rightHeaderContent = [
+            items.settings,
+            items.logout
+        ]
     }
 
     return (
