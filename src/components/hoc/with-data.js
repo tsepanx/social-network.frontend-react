@@ -16,7 +16,7 @@ const withData = (getData, onLoaded, onError,
         useEffect(() => {
             if (!loaded && !fetching)
                 update().then()
-        })
+        }, [])
 
         const update = async () => {
             setFetching(true)
