@@ -144,7 +144,7 @@ const mapStateToProps = (state) => ({
 
 Profile = compose(
     connect(mapStateToProps, {resetProfile, setProfile}),
-    withData(getData, onLoaded, onError, null),
+    withData(getData, onLoaded, onError, undefined, null),
 )(Profile)
 
 export default Profile

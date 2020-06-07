@@ -7,13 +7,11 @@ import {Redirect} from "react-router-dom";
 
 export const withAuth = (redirectLogin = false, preloader = undefined) => Component => {
 
-    const shouldObtainData = (props) => {
-        return (!props.auth.loaded)
-    }
-
+    const shouldObtainData = (props) => (!props.auth.loaded)
 
     const getData = async (props) => {
-        return shouldObtainData(props) ? props.loginCurrentUser() : props.auth.credentials
+        return props.loginCurrentUser()
+        // return shouldObtainData(props) ? props.loginCurrentUser() : props.auth.credentials
     }
 
     const onLoaded = async (props, data) => {
@@ -41,6 +39,6 @@ export const withAuth = (redirectLogin = false, preloader = undefined) => Compon
 
     return compose(
         connect(mapStateToProps, {loginCurrentUser, setLoggedIn, setLoggedOut}),
-        withData(getData, onLoaded, onError, preloader)
+        withData(getData, onLoaded, onError, shouldObtainData, preloader)
     )(View)
 }

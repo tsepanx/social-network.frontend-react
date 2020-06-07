@@ -1,7 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import Spinner from "../common/spinner/spinner";
 
-const withData = (getData, onLoaded, onError, Preloader = Spinner) => (View) => {
+
+const withData = (getData, onLoaded, onError,
+                  shouldObtainData = () => true,
+
+                  Preloader = Spinner
+) => (View) => {
     return (props) => {
 
         const [fetching, setFetching] = useState(false)
@@ -17,9 +22,10 @@ const withData = (getData, onLoaded, onError, Preloader = Spinner) => (View) => 
             setFetching(true)
 
             try {
-                let data = await getData(props)
-
-                await onLoaded(props, data)
+                if (shouldObtainData(props)) {
+                    let data = await getData(props)
+                    await onLoaded(props, data)
+                }
             } catch (e) {
                 let isError = await onError(props, e)
                 setError(isError)
