@@ -30,5 +30,5 @@ const App = () => {
 }
 
 export default compose(
-    withAuth(false)
+    // withAuth(false)
 )(App);

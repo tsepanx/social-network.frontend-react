@@ -5,7 +5,6 @@ import Spinner from "../common/spinner/spinner";
 const withData = (getData, onLoaded, onError,
                   shouldObtainData = () => true,
                   deps = null,
-
                   Preloader = Spinner
 ) => (View) => {
     return (props) => {
@@ -14,7 +13,14 @@ const withData = (getData, onLoaded, onError,
         const [loaded, setLoaded] = useState(false)
         const [error, setError] = useState(false)
 
-        const requestData = async (props) => {
+        const dependencies = deps ? deps(props) : []
+
+        useEffect(() => {
+            if (deps || (!loaded && !fetching))
+                update().then()
+        }, dependencies)
+
+        const handleData = async (props) => {
             let data = await getData(props)
             await onLoaded(props, data)
         }
@@ -26,7 +32,7 @@ const withData = (getData, onLoaded, onError,
 
         const tryHandleData = async (props) => {
             try {
-                await requestData(props)
+                await handleData(props)
             } catch (e) {
                 await handleError(props, e)
             }
@@ -39,24 +45,14 @@ const withData = (getData, onLoaded, onError,
             setLoaded(true)
         }
 
-        if (deps)
-            useEffect(() => {
-                update().then()
-            }, deps(props))
-        else
-            useEffect(() => {
-                if (!loaded && !fetching) update().then()
-            }, [])
-
         if (error)
             return <>Error</>
 
-        if (!loaded)
-            return Preloader ? React.createElement(Preloader) : <></>
-        else
+        if (loaded) {
             return <View {...props} />
-
-    };
+        } else
+            return Preloader ? React.createElement(Preloader) : <></>
+    }
 }
 
 export default withData

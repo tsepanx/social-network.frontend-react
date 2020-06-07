@@ -151,7 +151,7 @@ const mapStateToProps = (state) => ({
 
 Profile = compose(
     connect(mapStateToProps, {resetProfile, setProfile}),
-    withData(getData, onLoaded, onError, shouldObtainData, (props) => [props.id], null),
+    withData(getData, onLoaded, onError, shouldObtainData, (props) => [props.id]),
 )(Profile)
 
 export {Friends}

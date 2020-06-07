@@ -7,7 +7,7 @@ import {Redirect} from "react-router-dom";
 
 export const withAuth = (redirectLogin = false, preloader = undefined) => Component => {
 
-    const shouldObtainData = (props) => (!props.auth.loaded)
+    const shouldObtainData = (props) => !props.auth.loaded
 
     const getData = async (props) => props.loginCurrentUser()
 
