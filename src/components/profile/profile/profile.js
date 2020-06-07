@@ -4,6 +4,7 @@ import {compose} from "redux";
 import {resetProfile, setProfile} from "../../../redux/profile-reducer";
 
 import './profile.css'
+import DEFAULT_PROFILE_IMAGE from '../../../assets/profile.png'
 
 import {FriendsApi, ProfileApi} from "../../../api/api";
 import withData from "../../hoc/with-data";
@@ -36,13 +37,11 @@ const onLoaded = async (props, data) => {
             friends
         })
     } catch (e) {
-        debugger
         props.resetProfile();
     }
 }
 
 const onError = async (props, err) => {
-    debugger
     let status = err.response.status
 
     switch (status) {
@@ -51,14 +50,16 @@ const onError = async (props, err) => {
             break
         case 404:
             props.resetProfile()
-            props.setProfile({
-                loaded: true
-            })
+            props.setProfile({})
     }
 }
 
 let Profile = ({profile}) => { // TODO /profile/id:userId link to profile
     let {profilePhoto, username, status, posts, friends} = profile
+
+    if (!profilePhoto) {
+        profilePhoto = DEFAULT_PROFILE_IMAGE
+    }
 
     return (
         <div className='profile'>

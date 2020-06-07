@@ -121,15 +121,10 @@ export class FriendsApi {
     static endpointUrl = 'social/'
 
     static getRelationships = async (id) => {
-        try {
-            let r = await instance.get(endpointUrlWithId(id)(this.endpointUrl))
-            return {
-                ...r,
-                data: r.data.friends
-            }
-        } catch (e) {
-            debugger
-            console.log(e)
+        let r = await instance.get(endpointUrlWithId(id)(this.endpointUrl))
+        return {
+            ...r,
+            data: r.data.friends
         }
     }
 }
