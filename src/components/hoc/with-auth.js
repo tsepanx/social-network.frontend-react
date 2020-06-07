@@ -39,6 +39,6 @@ export const withAuth = (redirectLogin = false, preloader = undefined) => Compon
 
     return compose(
         connect(mapStateToProps, {loginCurrentUser, setLoggedIn, setLoggedOut}),
-        withData(getData, onLoaded, onError, shouldObtainData, preloader)
+        withData(getData, onLoaded, onError, shouldObtainData, false, (props) => [props.auth.authorized], preloader)
     )(View)
 }

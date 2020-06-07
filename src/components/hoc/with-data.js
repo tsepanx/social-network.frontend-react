@@ -4,10 +4,14 @@ import Spinner from "../common/spinner/spinner";
 
 const withData = (getData, onLoaded, onError,
                   shouldObtainData = () => true,
+                  withDeps = false,
+                  deps = [],
 
                   Preloader = Spinner
 ) => (View) => {
     return (props) => {
+
+        // const dependencies = deps(props)
 
         const [fetching, setFetching] = useState(false)
         const [loaded, setLoaded] = useState(false)
@@ -17,6 +21,17 @@ const withData = (getData, onLoaded, onError,
             if (!loaded && !fetching)
                 update().then()
         }, [])
+
+        // if (withDeps) {
+        //     // debugger
+        //     useEffect(() => {
+        //         checkUpdate().then()
+        //         // if (shouldObtainData(props))
+        //         //     setLoaded(false)
+        //         //     update().then()
+        //         // }, [props.id])
+        //     }, dependencies)
+        // }
 
         const update = async () => {
             setFetching(true)

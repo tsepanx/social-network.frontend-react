@@ -10,14 +10,15 @@ import {resetProfile} from "../../redux/profile-reducer";
 import {defaultForm} from "../common/form/form/form";
 
 const Login = (props) => {
+    let {auth} = props
 
     const onSubmit = (formData) => {
         props.submitLogin(formData)
     }
 
-    if (props.authorized) {
+    if (auth.authorized) {
         props.resetProfile()
-        return <Redirect to={`/profile/${props.credentials.id}`}/>
+        return <Redirect to={`/profile/${auth.credentials.id}`}/>
     }
 
     return <div className='login'>
@@ -26,11 +27,9 @@ const Login = (props) => {
     </div>
 }
 
-const mapStateToProps = (state) => {
-    return {
-        ...state.auth
-    }
-}
+const mapStateToProps = state => ({
+    auth: state.auth
+})
 
 export default compose(
     connect(mapStateToProps, {submitLogin, resetProfile})

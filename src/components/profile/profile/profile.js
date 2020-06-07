@@ -9,7 +9,10 @@ import {FriendsApi, ProfileApi} from "../../../api/api";
 import withData from "../../hoc/with-data";
 import ProfileCard from "../profile-card/profile-card";
 
-const shouldObtainData = props => (props.id !== props.profile.id)
+const shouldObtainData = props => {
+    return (props.id !== props.profile.id)
+}
+
 
 const getData = async (props) => {
     let id = props.id
@@ -80,7 +83,7 @@ let Profile = ({profile}) => { // TODO /profile/id:userId link to profile
     )
 }
 
-export const Friends = ({list}) => {
+const Friends = ({list}) => {
     const friendsToCards = (value, index) => {
         return <ProfileCard
             key={index}
@@ -148,7 +151,9 @@ const mapStateToProps = (state) => ({
 
 Profile = compose(
     connect(mapStateToProps, {resetProfile, setProfile}),
-    withData(getData, onLoaded, onError, shouldObtainData, null),
+    withData(getData, onLoaded, onError, shouldObtainData, false, (props) => [props.id], null),
 )(Profile)
+
+export {Friends}
 
 export default Profile
