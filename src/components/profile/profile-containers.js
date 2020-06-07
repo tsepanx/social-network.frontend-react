@@ -5,12 +5,14 @@ import Profile from "./profile/profile";
 import {Redirect} from "react-router-dom";
 
 let ProfilePage = (props) => {
-    const userId = parseInt(props.match.params.userId)
+    let {auth, match} = props
 
-    if (props.auth.authorized) {
+    const userId = parseInt(match.params.userId)
+
+    if (auth.authorized) {
         const authId = props.auth.credentials.id
 
-        if (userId === authId) // profile of authorized user
+        if (userId === authId)
             return <Redirect to={'/me'}/>
     }
 
@@ -20,7 +22,9 @@ let ProfilePage = (props) => {
 }
 
 let AuthorizedProfilePage = (props) => {
-    const userId = props.auth.credentials.id
+    let {auth} = props
+
+    const userId = auth.credentials.id
 
     return (
         <Profile {...props} id={userId}/>

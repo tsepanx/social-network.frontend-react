@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import Spinner from "../common/spinner/spinner";
-import {connect} from "react-redux";
-import {compose} from "redux";
 
 const withData = (getData, onLoaded, onError, Preloader = Spinner) => (View) => {
-    const Component = (props) => {
+    return (props) => {
 
         const [fetching, setFetching] = useState(false)
         const [loaded, setLoaded] = useState(false)
@@ -34,18 +32,11 @@ const withData = (getData, onLoaded, onError, Preloader = Spinner) => (View) => 
             return <>Error</>
 
         if (!loaded)
-            if (Preloader)
-                return <Preloader/>
-            else
-                return <></>
+            return Preloader ? React.createElement(Preloader) : <></>
         else
             return <View {...props} />
 
     };
-
-    return compose(
-        connect(() => {}, {})
-    )(Component);
 }
 
 export default withData

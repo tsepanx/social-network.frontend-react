@@ -6,6 +6,8 @@ import './app.css';
 
 import Header from "../header/header";
 import Content from "../content/content";
+import {withAuth} from "../hoc/with-auth";
+import {compose} from "redux";
 
 const App = () => {
     return (
@@ -18,10 +20,8 @@ const App = () => {
                 </div>
 
                 <div className="row">
-                    <div className="col-12">
-                        <div className="App-content">
-                            <Content/>
-                        </div>
+                    <div className="col-12 App-content">
+                        <Content/>
                     </div>
                 </div>
             </div>
@@ -29,4 +29,6 @@ const App = () => {
     );
 }
 
-export default App;
+export default compose(
+    withAuth(false)
+)(App);
