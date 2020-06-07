@@ -4,50 +4,49 @@ import Spinner from "../common/spinner/spinner";
 
 const withData = (getData, onLoaded, onError,
                   shouldObtainData = () => true,
-                  withDeps = false,
-                  deps = [],
+                  deps = null,
 
                   Preloader = Spinner
 ) => (View) => {
     return (props) => {
 
-        // const dependencies = deps(props)
-
         const [fetching, setFetching] = useState(false)
         const [loaded, setLoaded] = useState(false)
         const [error, setError] = useState(false)
 
-        useEffect(() => {
-            if (!loaded && !fetching)
-                update().then()
-        }, [])
+        const requestData = async (props) => {
+            let data = await getData(props)
+            await onLoaded(props, data)
+        }
 
-        // if (withDeps) {
-        //     // debugger
-        //     useEffect(() => {
-        //         checkUpdate().then()
-        //         // if (shouldObtainData(props))
-        //         //     setLoaded(false)
-        //         //     update().then()
-        //         // }, [props.id])
-        //     }, dependencies)
-        // }
+        const handleError = async (props, e) => {
+            let isError = await onError(props, e)
+            setError(isError)
+        }
+
+        const tryHandleData = async (props) => {
+            try {
+                await requestData(props)
+            } catch (e) {
+                await handleError(props, e)
+            }
+        }
 
         const update = async () => {
             setFetching(true)
-
-            try {
-                if (shouldObtainData(props)) {
-                    let data = await getData(props)
-                    await onLoaded(props, data)
-                }
-            } catch (e) {
-                let isError = await onError(props, e)
-                setError(isError)
-            }
-
+            if (shouldObtainData(props))
+                await tryHandleData(props)
             setLoaded(true)
         }
+
+        if (deps)
+            useEffect(() => {
+                update().then()
+            }, deps(props))
+        else
+            useEffect(() => {
+                if (!loaded && !fetching) update().then()
+            }, [])
 
         if (error)
             return <>Error</>

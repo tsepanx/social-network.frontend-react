@@ -9,14 +9,9 @@ export const withAuth = (redirectLogin = false, preloader = undefined) => Compon
 
     const shouldObtainData = (props) => (!props.auth.loaded)
 
-    const getData = async (props) => {
-        return props.loginCurrentUser()
-        // return shouldObtainData(props) ? props.loginCurrentUser() : props.auth.credentials
-    }
+    const getData = async (props) => props.loginCurrentUser()
 
-    const onLoaded = async (props, data) => {
-        return props.setLoggedIn(data);
-    }
+    const onLoaded = async (props, data) => props.setLoggedIn(data)
 
     const onError = async (props, error) => {
         console.log('error in withAuth', error)
@@ -39,6 +34,6 @@ export const withAuth = (redirectLogin = false, preloader = undefined) => Compon
 
     return compose(
         connect(mapStateToProps, {loginCurrentUser, setLoggedIn, setLoggedOut}),
-        withData(getData, onLoaded, onError, shouldObtainData, false, (props) => [props.auth.authorized], preloader)
+        withData(getData, onLoaded, onError, shouldObtainData, null, preloader)
     )(View)
 }
