@@ -9,6 +9,7 @@ import DEFAULT_PROFILE_IMAGE from '../../../assets/profile.png'
 import {FriendsApi, ProfileApi} from "../../../api/api";
 import withData from "../../hoc/with-data";
 import ProfileCard from "../profile-card/profile-card";
+import {submitLogout} from "../../../redux/auth-reducer";
 
 const shouldObtainData = props => {
     return (props.id !== props.profile.id)
@@ -41,17 +42,14 @@ const onLoaded = async (props, data) => {
     }
 }
 
-const onError = async (props, err) => {
-    let status = err.response.status
+const onError = async (props, status) => {
+    const UNAUTHORIZED = 401
+    const NOT_FOUND = 404
 
-    switch (status) {
-        case 401:
-            props.submitLogout()
-            break
-        case 404:
-            props.resetProfile()
-            props.setProfile({})
-    }
+    if (status === UNAUTHORIZED)
+        props.submitLogout()
+    if (status === NOT_FOUND)
+        props.resetProfile(true)
 }
 
 let Profile = ({profile}) => { // TODO /profile/id:userId link to profile
@@ -151,8 +149,12 @@ const mapStateToProps = (state) => ({
 })
 
 Profile = compose(
-    connect(mapStateToProps, {resetProfile, setProfile}),
-    withData(getData, onLoaded, onError, shouldObtainData, (props) => [props.id]),
+    connect(mapStateToProps, {resetProfile, setProfile, submitLogout}),
+    withData(
+        getData, onLoaded, onError,
+        shouldObtainData,
+        props => [props.id],
+        null),
 )(Profile)
 
 export {Friends}

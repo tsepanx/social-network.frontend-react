@@ -11,8 +11,6 @@ const withData = (getData, onLoaded, onError,
 
         const [fetching, setFetching] = useState(false)
         const [loaded, setLoaded] = useState(false)
-        const [error, setError] = useState(false)
-
         const dependencies = deps ? deps(props) : []
 
         useEffect(() => {
@@ -26,8 +24,12 @@ const withData = (getData, onLoaded, onError,
         }
 
         const handleError = async (props, e) => {
-            let isError = await onError(props, e)
-            setError(isError)
+            if ('response' in e) {
+                let status = e.response.status
+                return onError(props, status)
+            } else {
+                throw 'Unhandled error without response field'
+            }
         }
 
         const tryHandleData = async (props) => {
@@ -44,9 +46,6 @@ const withData = (getData, onLoaded, onError,
                 await tryHandleData(props)
             setLoaded(true)
         }
-
-        if (error)
-            return <>Error</>
 
         if (loaded) {
             return <View {...props} />

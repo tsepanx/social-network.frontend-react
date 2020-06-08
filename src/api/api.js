@@ -39,12 +39,14 @@ const requestWithThrow = (func, onError = null) => async (...args) => {
 
         if (DEFAULT_ERROR_KEY in data)
             throw {password: data[DEFAULT_ERROR_KEY]}
-        if ('username' in data)
+        else if ('username' in data)
             throw {username: data.username[0]}
-        if ('password' in data)
+        else if ('password' in data)
             throw {password: data.password[0]}
-        if ('detail' in data)
-            throw {detail: data.detail}
+        // if ('detail' in data)
+        //     throw {detail: data.detail}
+        else
+            throw e
     }
 }
 

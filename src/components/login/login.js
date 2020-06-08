@@ -17,7 +17,7 @@ const Login = (props) => {
     }
 
     if (auth.authorized) {
-        props.resetProfile()
+        props.resetProfile(false)
         return <Redirect to={`/profile/${auth.credentials.id}`}/>
     }
 

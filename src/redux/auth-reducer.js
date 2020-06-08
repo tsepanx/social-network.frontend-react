@@ -58,7 +58,7 @@ export const submitLogin = ({username, password}) => async (dispatch) => {
 export const submitLogout = () => async (dispatch) => {
     await UserApi.logout()
     setLoggedOut()(dispatch)
-    resetProfile()(dispatch)
+    // resetProfile(false)(dispatch)
 }
 
 export const submitSignUp = ({username, password}) => async (dispatch) => {

@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {compose} from "redux";
-import {loginCurrentUser, setLoggedIn, setLoggedOut} from "../../redux/auth-reducer";
+import {loginCurrentUser, setLoggedIn, setLoggedOut, submitLogout} from "../../redux/auth-reducer";
 import withData from "./with-data";
 import {Redirect} from "react-router-dom";
 
@@ -13,11 +13,7 @@ export const withAuth = (redirectLogin = false, preloader = undefined) => Compon
 
     const onLoaded = async (props, data) => props.setLoggedIn(data)
 
-    const onError = async (props, error) => {
-        console.log('error in withAuth', error)
-        await props.setLoggedOut()
-        return false
-    }
+    const onError = async (props, status) => props.submitLogout()
 
     const View = (props) => {
         let {auth} = props
@@ -33,7 +29,7 @@ export const withAuth = (redirectLogin = false, preloader = undefined) => Compon
     });
 
     return compose(
-        connect(mapStateToProps, {loginCurrentUser, setLoggedIn, setLoggedOut}),
+        connect(mapStateToProps, {loginCurrentUser, setLoggedIn, submitLogout}),
         withData(getData, onLoaded, onError, shouldObtainData, null, preloader)
     )(View)
 }

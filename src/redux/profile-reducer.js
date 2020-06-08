@@ -45,8 +45,8 @@ export const setProfile = (profile) => (dispatch) => {
     dispatch(setProfileCreator(profile, true))
 }
 
-export const resetProfile = () => (dispatch) => {
-    dispatch(setProfileCreator(profileInitialState, false))
+export const resetProfile = (loaded) => (dispatch) => {
+    dispatch(setProfileCreator(profileInitialState, loaded))
 }
 
 export default profileReducer
