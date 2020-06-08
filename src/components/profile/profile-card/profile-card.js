@@ -6,9 +6,8 @@ import {connect} from "react-redux";
 import './profile-card.css'
 import DEFAULT_PROFILE_IMAGE from '../../../assets/profile.png'
 
-const ProfileCard = (props) => {
-    let key = props.id
-    let {profile_photo} = props
+const ProfileCard = ({id, username, status, profile_photo, onClick}) => {
+    let key = id
 
     if (!profile_photo)
         profile_photo = DEFAULT_PROFILE_IMAGE
@@ -17,12 +16,11 @@ const ProfileCard = (props) => {
         <div className='profile-card bg-dark'>
             <img src={profile_photo}/>
             <div className="info">
-                <h6>Username: {props.username}</h6>
-                <h6>Status: {props.status}</h6>
-                {/*<a href={`/profile/${props.id}`}>Profile page</a>*/}
-                <NavLink key={key} to={`/profile/${props.id}`}>Profile page</NavLink>
+                <h6>Username: {username}</h6>
+                <h6>Status: {status}</h6>
+                <NavLink key={key} to={`/profile/${id}`}>Profile page</NavLink>
             </div>
-            <div><div className="btn btn-info">Follow</div></div>
+            {onClick && <div><div className="btn btn-info" id={key} onClick={onClick}>Follow</div></div>}
         </div>
     )
 }

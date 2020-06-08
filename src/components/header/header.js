@@ -15,6 +15,8 @@ const items = {
     me: [...pages.me, 'My profile'],
     feed: [...pages.feed, 'News'],
     messages: [...pages.messages, 'Messages'],
+    people: [...pages.people, 'People'],
+
     tasks: [...pages.tasks, 'My tasks'],
     info: [...pages.info, 'My info']
 }
@@ -47,6 +49,7 @@ const Header = (props) => {
             items.me,
             items.feed,
             items.messages,
+            items.people,
             items.tasks,
             items.info
         ]

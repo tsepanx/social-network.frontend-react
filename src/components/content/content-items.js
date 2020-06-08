@@ -8,6 +8,7 @@ import Feed from "../feed/feed";
 import Messages from "../messages/messages";
 import TodoList from "../todo-list/todo-list";
 import InfoContainer from "../info/info-container";
+import People from "../people/people";
 
 // page: [Component, path]
 const contentComponents = {
@@ -22,6 +23,8 @@ const contentComponents = {
 
     feed: [Feed, '/feed'],
     messages: [Messages, '/messages'],
+    people: [People, '/people'],
+
     settings: [Settings, '/settings'],
 
     tasks: [TodoList, '/todo'],

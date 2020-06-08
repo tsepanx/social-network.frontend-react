@@ -28,7 +28,7 @@ const withData = (getData, onLoaded, onError,
                 let status = e.response.status
                 return onError(props, status)
             } else {
-                throw 'Unhandled error without response field'
+                throw e
             }
         }
 

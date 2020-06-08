@@ -35,6 +35,9 @@ const requestWithThrow = (func, onError = null) => async (...args) => {
         if (onError)
             onError()
 
+        if (!('response' in e))
+            throw e
+
         let data = e.response.data
 
         if (DEFAULT_ERROR_KEY in data)
@@ -105,16 +108,18 @@ export class UserApi {
     })
 }
 
-const instanceGet = (id, endpointUrl) => requestWithThrow(async () => {
-    return instance.get(endpointUrlWithId(id)(endpointUrl));
+const instanceGet = (id = null, endpointUrl) => requestWithThrow(async () => {
+    return instance.get(id ? endpointUrlWithId(id)(endpointUrl) : endpointUrl)
 })
 
-const instancePatch = (id, endpointUrl, args) => requestWithThrow(async () => {
-    return instance.patch(endpointUrlWithId(id)(endpointUrl), args);
+const instancePatch = (id = null, endpointUrl, args) => requestWithThrow(async () => {
+    return instance.patch(id ? endpointUrlWithId(id)(endpointUrl) : endpointUrl, args);
 })
 
 export class ProfileApi {
     static endpointUrl = 'profile/'
+
+    static getMany = () => instanceGet(null, this.endpointUrl)()
 
     static getProfile = (id) => instanceGet(id, this.endpointUrl)()
 

@@ -64,7 +64,7 @@ export const submitSignUp = ({username, password}) => async (dispatch) => {
         await UserApi.createUser(username, password)
         let r = await loginCurrentUser()(dispatch)
 
-        window.location.href = `/profile/${r.data.id}`
+        window.location.replace(`/me`)
     } catch (e) {
         dispatch(stopSubmit('signup', e))
     }
