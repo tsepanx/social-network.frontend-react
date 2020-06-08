@@ -1,3 +1,5 @@
+import {ProfileApi} from "../api/api";
+
 const profileActions = {
     SET_PROFILE: 'SET_PROFILE',
     ADD_POST: 'ADD_POST'
@@ -47,6 +49,18 @@ export const setProfile = (profile) => (dispatch) => {
 
 export const resetProfile = (loaded) => (dispatch) => {
     dispatch(setProfileCreator(profileInitialState, loaded))
+}
+
+export const submitChangeStatus = (id, status) => async (dispatch) => {
+    await ProfileApi.setStatus(id, status)
+
+    setProfile({status})(dispatch)
+}
+
+export const submitChangePhoto = (id, url) => async (dispatch) => {
+    await ProfileApi.setProfilePhoto(id, url)
+
+    setProfile({profilePhoto: url})(dispatch)
 }
 
 export default profileReducer

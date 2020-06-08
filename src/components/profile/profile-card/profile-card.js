@@ -1,16 +1,21 @@
+import React from "react";
+import {NavLink} from "react-router-dom";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import React from "react";
 
 import './profile-card.css'
-import {NavLink} from "react-router-dom";
+import DEFAULT_PROFILE_IMAGE from '../../../assets/profile.png'
 
 const ProfileCard = (props) => {
     let key = props.id
+    let {profile_photo} = props
+
+    if (!profile_photo)
+        profile_photo = DEFAULT_PROFILE_IMAGE
 
     return (
         <div className='profile-card bg-dark'>
-            <img src={props.profile_photo}/>
+            <img src={profile_photo}/>
             <div className="info">
                 <h6>Username: {props.username}</h6>
                 <h6>Status: {props.status}</h6>

@@ -40,11 +40,9 @@ const requestWithThrow = (func, onError = null) => async (...args) => {
         if (DEFAULT_ERROR_KEY in data)
             throw {password: data[DEFAULT_ERROR_KEY]}
         else if ('username' in data)
-            throw {username: data.username[0]}
+            throw {username: data.username}
         else if ('password' in data)
-            throw {password: data.password[0]}
-        // if ('detail' in data)
-        //     throw {detail: data.detail}
+            throw {password: data.password}
         else
             throw e
     }
@@ -107,26 +105,32 @@ export class UserApi {
     })
 }
 
+const instanceGet = (id, endpointUrl) => requestWithThrow(async () => {
+    return instance.get(endpointUrlWithId(id)(endpointUrl));
+})
+
+const instancePatch = (id, endpointUrl, args) => requestWithThrow(async () => {
+    return instance.patch(endpointUrlWithId(id)(endpointUrl), args);
+})
+
 export class ProfileApi {
     static endpointUrl = 'profile/'
 
-    static getProfile = async (id) => {
-        try {
-            return await instance.get(endpointUrlWithId(id)(this.endpointUrl))
-        } catch (e) {
-            return e
-        }
-    }
+    static getProfile = (id) => instanceGet(id, this.endpointUrl)()
+
+    static setStatus = (id, status) => instancePatch(id, this.endpointUrl, {status})()
+
+    static setProfilePhoto = (id, url) => instancePatch(id, this.endpointUrl, {profile_photo: url})()
 }
 
-export class FriendsApi {
-    static endpointUrl = 'social/'
-
-    static getRelationships = async (id) => {
-        let r = await instance.get(endpointUrlWithId(id)(this.endpointUrl))
-        return {
-            ...r,
-            data: r.data.friends
-        }
-    }
-}
+// export class FriendsApi {
+//     static endpointUrl = 'social/'
+//
+//     static getRelationships = async (id) => {
+//         let r = await instance.get(endpointUrlWithId(id)(this.endpointUrl))
+//         return {
+//             ...r,
+//             data: r.data.friends
+//         }
+//     }
+// }

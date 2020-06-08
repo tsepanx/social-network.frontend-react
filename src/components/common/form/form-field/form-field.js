@@ -40,16 +40,20 @@ export const commonFormField = (name,
         validate={validators}
     />)
 
+export const defaultInputField = (name, placeholder = undefined, validators = undefined, type = undefined) =>
+    commonFormField(name, input, placeholder, validators, type)
+
+export const defaultTextareaField = (name, placeholder = undefined, validators = undefined, type = undefined) =>
+    commonFormField(name, textarea, placeholder, validators, type)
+
 export const defaultField = {
-    username: commonFormField(
+    username: defaultInputField(
         'username',
-        input,
         'Username'
     ),
 
-    password: commonFormField(
+    password: defaultInputField(
         'password',
-        input,
         'Password',
         defaultPasswordValidators,
         'password'

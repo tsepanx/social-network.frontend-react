@@ -7,11 +7,15 @@ import {submitSignUp} from "../../redux/auth-reducer";
 
 const SignUp = (props) => {
 
+    const handleSubmit = (formData) => {
+        props.submitSignUp(formData)
+    }
+
     return (
         <div className='signup'>
             <h3>Sign Up HERE</h3>
 
-            {defaultForm(props.submitSignUp).signup}
+            {defaultForm(handleSubmit).signup}
         </div>
     )
 }

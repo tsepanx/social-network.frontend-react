@@ -27,11 +27,11 @@ const fieldShouldContainOnlyLowercase = value => baseValidator(
 
 export const defaultInputValidators = [
     fieldIsNotNull,
-    fieldIsShorterEqualThan(10),
+    fieldIsShorterEqualThan(20),
     fieldShouldContainOnlyLowercase,
 ]
 
 export const defaultPasswordValidators = [
     fieldIsNotNull,
-    fieldIsLongerEqualThan(3)
+    // fieldIsLongerEqualThan(3)
 ]

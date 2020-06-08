@@ -6,10 +6,11 @@ import {useHistory} from "react-router-dom"
 import './settings.css'
 
 import {withAuth} from "../hoc/with-auth";
-import {defaultField} from "../common/form/form-field/form-field";
-import {UserApi} from "../../api/api";
+import {defaultField, defaultInputField, defaultTextareaField} from "../common/form/form-field/form-field";
+import {ProfileApi, UserApi} from "../../api/api";
 import {commonReduxForm} from "../common/form/form/form";
 import {submitChangePassword, submitChangeUsername} from "../../redux/auth-reducer";
+import {submitChangePhoto, submitChangeStatus} from "../../redux/profile-reducer";
 
 const Settings = (props) => {
 
@@ -18,6 +19,8 @@ const Settings = (props) => {
     return (<div className='settings'>
         <h2>Settings</h2>
         <ul>
+            <ChangeStatus {...props} userId={userId}/>
+            <ChangeProfilePhoto {...props} userId={userId}/>
             <ChangeUsername {...props} userId={userId}/>
             <ChangePassword {...props} userId={userId}/>
             <DangerZone {...props} userId={userId}/>
@@ -25,15 +28,31 @@ const Settings = (props) => {
     </div>)
 }
 
-const DangerZone = (props) => {
-    return (
-        <li className="danger">
-            <h5>Danger zone</h5>
+const ChangeStatus = (props) => {
+    const onSubmit = (formData) => {
+        props.submitChangeStatus(props.userId, formData.status)
+    }
 
-            <div className='list-group'>
-                <div className='list-group-item'>Some danger option</div>
-                <DeleteAccount {...props}/>
-            </div>
+    const statusField = defaultInputField('status', 'New status')
+
+    return (
+        <li>
+            <h4>Change status</h4>
+            {commonReduxForm('change-status', onSubmit, [statusField])}
+        </li>
+    )
+}
+const ChangeProfilePhoto = (props) => {
+    const onSubmit = (formData) => {
+        props.submitChangePhoto(props.userId, formData.url)
+    }
+
+    const urlField = defaultTextareaField('url', 'New photo url', null)
+
+    return (
+        <li>
+            <h4>Change photo</h4>
+            {commonReduxForm('change-photo', onSubmit, [urlField])}
         </li>
     )
 }
@@ -71,6 +90,19 @@ const ChangePassword = (props) => {
 
 }
 
+const DangerZone = (props) => {
+    return (
+        <li className="danger">
+            <h5>Danger zone</h5>
+
+            <div className='list-group'>
+                <div className='list-group-item'>Some danger option</div>
+                <DeleteAccount {...props}/>
+            </div>
+        </li>
+    )
+}
+
 const DeleteAccount = (props) => {
     const history = useHistory()
 
@@ -95,6 +127,6 @@ let mapStateToProps = () => ({
 });
 
 export default compose(
-    connect(mapStateToProps, {submitChangeUsername, submitChangePassword}),
+    connect(mapStateToProps, {submitChangeUsername, submitChangePassword, submitChangeStatus, submitChangePhoto}),
     withAuth(true),
 )(Settings)

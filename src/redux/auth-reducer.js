@@ -1,6 +1,5 @@
 import {stopSubmit} from "redux-form";
 import {AuthApi, UserApi} from "../api/api";
-import {resetProfile} from "./profile-reducer";
 
 const authActions = {
     SET_USER_CREDENTIALS: 'SET_USER_CREDENTIALS'
@@ -58,7 +57,6 @@ export const submitLogin = ({username, password}) => async (dispatch) => {
 export const submitLogout = () => async (dispatch) => {
     await UserApi.logout()
     setLoggedOut()(dispatch)
-    // resetProfile(false)(dispatch)
 }
 
 export const submitSignUp = ({username, password}) => async (dispatch) => {
@@ -86,8 +84,6 @@ export const submitChangeUsername = (id, username) => async (dispatch) => {
     try {
         await UserApi.changeUsername(id, username)
         await loginCurrentUser(true)(dispatch)
-
-        // window.location.reload()
     } catch (e) {
         debugger
     }

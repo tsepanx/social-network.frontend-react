@@ -6,7 +6,7 @@ import {resetProfile, setProfile} from "../../../redux/profile-reducer";
 import './profile.css'
 import DEFAULT_PROFILE_IMAGE from '../../../assets/profile.png'
 
-import {FriendsApi, ProfileApi} from "../../../api/api";
+import {ProfileApi} from "../../../api/api";
 import withData from "../../hoc/with-data";
 import ProfileCard from "../profile-card/profile-card";
 import {submitLogout} from "../../../redux/auth-reducer";
@@ -20,22 +20,14 @@ const getData = async (props) => {
     let id = props.id
 
     let profile = await ProfileApi.getProfile(id)
-    let friends = await FriendsApi.getRelationships(id)
-
-    profile = profile.data
-    friends = friends.data
-
-    return {profile, friends}
+    return profile.data
 }
 
 const onLoaded = async (props, data) => {
-    let {profile, friends} = data
-
     try {
         props.setProfile({
-            ...profile,
-            profilePhoto: profile["profile_photo"],
-            friends
+            ...data,
+            profilePhoto: data["profile_photo"],
         })
     } catch (e) {
         props.resetProfile();
